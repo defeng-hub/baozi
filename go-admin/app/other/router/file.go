@@ -13,7 +13,7 @@ func init() {
 // 需认证的路由代码
 func registerFileRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {
 	var api = apis.File{}
-	r := v1.Group("").Use(authMiddleware.MiddlewareFunc())
+	r := v1.Group("")
 	{
 		r.POST("/public/uploadFile", api.UploadFile)
 	}
