@@ -3,20 +3,24 @@
     <template #wrapper>
       <el-card class="box-card">
         <el-form ref="queryForm" :model="queryParams" :inline="true" label-width="68px">
-          <el-form-item label="手机号" label-width="100" prop="phone"><el-input v-model="queryParams.phone" placeholder="请输入手机号" clearable
-              size="small" @keyup.enter.native="handleQuery" />
+          <el-form-item label="手机号" label-width="100" prop="phone"><el-input v-model="queryParams.phone"
+              placeholder="请输入手机号" clearable size="small" @keyup.enter.native="handleQuery" />
           </el-form-item>
-          <el-form-item label="发包方名称" label-width="100" prop="fabaofangName"><el-input v-model="queryParams.fabaofangName"
-              placeholder="请输入发包方名称" clearable size="small" @keyup.enter.native="handleQuery" />
+          <el-form-item label="发包方名称" label-width="100" prop="fabaofangName"><el-input
+              v-model="queryParams.fabaofangName" placeholder="请输入发包方名称" clearable size="small"
+              @keyup.enter.native="handleQuery" />
           </el-form-item>
-          <el-form-item label="发包方联系人" label-width="100" prop="fabaofangUser"><el-input v-model="queryParams.fabaofangUser"
-              placeholder="请输入发包方联系人" clearable size="small" @keyup.enter.native="handleQuery" />
+          <el-form-item label="发包方联系人" label-width="100" prop="fabaofangUser"><el-input
+              v-model="queryParams.fabaofangUser" placeholder="请输入发包方联系人" clearable size="small"
+              @keyup.enter.native="handleQuery" />
           </el-form-item>
-          <el-form-item label="施工方名称" label-width="100" prop="shigongfangName"><el-input v-model="queryParams.shigongfangName"
-              placeholder="请输入施工方名称" clearable size="small" @keyup.enter.native="handleQuery" />
+          <el-form-item label="施工方名称" label-width="100" prop="shigongfangName"><el-input
+              v-model="queryParams.shigongfangName" placeholder="请输入施工方名称" clearable size="small"
+              @keyup.enter.native="handleQuery" />
           </el-form-item>
-          <el-form-item label="施工方项目负责人" label-width="100" prop="shigongfangUser"><el-input v-model="queryParams.shigongfangUser"
-              placeholder="请输入施工方项目负责人" clearable size="small" @keyup.enter.native="handleQuery" />
+          <el-form-item label="施工方项目负责人" label-width="100" prop="shigongfangUser"><el-input
+              v-model="queryParams.shigongfangUser" placeholder="请输入施工方项目负责人" clearable size="small"
+              @keyup.enter.native="handleQuery" />
           </el-form-item>
 
           <el-form-item>
@@ -26,7 +30,7 @@
         </el-form>
 
         <el-row :gutter="10" class="mb8">
-          <el-col :span="1.5">
+          <!-- <el-col :span="1.5">
             <el-button v-permisaction="['admin:tbTable:add']" type="primary" icon="el-icon-plus" size="mini"
               @click="handleAdd">新增
             </el-button>
@@ -35,7 +39,7 @@
             <el-button v-permisaction="['admin:tbTable:edit']" type="success" icon="el-icon-edit" size="mini"
               :disabled="single" @click="handleUpdate">修改
             </el-button>
-          </el-col>
+          </el-col> -->
           <el-col :span="1.5">
             <el-button v-permisaction="['admin:tbTable:remove']" type="danger" icon="el-icon-delete" size="mini"
               :disabled="multiple" @click="handleDelete">删除
@@ -44,27 +48,32 @@
         </el-row>
 
         <el-table v-loading="loading" :data="tbTableList" @selection-change="handleSelectionChange">
-          <el-table-column type="selection" width="55" align="center" /><el-table-column label="手机号" align="center"
-            prop="phone" :show-overflow-tooltip="true" /><el-table-column label="作业面积" align="center" prop="zuoyemianji"
-            :show-overflow-tooltip="true" /><el-table-column label="作业地址" align="center" prop="zuoyedizhi"
-            :show-overflow-tooltip="true" /><el-table-column label="所属社区" align="center" prop="suoshushequ"
-            :show-overflow-tooltip="true" /><el-table-column label="发包方名称" align="center" prop="fabaofangName"
-            :show-overflow-tooltip="true" /><el-table-column label="发包方联系人" align="center" prop="fabaofangUser"
-            :show-overflow-tooltip="true" /><el-table-column label="发包方联系方式" align="center" prop="fabaofangPhone"
-            :show-overflow-tooltip="true" /><el-table-column label="施工方名称" align="center" prop="shigongfangName"
-            :show-overflow-tooltip="true" /><el-table-column label="施工方项目负责人" align="center" prop="shigongfangUser"
-            :show-overflow-tooltip="true" /><el-table-column label="施工方联系方式" align="center" prop="shigongfangPhone"
-            :show-overflow-tooltip="true" /><el-table-column label="审核状态" align="center" prop="status"
-            :show-overflow-tooltip="true" /><el-table-column label="备注" align="center" prop="remark"
-            :show-overflow-tooltip="true" />
-          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          <el-table-column type="selection" width="55" align="center" />
+          <el-table-column label="编号" align="center" prop="id" :show-overflow-tooltip="true" />
+          <el-table-column label="手机号" align="center" prop="phone" :show-overflow-tooltip="true" />
+          <el-table-column label="作业面积" align="center" prop="zuoyemianji" :show-overflow-tooltip="true" />
+          <el-table-column label="作业地址" align="center" prop="zuoyedizhi" :show-overflow-tooltip="true" />
+          <el-table-column label="所属社区" align="center" prop="suoshushequ" :show-overflow-tooltip="true" />
+          <el-table-column label="发包方名称" align="center" prop="fabaofangName" :show-overflow-tooltip="true" />
+          <el-table-column label="发包方联系人" align="center" prop="fabaofangUser" :show-overflow-tooltip="true" />
+          <!-- <el-table-column label="发包方联系方式" align="center" prop="fabaofangPhone"
+            :show-overflow-tooltip="true" /> -->
+          <el-table-column label="施工方名称" align="center" prop="shigongfangName" :show-overflow-tooltip="true" />
+          <el-table-column label="施工方项目负责人" align="center" prop="shigongfangUser" :show-overflow-tooltip="true" />
+          <!-- <el-table-column label="施工方联系方式" align="center" prop="shigongfangPhone"
+            :show-overflow-tooltip="true" /> -->
+          <el-table-column label="审核状态" align="center" prop="status" :show-overflow-tooltip="true" />
+          <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
+
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="200" >
             <template slot-scope="scope">
-              <el-popconfirm class="delete-popconfirm" title="确认要修改吗?" confirm-button-text="修改"
-                @confirm="handleUpdate(scope.row)">
-                <el-button slot="reference" v-permisaction="['admin:tbTable:edit']" size="mini" type="text"
-                  icon="el-icon-edit">修改
-                </el-button>
-              </el-popconfirm>
+
+              <el-button slot="reference" v-permisaction="['admin:tbTable:edit']"  @click="handleUpdate(scope.row)"
+               size="mini" type="text" icon="el-icon-edit">审核</el-button>
+
+              <el-button style="margin-left: 10px;" slot="reference" size="mini"  @click="handlerZhifa()"
+              type="text" icon="el-icon-view">执法检查</el-button>
+
               <el-popconfirm class="delete-popconfirm" title="确认要删除吗?" confirm-button-text="删除"
                 @confirm="handleDelete(scope.row)">
                 <el-button slot="reference" v-permisaction="['admin:tbTable:remove']" size="mini" type="text"
@@ -79,66 +88,116 @@
           :limit.sync="queryParams.pageSize" @pagination="getList" />
 
         <!-- 添加或修改对话框 -->
-        <el-dialog :title="title" :visible.sync="open" width="500px">
-          <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-dialog :title="title" :visible.sync="open" width="70vw">
 
-            <el-form-item label="手机号" prop="phone">
-              <el-input v-model="form.phone" placeholder="手机号" />
-            </el-form-item>
-            <el-form-item label="作业面积" prop="zuoyemianji">
-              <el-input v-model="form.zuoyemianji" placeholder="作业面积" />
-            </el-form-item>
-            <el-form-item label="作业地址" prop="zuoyedizhi">
-              <el-input v-model="form.zuoyedizhi" placeholder="作业地址" />
-            </el-form-item>
-            <el-form-item label="所属社区" prop="suoshushequ">
-              <el-input v-model="form.suoshushequ" placeholder="所属社区" />
-            </el-form-item>
-            <el-form-item label="发包方名称" prop="fabaofangName">
-              <el-input v-model="form.fabaofangName" placeholder="发包方名称" />
-            </el-form-item>
-            <el-form-item label="发包方联系人" prop="fabaofangUser">
-              <el-input v-model="form.fabaofangUser" placeholder="发包方联系人" />
-            </el-form-item>
-            <el-form-item label="发包方联系方式" prop="fabaofangPhone">
-              <el-input v-model="form.fabaofangPhone" placeholder="发包方联系方式" />
-            </el-form-item>
-            <el-form-item label="施工方名称" prop="shigongfangName">
-              <el-input v-model="form.shigongfangName" placeholder="施工方名称" />
-            </el-form-item>
-            <el-form-item label="施工方项目负责人" prop="shigongfangUser">
-              <el-input v-model="form.shigongfangUser" placeholder="施工方项目负责人" />
-            </el-form-item>
-            <el-form-item label="施工方联系方式" prop="shigongfangPhone">
-              <el-input v-model="form.shigongfangPhone" placeholder="施工方联系方式" />
-            </el-form-item>
-            <el-form-item label="营业执照" prop="yingyezhizhao">
-              <el-input v-model="form.yingyezhizhao" placeholder="营业执照" />
-            </el-form-item>
-            <el-form-item label="法人身份证号" prop="farenid">
-              <el-input v-model="form.farenid" placeholder="法人身份证号" />
-            </el-form-item>
-            <el-form-item label="建筑企业资质安全生产许可证" prop="anquanxvkezheng">
-              <el-input v-model="form.anquanxvkezheng" placeholder="建筑企业资质安全生产许可证" />
-            </el-form-item>
-            <el-form-item label="授权委托书" prop="shouquanweituozhu">
-              <el-input v-model="form.shouquanweituozhu" placeholder="授权委托书" />
-            </el-form-item>
-            <el-form-item label="项目负责人身份证" prop="fuzerenid">
-              <el-input v-model="form.fuzerenid" placeholder="项目负责人身份证" />
-            </el-form-item>
-            <el-form-item label="甲乙双方施工合同" prop="jiayishuangfangshigonghetong">
-              <el-input v-model="form.jiayishuangfangshigonghetong" placeholder="甲乙双方施工合同" />
-            </el-form-item>
-            <el-form-item label="安全生产责任保险" prop="anquanshengchanzerenbaoxian">
-              <el-input v-model="form.anquanshengchanzerenbaoxian" placeholder="安全生产责任保险" />
-            </el-form-item>
-            <el-form-item label="审核状态" prop="status">
-              <el-input v-model="form.status" placeholder="审核状态" />
-            </el-form-item>
-            <el-form-item label="备注" prop="remark">
-              <el-input v-model="form.remark" placeholder="备注" />
-            </el-form-item>
+          <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+            <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tab-pane label="基本信息" name="first">
+                <el-form-item label="手机号" prop="phone">
+                  <el-input v-model="form.phone" placeholder="手机号" :disabled="true" />
+                </el-form-item>
+                <el-form-item label="作业面积" prop="zuoyemianji">
+                  <el-input v-model="form.zuoyemianji" placeholder="作业面积" />
+                </el-form-item>
+                <el-form-item label="作业地址" prop="zuoyedizhi">
+                  <el-input v-model="form.zuoyedizhi" placeholder="作业地址" />
+                </el-form-item>
+                <el-form-item label="所属社区" prop="suoshushequ">
+                  <el-input v-model="form.suoshushequ" placeholder="所属社区" />
+                </el-form-item>
+              </el-tab-pane>
+
+              <el-tab-pane label="发包方（甲方）和 施工方（乙方）" name="second">
+                <el-form-item label="发包方名称" prop="fabaofangName" label-width="auto">
+                  <el-input v-model="form.fabaofangName" placeholder="发包方名称" />
+                </el-form-item>
+                <el-form-item label="发包方联系人" prop="fabaofangUser" label-width="auto">
+                  <el-input v-model="form.fabaofangUser" placeholder="发包方联系人" />
+                </el-form-item>
+                <el-form-item label="发包方联系方式" prop="fabaofangPhone" label-width="auto">
+                  <el-input v-model="form.fabaofangPhone" placeholder="发包方联系方式" />
+                </el-form-item>
+                <el-form-item label="施工方名称" prop="shigongfangName" label-width="auto">
+                  <el-input v-model="form.shigongfangName" placeholder="施工方名称" />
+                </el-form-item>
+                <el-form-item label="施工方项目负责人" prop="shigongfangUser" label-width="auto">
+                  <el-input v-model="form.shigongfangUser" placeholder="施工方项目负责人" />
+                </el-form-item>
+                <el-form-item label="施工方联系方式" prop="shigongfangPhone" label-width="auto">
+                  <el-input v-model="form.shigongfangPhone" placeholder="施工方联系方式" />
+                </el-form-item>
+              </el-tab-pane>
+
+              <el-tab-pane label="资质上传" name="third">
+                <el-form-item label="营业执照" prop="yingyezhizhao" label-width="auto">
+                  <el-input v-model="form.yingyezhizhao" placeholder="营业执照" size="mini">
+                    <template slot="prepend">地址</template>
+                    <template slot="append">
+                      <a :href="form.yingyezhizhao" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
+                    </template>
+                  </el-input>
+
+                  <el-image style="width: 100px; height: 100px" :src="form.yingyezhizhao"
+                    :preview-src-list="[form.yingyezhizhao]"></el-image>
+                </el-form-item>
+
+                <el-form-item label="法人身份证" prop="farenid" label-width="auto">
+                  <el-input v-model="form.farenid" placeholder="营业执照" size="mini">
+                    <template slot="prepend">地址</template>
+                    <template slot="append">
+                      <a :href="form.farenid" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
+                    </template>
+                  </el-input>
+
+                  <el-image style="width: 100px; height: 100px" :src="form.farenid"
+                    :preview-src-list="[form.farenid]"></el-image>
+                </el-form-item>
+                <el-form-item label="建筑企业资质安全生产许可证" prop="anquanxvkezheng" label-width="auto">
+                  <el-input v-model="form.anquanxvkezheng" placeholder="建筑企业资质安全生产许可证" size="mini">
+                    <template slot="prepend">地址</template>
+                    <template slot="append">
+                      <a :href="form.anquanxvkezheng" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
+                    </template>
+                  </el-input>
+
+                  <el-image style="width: 100px; height: 100px" :src="form.anquanxvkezheng"
+                    :preview-src-list="[form.anquanxvkezheng]"></el-image>
+                </el-form-item>
+                <el-form-item label="授权委托书" prop="shouquanweituozhu" label-width="auto">
+                  <el-input v-model="form.shouquanweituozhu" placeholder="授权委托书" />
+                </el-form-item>
+                <el-form-item label="项目负责人身份证" prop="fuzerenid" label-width="auto">
+                  <el-input v-model="form.fuzerenid" placeholder="项目负责人身份证" />
+                </el-form-item>
+                <el-form-item label="甲乙双方施工合同" prop="jiayishuangfangshigonghetong" label-width="auto">
+                  <el-input v-model="form.jiayishuangfangshigonghetong" placeholder="甲乙双方施工合同" />
+                </el-form-item>
+                <el-form-item label="安全生产责任保险" prop="anquanshengchanzerenbaoxian" label-width="auto">
+                  <el-input v-model="form.anquanshengchanzerenbaoxian" placeholder="安全生产责任保险" />
+                </el-form-item>
+              </el-tab-pane>
+
+              <el-tab-pane label="人工审核" name="fourth">
+                <el-form-item label="审核状态" prop="status">
+                  <el-select v-model="form.status" placeholder="请选择">
+                    <el-option key="1" label="已提交" value=""></el-option>
+                    <el-option key="1" label="审核通过" value="审核通过"></el-option>
+                    <el-option key="1" label="审核未通过" value="审核未通过"></el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item label="备注" prop="remark">
+                  <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" style="width: 50%" placeholder="备注"
+                    v-model="form.remark">
+                  </el-input>
+                </el-form-item>
+              </el-tab-pane>
+            </el-tabs>
+
+
+
+
+
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -159,6 +218,7 @@ export default {
   },
   data() {
     return {
+      activeName: 'first',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -209,6 +269,12 @@ export default {
     this.getList()
   },
   methods: {
+    handlerZhifa(){
+      this.$router.push({ path: '/tb-config/tb-zhifajiancha', query: { pid: 1 }})
+    },
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
     /** 查询参数列表 */
     getList() {
       this.loading = true
@@ -291,7 +357,7 @@ export default {
       getTbTable(id).then(response => {
         this.form = response.data
         this.open = true
-        this.title = '修改TbTable'
+        this.title = '人工审核'
         this.isEdit = true
       })
     },
