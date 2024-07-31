@@ -50,7 +50,7 @@
         <el-table v-loading="loading" :data="tbTableList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="编号" align="center" prop="id" :show-overflow-tooltip="true" />
-          <el-table-column label="手机号" align="center" prop="phone" :show-overflow-tooltip="true" />
+          <el-table-column width="140" label="手机号" align="center" prop="phone" :show-overflow-tooltip="true" />
           <el-table-column label="作业面积" align="center" prop="zuoyemianji" :show-overflow-tooltip="true" />
           <el-table-column label="作业地址" align="center" prop="zuoyedizhi" :show-overflow-tooltip="true" />
           <el-table-column label="所属社区" align="center" prop="suoshushequ" :show-overflow-tooltip="true" />
@@ -62,8 +62,20 @@
           <el-table-column label="施工方项目负责人" align="center" prop="shigongfangUser" :show-overflow-tooltip="true" />
           <!-- <el-table-column label="施工方联系方式" align="center" prop="shigongfangPhone"
             :show-overflow-tooltip="true" /> -->
-          <el-table-column label="审核状态" align="center" prop="status" :show-overflow-tooltip="true" />
-          <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
+          <el-table-column width="100" label="审核状态" align="center" prop="status" :show-overflow-tooltip="true" >
+            <template slot-scope="scope">
+              <p v-if="scope.row.status == '审核通过'" style="color: #43964e;">{{ scope.row.status }}</p>
+              <p v-if="scope.row.status == '审核未通过'" style="color: #ea3323;">{{ scope.row.status }}</p>
+              <p v-else>待审核</p>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" >
+            <template slot-scope="scope">
+              <p v-if="scope.row.remark">{{ scope.row.remark }}</p>
+              <p v-else>—</p>
+            </template>
+          </el-table-column>
 
           <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="200" >
             <template slot-scope="scope">
@@ -180,9 +192,13 @@
               <el-tab-pane label="人工审核" name="fourth">
                 <el-form-item label="审核状态" prop="status">
                   <el-select v-model="form.status" placeholder="请选择">
-                    <el-option key="1" label="已提交" value=""></el-option>
-                    <el-option key="1" label="审核通过" value="审核通过"></el-option>
-                    <el-option key="1" label="审核未通过" value="审核未通过"></el-option>
+                    <el-option key="1" label="已提交（待审核）" value=""></el-option>
+                    <el-option key="1" label="审核通过" value="审核通过">
+                      <span style="float: left;color: #43964e;font-weight: 500;">审核通过</span>
+                    </el-option>
+                    <el-option key="1" label="审核未通过" value="审核未通过">
+                      <span style="float: left;color: #ea3323;font-weight: 500;">审核未通过</span>
+                    </el-option>
                   </el-select>
                 </el-form-item>
 

@@ -40,13 +40,10 @@
         <el-table v-loading="loading" :data="tbZhifajianchaList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="项目id" align="center" prop="pid" :show-overflow-tooltip="true" />
-          <el-table-column label="照片视频" align="center" prop="file" :show-overflow-tooltip="true" >
+          <el-table-column label="照片视频" align="center" prop="file" :show-overflow-tooltip="true">
             <template slot-scope="scope">
-              <el-image
-                style="width: 100px; height: 100px"
-                :src="scope.row.file"
-                :preview-src-list="[scope.row.file]"
-              />
+              <el-image style="width: 100px; height: 100px" :src="scope.row.file"
+                :preview-src-list="[scope.row.file]" />
             </template>
           </el-table-column>
 
