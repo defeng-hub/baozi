@@ -1,5 +1,5 @@
 <template>
-	<view class="continer" @touchmove.stop.prevent="() => {}">
+	<view class="continer">
 		<view class="title">
 			<view class="title1">{{ title1 }}</view>
 			<view class="title2">{{ title2 }}</view>
@@ -124,6 +124,10 @@
 </script>
 
 <style lang="scss">
+page{
+	background-image: url(@/static/page1/bg.png);
+	background-size: cover;
+}
 .popup{
 	min-height: 500rpx;
 	margin-top: 20rpx;
@@ -145,9 +149,8 @@
 }
 .continer{
 	z-index: 1;
-	position: fixed;
-	height: 100%;
 	width: 100%;
+	height: 110vh;
 	.bottom{
 		position: fixed;
 		bottom: 50rpx;
@@ -206,7 +209,7 @@
 		position: absolute;
 		.title1{
 			position: absolute;
-			top: 250rpx;
+			top: 150rpx;
 			text-align: center;
 			height: 85rpx;
 			font-weight: 700;
@@ -221,7 +224,7 @@
 		.title2{
 			position: absolute;
 			text-align: center;
-			top: 330rpx;
+			top: 230rpx;
 			height: 56rpx;
 			font-weight: 700;
 			font-size: 40rpx;
@@ -234,8 +237,5 @@
 		}
 	}
 }
-page{
-	background-image: url(@/static/page1/bg.png);
-	background-size: cover;
-}
+
 </style>

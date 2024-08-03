@@ -389,6 +389,7 @@
 	page {
 		background-image: url(@/static/page1/bg.png);
 		background-size: cover;
+		overflow-y: scroll;
 	}
 
 	.top {

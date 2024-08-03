@@ -80,10 +80,7 @@
 						url:"/pages/form/page4"
 					})
 				}else{
-					uni.showToast({
-						title:this.resTime+"秒 后可进行下一步",
-						icon:"none"
-					})
+
 				}
 			}
 		}
@@ -96,7 +93,6 @@ page{
 	background-size: cover;
 }
 .continer{
-	height: 100%;
 	width: 100%;
 	padding: 50rpx 26rpx;
 }
@@ -129,7 +125,9 @@ page{
 	}
 }
 .end{
-	margin-top: 20rpx;
+	position: fixed;
+	bottom: 20rpx;
+	width: 100%;
 	height: 27rpx;
 	font-weight: 400;
 	font-size: 24rpx;

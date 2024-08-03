@@ -63,7 +63,6 @@ page{
 	background-size: cover;
 }
 .continer{
-	height: 100%;
 	width: 100%;
 	padding: 50rpx 26rpx;
 }
@@ -111,7 +110,7 @@ page{
 .notice{
 	width: 698rpx;
 	background: linear-gradient( 319deg, #6F9FFF 0%, #F0F5FF 100%);
-	border-radius: 15rpx 15rpx 15rpx 15rpx;
+	border-radius: 10rpx 10rpx 10rpx 10rpx;
 	border: 2rpx solid #FFFFFF;
 	
 	display: flex;

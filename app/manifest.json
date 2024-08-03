@@ -63,7 +63,11 @@
     "h5" : {
         "title" : "备案须知",
         "router" : {
-            "mode" : "history"
+            "mode" : "history",
+            "base" : ""
+        },
+        "devServer" : {
+            "https" : false
         }
     }
 }

@@ -8,7 +8,7 @@
 			"path" : "pages/form/page1",
 			"style" : 
 			{
-				"navigationBarTitleText" : "南磨房",
+				"navigationBarTitleText" : "南磨房地区限额以下小型施工备案",
 				"navigationStyle": "custom",
 				"disableScroll": true,
 				"backgroundColor":"#F6F7FB"
@@ -28,9 +28,8 @@
 			"path" : "pages/form/page3",
 			"style" : 
 			{
-				"navigationBarTitleText" : "page",
+				"navigationBarTitleText" : "黑名单和灰名单",
 				"navigationStyle": "custom",
-				"disableScroll": true,
 				"backgroundColor":"#F6F7FB"
 			}
 		},
@@ -38,9 +37,8 @@
 			"path" : "pages/form/page4",
 			"style" : 
 			{
-				"navigationBarTitleText" : "form",
+				"navigationBarTitleText" : "备案填写",
 				"navigationStyle": "custom",
-				"disableScroll": true,
 				"backgroundColor":"#F6F7FB"
 			}
 		},
@@ -48,9 +46,8 @@
 			"path" : "pages/form/page5",
 			"style" : 
 			{
-				"navigationBarTitleText" : "page",
+				"navigationBarTitleText" : "提交完成",
 				"navigationStyle": "custom",
-				"disableScroll": true,
 				"backgroundColor":"#F6F7FB"
 			}
 		},
@@ -60,7 +57,6 @@
 			{
 				"navigationBarTitleText" : "执法检查",
 				"navigationStyle": "custom",
-				"disableScroll": true,
 				"backgroundColor":"#F6F7FB"
 			}
 		},
@@ -70,7 +66,6 @@
 			{
 				"navigationBarTitleText" : "执法检查",
 				"navigationStyle": "custom",
-				"disableScroll": true,
 				"backgroundColor":"#F6F7FB"
 			}
 		},
