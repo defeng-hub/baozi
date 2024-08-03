@@ -6,10 +6,12 @@
           <el-form-item label="项目id" prop="pid"><el-input v-model="queryParams.pid" placeholder="请输入项目id" clearable
               size="small" @keyup.enter.native="handleQuery" />
           </el-form-item>
-          <el-form-item label="上传人" prop="user"><el-input v-model="queryParams.user" placeholder="请输入上传人" clearable
+          <el-form-item label="上传人" prop="user">
+            <el-input v-model="queryParams.user" placeholder="请输入上传人" clearable
               size="small" @keyup.enter.native="handleQuery" />
           </el-form-item>
-          <el-form-item label="所属部门" prop="department"><el-input v-model="queryParams.department" placeholder="请输入所属部门"
+          <el-form-item label="所属部门" prop="department">
+            <el-input v-model="queryParams.department" placeholder="请输入所属部门"
               clearable size="small" @keyup.enter.native="handleQuery" />
           </el-form-item>
 
@@ -40,12 +42,13 @@
         <el-table v-loading="loading" :data="tbZhifajianchaList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="项目id" align="center" prop="pid" :show-overflow-tooltip="true" />
-          <el-table-column label="照片视频" align="center" prop="file" :show-overflow-tooltip="true">
+          <el-table-column label="现场照片/视频" align="center" prop="file" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <el-image style="width: 100px; height: 100px" :src="scope.row.file"
                 :preview-src-list="[scope.row.file]" />
             </template>
           </el-table-column>
+          <el-table-column label="检查情况" align="center" prop="text" :show-overflow-tooltip="true" />
 
           <el-table-column label="上传人" align="center" prop="user" :show-overflow-tooltip="true" />
           <el-table-column label="所属部门" align="center" prop="department" :show-overflow-tooltip="true" />
@@ -77,8 +80,11 @@
             <el-form-item label="项目id" prop="pid">
               <el-input v-model="form.pid" :disabled="true" placeholder="项目id" />
             </el-form-item>
-            <el-form-item label="照片视频" prop="file">
+            <el-form-item label="现场照片/视频" prop="file">
               <el-input v-model="form.file" placeholder="照片或视频" />
+            </el-form-item>
+            <el-form-item label="检查情况" prop="file">
+              <el-input v-model="form.text" placeholder="检查情况" />
             </el-form-item>
             <el-form-item label="上传人" prop="user">
               <el-input v-model="form.user" placeholder="上传人" />

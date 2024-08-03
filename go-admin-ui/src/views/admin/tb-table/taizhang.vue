@@ -86,7 +86,7 @@
               <el-button slot="reference" v-permisaction="['admin:tbTable:edit']" @click="handleUpdate(scope.row)"
               size="mini" type="text" icon="el-icon-edit">编辑</el-button>
 
-              <el-button style="margin-left: 10px;" slot="reference" size="mini"  @click="handlerZhifa()"
+              <el-button style="margin-left: 10px;" slot="reference" size="mini"  @click="handlerZhifa(scope.row)"
               type="text" icon="el-icon-view">执法检查</el-button>
             </template>
           </el-table-column>
@@ -360,8 +360,8 @@ export default {
     isImg(str) {
       return /\.(png|jpg|jpeg)$/i.test(str);
     },
-    handlerZhifa() {
-      this.$router.push({ path: '/tb-config/tb-zhifajiancha', query: { pid: 1 } })
+    handlerZhifa(row) {
+      this.$router.push({ path: '/tb-config/tb-zhifajiancha', query: { pid: row.id } })
     },
     handleClick(tab, event) {
       console.log(tab, event);
