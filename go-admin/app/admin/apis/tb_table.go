@@ -1,16 +1,17 @@
 package apis
 
 import (
+	"encoding/base64"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-admin-team/go-admin-core/sdk/api"
 	"github.com/go-admin-team/go-admin-core/sdk/pkg/jwtauth/user"
 	_ "github.com/go-admin-team/go-admin-core/sdk/pkg/response"
-
 	"go-admin/app/admin/models"
 	"go-admin/app/admin/service"
 	"go-admin/app/admin/service/dto"
 	"go-admin/common/actions"
+	"strconv"
 )
 
 type TbTable struct {
@@ -90,6 +91,160 @@ func (e TbTable) Get(c *gin.Context) {
 	}
 
 	e.OK(object, "查询成功")
+}
+
+func (e TbTable) GetByPhone(c *gin.Context) {
+	req := dto.TbTableGetByPhoneReq{}
+	s := service.TbTable{}
+	err := e.MakeContext(c).
+		MakeOrm().
+		Bind(&req).
+		MakeService(&s.Service).
+		Errors
+	if err != nil {
+		e.Logger.Error(err)
+		e.Error(500, err, err.Error())
+		return
+	}
+	var object models.TbTable
+
+	p := actions.GetPermissionFromContext(c)
+	err = s.GetByPhone(&req, p, &object)
+	if err != nil {
+		if err.Error() == "查看对象不存在或无权查看" {
+			e.Error(200, err, err.Error())
+			return
+		} else {
+			e.Error(500, err, fmt.Sprintf("获取TbTable失败，\r\n失败信息 %s", err.Error()))
+			return
+		}
+	}
+	//v, _ := common2.AesEncrypt([]byte(strconv.Itoa(object.Model.Id)))
+	id := base64.StdEncoding.EncodeToString([]byte(strconv.Itoa(object.Model.Id)))
+
+	var res = models.TbTableMini{
+		Id:        id,
+		Phone:     object.Phone,
+		Status:    object.Status,
+		Remark:    object.Remark,
+		ModelTime: object.ModelTime,
+		ControlBy: object.ControlBy,
+	}
+	e.OK(res, "查询成功")
+	return
+}
+
+func (e TbTable) GetByDesId(c *gin.Context) {
+	req := dto.TbTableGetByDesIdReq{}
+	s := service.TbTable{}
+	err := e.MakeContext(c).
+		MakeOrm().
+		Bind(&req).
+		MakeService(&s.Service).
+		Errors
+	if err != nil {
+		e.Logger.Error(err)
+		e.Error(500, err, err.Error())
+		return
+	}
+	var object models.TbTable
+
+	p := actions.GetPermissionFromContext(c)
+	err = s.GetByDesId(&req, p, &object)
+	if err != nil {
+		if err.Error() == "查看对象不存在或无权查看" {
+			e.Error(200, err, err.Error())
+			return
+		} else {
+			e.Error(500, err, fmt.Sprintf("获取TbTable失败，\r\n失败信息 %s", err.Error()))
+			return
+		}
+	}
+
+	form := SubmitForm{
+		Phone:       object.Phone,
+		Zuoyemianji: object.Zuoyemianji,
+		Zuoyedizhi:  object.Zuoyedizhi,
+		Suoshushequ: object.Suoshushequ,
+		Fabaofang: struct {
+			Name  string `json:"name"`
+			User  string `json:"user"`
+			Phone string `json:"phone"`
+		}{
+			Name:  object.FabaofangName,
+			User:  object.FabaofangUser,
+			Phone: object.Phone,
+		},
+		Shigongfang: struct {
+			Name  string `json:"name"`
+			User  string `json:"user"`
+			Phone string `json:"phone"`
+		}{
+			Name:  object.ShigongfangName,
+			User:  object.ShigongfangUser,
+			Phone: object.Phone,
+		},
+	}
+	if object.Yingyezhizhao != "" {
+		form.Yingyezhizhao = UploadFile{
+			{URL: object.Yingyezhizhao},
+		}
+	} else {
+		form.Yingyezhizhao = UploadFile{}
+	}
+
+	if object.Farenid != "" {
+		form.FarenID = UploadFile{
+			{URL: object.Farenid},
+		}
+	} else {
+		form.FarenID = UploadFile{}
+	}
+
+	if object.Anquanxvkezheng != "" {
+		form.Anquanxvkezheng = UploadFile{
+			{URL: object.Anquanxvkezheng},
+		}
+	} else {
+		form.Anquanxvkezheng = UploadFile{}
+	}
+
+	if object.Shouquanweituozhu != "" {
+		form.Shouquanweituozhu = UploadFile{
+			{URL: object.Shouquanweituozhu},
+		}
+	} else {
+		form.Shouquanweituozhu = UploadFile{}
+	}
+
+	if object.Fuzerenid != "" {
+		form.FuzerenID = UploadFile{
+			{URL: object.Fuzerenid},
+		}
+	} else {
+		form.FuzerenID = UploadFile{}
+	}
+
+	if object.Jiayishuangfangshigonghetong != "" {
+		form.Jiayishuangfangshigonghetong = UploadFile{
+			{URL: object.Jiayishuangfangshigonghetong},
+		}
+	} else {
+		form.Jiayishuangfangshigonghetong = UploadFile{}
+	}
+
+	if object.Anquanshengchanzerenbaoxian != "" {
+		form.Anquanshengchanzerenbaoxian = UploadFile{
+			{URL: object.Anquanshengchanzerenbaoxian},
+		}
+	} else {
+		form.Anquanshengchanzerenbaoxian = UploadFile{}
+	}
+
+	e.OK(gin.H{
+		"data": object,
+		"form": form,
+	}, "查询成功")
 }
 
 // Insert 创建TbTable

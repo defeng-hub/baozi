@@ -17,17 +17,50 @@
 				</view>
 			</view>
 		</view>
+		
+		<u-popup :show="show" closeable closeOnClickOverlay @close="close" >
+			<view class="popup">
+				<u--form style="width: 670rpx;" labelPosition="left" :model="model1" :rules="rules" ref="uForm">
+					<u-form-item :labelWidth="200" label="手机号：" prop="phone" borderBottom>
+						<u--input :maxlength="11" v-model="model1.phone" placeholder="手机号必填" border="none"></u--input>
+					</u-form-item>
+					<u-form-item :labelWidth="200" label="验证码：" prop="authcode" borderBottom>
+						<u--input v-model="model1.authcode" placeholder="请输入验证码"  border="none"></u--input>
+						<template slot="right">
+							<u-button :disabled="model1.phone.length != 11" type="primary" :plain="true" style="right: 20rpx;" size="mini">获取验证码</u-button>
+						</template>
+					</u-form-item>
+					
+					<view class="btn3" @click="queryBeian()">查询备案记录</view>
+				</u--form>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
 <script>
-	import { getKey } from 'api'
+	import { getKey,getTableByPhone } from 'api'
 	export default {
 		data() {
 			return {
+				model1:{
+					phone:"",
+					authcode:"",
+				},
+				rules: {
+					'phone':{
+						type: 'string',
+						required: true,
+						max:11,
+						min:11,
+						message: '手机号不符合要求',
+						trigger: ['blur', 'change']
+					}
+				},
 				title1:"",
 				title2:"",
-				end:""
+				end:"",
+				show: false, //弹出层
 			};
 		},
 		async created() {
@@ -47,13 +80,69 @@
 				uni.navigateTo({url:"/pages/form/page2"})
 			},
 			query(){
-				console.log("query")
+				// console.log("query")
+				this.show = true;
+			},
+			async queryBeian(){
+				this.$refs.uForm.validate().then(async (res) => {
+					console.log(this.model1)
+					let resp = await this.$http.get(getTableByPhone + this.model1.phone, {})
+					console.log(resp)
+					if(resp.code == 200){
+						if(resp.msg == "查看对象不存在或无权查看"){
+							uni.showToast({
+								title:"未查询到任何备案",
+								icon:"none"
+							})
+						}else{
+							if(resp.data?.status  == "审核未通过"){
+								// console.log(resp.data?.status)
+								uni.navigateTo({
+									url:"/pages/form/page4?"+"HJnq8c="+resp.data?.id
+								})
+							}else if(resp.data?.status  == ""){
+								// console.log(resp.data?.status)
+								//待审核
+								uni.navigateTo({
+									url:"/pages/form/page4?"+"HJnq8c="+resp.data?.id
+								})
+							}else if(resp.data?.status  == "审核通过"){
+								console.log("审核通过审核通过审核通过")
+							}
+						}
+					}
+				}).catch(errors => {
+					uni.$u.toast('资料填写不完整')
+				})
+
+			},
+			close(){
+				this.show = false;
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
+.popup{
+	min-height: 500rpx;
+	margin-top: 20rpx;
+	padding: 40rpx 32rpx;
+	width: 94.7vw;
+	background: #FFFFFF;
+	border-radius: 8rpx;
+	.btn3{
+		margin-top: 50rpx;
+		margin-left: 120rpx;
+		width: 450rpx;
+		height: 70rpx;
+		background: #0047ff;
+		border-radius: 40rpx;
+		color: #ffffff;
+		text-align: center;
+		line-height: 70rpx;
+	}
+}
 .continer{
 	z-index: 1;
 	position: fixed;

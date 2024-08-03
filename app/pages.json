@@ -37,7 +37,17 @@
 			"path" : "pages/form/page4",
 			"style" : 
 			{
-				"navigationBarTitleText" : "南磨房",
+				"navigationBarTitleText" : "form",
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"backgroundColor":"#F6F7FB"
+			}
+		},
+		{
+			"path" : "pages/form/page5",
+			"style" : 
+			{
+				"navigationBarTitleText" : "page",
 				"navigationStyle": "custom",
 				"disableScroll": true,
 				"backgroundColor":"#F6F7FB"
