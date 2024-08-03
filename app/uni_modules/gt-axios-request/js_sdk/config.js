@@ -12,8 +12,8 @@ import Cache from './cache'
 
 axios.defaults.timeout = 10000			// 响应时间
 axios.defaults.withCredentials = false 					// 让请求头携带参数cookie
-// axios.defaults.baseURL = 'http://101.35.245.54:8100' 	// 配置接口地址
-axios.defaults.baseURL = 'http://localhost:8100' 	// 配置接口地址
+axios.defaults.baseURL = 'http://101.35.245.54:8100' 	// 配置接口地址
+// axios.defaults.baseURL = 'http://localhost:8100' 	// 配置接口地址
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'  // 配置请求头
 axios.defaults.headers.post['Content-Type'] = 'application/json'  // 配置请求头
 // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
