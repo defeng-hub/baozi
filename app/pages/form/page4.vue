@@ -146,9 +146,9 @@
 	import {
 		getKey,
 		submitApi,
-		getTableByDesId
+		getTableByDesId,
+		BASE_URL
 	} from 'api'
-	var BASE_URL = "http://127.0.0.1:8100"
 	export default {
 		data() {
 			return {

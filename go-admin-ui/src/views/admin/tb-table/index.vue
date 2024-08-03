@@ -142,7 +142,7 @@
 
               <el-tab-pane label="资质上传" name="third">
                 <el-form-item label="营业执照" prop="yingyezhizhao" label-width="auto">
-                  <el-input v-model="form.yingyezhizhao" placeholder="营业执照" size="mini">
+                  <el-input v-model="form.yingyezhizhao" placeholder="空" size="mini">
                     <template slot="prepend">地址</template>
                     <template slot="append">
                       <a :href="form.yingyezhizhao" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
@@ -154,7 +154,7 @@
                 </el-form-item>
 
                 <el-form-item label="法人身份证" prop="farenid" label-width="auto">
-                  <el-input v-model="form.farenid" placeholder="营业执照" size="mini">
+                  <el-input v-model="form.farenid" placeholder="空" size="mini">
                     <template slot="prepend">地址</template>
                     <template slot="append">
                       <a :href="form.farenid" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
@@ -165,7 +165,7 @@
                     :preview-src-list="[form.farenid]"></el-image>
                 </el-form-item>
                 <el-form-item label="建筑企业资质安全生产许可证" prop="anquanxvkezheng" label-width="auto">
-                  <el-input v-model="form.anquanxvkezheng" placeholder="建筑企业资质安全生产许可证" size="mini">
+                  <el-input v-model="form.anquanxvkezheng" placeholder="空" size="mini">
                     <template slot="prepend">地址</template>
                     <template slot="append">
                       <a :href="form.anquanxvkezheng" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
@@ -176,16 +176,16 @@
                     :preview-src-list="[form.anquanxvkezheng]"></el-image>
                 </el-form-item>
                 <el-form-item label="授权委托书" prop="shouquanweituozhu" label-width="auto">
-                  <el-input v-model="form.shouquanweituozhu" placeholder="授权委托书" />
+                  <el-input v-model="form.shouquanweituozhu" placeholder="空" />
                 </el-form-item>
                 <el-form-item label="项目负责人身份证" prop="fuzerenid" label-width="auto">
-                  <el-input v-model="form.fuzerenid" placeholder="项目负责人身份证" />
+                  <el-input v-model="form.fuzerenid" placeholder="空" />
                 </el-form-item>
                 <el-form-item label="甲乙双方施工合同" prop="jiayishuangfangshigonghetong" label-width="auto">
-                  <el-input v-model="form.jiayishuangfangshigonghetong" placeholder="甲乙双方施工合同" />
+                  <el-input v-model="form.jiayishuangfangshigonghetong" placeholder="空" />
                 </el-form-item>
                 <el-form-item label="安全生产责任保险" prop="anquanshengchanzerenbaoxian" label-width="auto">
-                  <el-input v-model="form.anquanshengchanzerenbaoxian" placeholder="安全生产责任保险" />
+                  <el-input v-model="form.anquanshengchanzerenbaoxian" placeholder="空" />
                 </el-form-item>
               </el-tab-pane>
 
@@ -203,7 +203,7 @@
                 </el-form-item>
 
                 <el-form-item label="备注" prop="remark">
-                  <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" style="width: 50%" placeholder="备注"
+                  <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" style="width: 50%" placeholder="未填写"
                     v-model="form.remark">
                   </el-input>
                 </el-form-item>

@@ -10,8 +10,8 @@
 		</view>
 		<view class="bottom">
 			<view class="btns">
-				<view class="btn1" @click="next">施工备案提交</view>
-				<view class="btn2" @click="query">施工备案查询</view>
+				<view class="btn1" @click="query">施工台账查询</view>
+				<view class="btn2" @click="check">执法检查</view>
 				<view class="info">
 					{{ end }}
 				</view>
@@ -21,17 +21,13 @@
 		<u-popup :show="show" closeable closeOnClickOverlay @close="close" >
 			<view class="popup">
 				<u--form style="width: 670rpx;" labelPosition="left" :model="model1" :rules="rules" ref="uForm">
-					<u-form-item :labelWidth="200" label="手机号：" prop="phone" borderBottom>
-						<u--input :maxlength="11" v-model="model1.phone" placeholder="手机号必填" border="none"></u--input>
+					<u-form-item :labelWidth="200" label="账号：" prop="username" borderBottom>
+						<u--input :maxlength="11" v-model="model1.username" placeholder="手机号必填" border="none"></u--input>
 					</u-form-item>
-					<u-form-item :labelWidth="200" label="验证码：" prop="authcode" borderBottom>
-						<u--input v-model="model1.authcode" placeholder="请输入验证码"  border="none"></u--input>
-						<template slot="right">
-							<u-button :disabled="model1.phone.length != 11" type="primary" :plain="true" style="right: 20rpx;" size="mini">获取验证码</u-button>
-						</template>
+					<u-form-item :labelWidth="200" label="密码：" prop="passwd" borderBottom>
+						<u--input v-model="model1.passwd" placeholder="请输入密码"  border="none"></u--input>
 					</u-form-item>
-					
-					<view class="btn3" @click="queryBeian()">查询备案记录</view>
+					<view class="btn3" @click="login()">登陆</view>
 				</u--form>
 			</view>
 		</u-popup>
@@ -39,21 +35,25 @@
 </template>
 
 <script>
-	import { getKey,getTableByPhone } from 'api'
+	import { getKey,loginApi } from 'api'
 	export default {
 		data() {
 			return {
 				model1:{
-					phone:"",
-					authcode:"",
+					username:"",
+					passwd:"",
 				},
 				rules: {
-					'phone':{
+					'username':{
 						type: 'string',
 						required: true,
-						max:11,
-						min:11,
 						message: '手机号不符合要求',
+						trigger: ['blur', 'change']
+					},
+					'passwd': {
+						type: 'string',
+						required: true,
+						message: '密码不符合要求',
 						trigger: ['blur', 'change']
 					}
 				},
@@ -75,44 +75,43 @@
 			// console.log(this.title1,this.title2)
 		},
 		methods:{
-			next(){
+			check(){
+				this.show = true;
 				console.log("next")
-				uni.navigateTo({url:"/pages/form/page2"})
 			},
 			query(){
-				// console.log("query")
+				console.log("query")
 				this.show = true;
 			},
-			async queryBeian(){
-				this.$refs.uForm.validate().then(async (res) => {
+			async login(){
+				this.$refs.uForm.validate().then(async (refRes) => {
 					console.log(this.model1)
-					let resp = await this.$http.get(getTableByPhone + this.model1.phone, {})
-					console.log(resp)
-					if(resp.code == 200){
-						if(resp.msg == "查看对象不存在或无权查看"){
+					this.$http.post(loginApi, this.model1, {}).then(res => {
+						// console.log(res)
+						if (res.code != 200){
 							uni.showToast({
-								title:"未查询到任何备案",
-								icon:"none"
+								icon:"none",
+								title:"登录失败"
 							})
 						}else{
-							if(resp.data?.status  == "审核未通过"){
-								// console.log(resp.data?.status)
-								uni.navigateTo({
-									url:"/pages/form/page4?"+"HJnq8c="+resp.data?.id
+							if(res.data.status == false){
+								uni.showToast({
+									icon:"none",
+									title:res.data.msg
 								})
-							}else if(resp.data?.status  == ""){
-								// console.log(resp.data?.status)
-								//待审核
+								return 
+							}else{
+								uni.setStorageSync("Mt8p3QiZ", res.data.user)
 								uni.navigateTo({
-									url:"/pages/form/page4?"+"HJnq8c="+resp.data?.id
+									url:"/pages/admin/check2"
 								})
-							}else if(resp.data?.status  == "审核通过"){
-								console.log("审核通过审核通过审核通过")
 							}
 						}
-					}
+
+					})
+					
 				}).catch(errors => {
-					uni.$u.toast('资料填写不完整')
+					
 				})
 
 			},

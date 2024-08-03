@@ -3,6 +3,7 @@
 		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
 	},
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+
 		{
 			"path" : "pages/form/page1",
 			"style" : 
@@ -48,6 +49,26 @@
 			"style" : 
 			{
 				"navigationBarTitleText" : "page",
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"backgroundColor":"#F6F7FB"
+			}
+		},
+		{
+			"path" : "pages/admin/check",
+			"style" :
+			{
+				"navigationBarTitleText" : "执法检查",
+				"navigationStyle": "custom",
+				"disableScroll": true,
+				"backgroundColor":"#F6F7FB"
+			}
+		},
+		{
+			"path" : "pages/admin/check2",
+			"style" :
+			{
+				"navigationBarTitleText" : "执法检查",
 				"navigationStyle": "custom",
 				"disableScroll": true,
 				"backgroundColor":"#F6F7FB"
