@@ -241,6 +241,14 @@ func (e TbTable) GetByDesId(c *gin.Context) {
 		form.Anquanshengchanzerenbaoxian = UploadFile{}
 	}
 
+	if object.Tezhongzuoyezheng != "" {
+		form.Tezhongzuoyezheng = UploadFile{
+			{URL: object.Tezhongzuoyezheng},
+		}
+	} else {
+		form.Tezhongzuoyezheng = UploadFile{}
+	}
+
 	e.OK(gin.H{
 		"data": object,
 		"form": form,
@@ -316,6 +324,7 @@ type SubmitForm struct {
 	FuzerenID                    UploadFile `json:"fuzerenId"`
 	Jiayishuangfangshigonghetong UploadFile `json:"jiayishuangfangshigonghetong"`
 	Anquanshengchanzerenbaoxian  UploadFile `json:"anquanshengchanzerenbaoxian"`
+	Tezhongzuoyezheng            UploadFile `json:"tezhongzuoyezheng"`
 }
 
 func (e TbTable) Submit(c *gin.Context) {
@@ -351,6 +360,7 @@ func (e TbTable) Submit(c *gin.Context) {
 		Fuzerenid:                    form.FuzerenID.GetUrl(), //#xxxx
 		Jiayishuangfangshigonghetong: form.Jiayishuangfangshigonghetong.GetUrl(),
 		Anquanshengchanzerenbaoxian:  form.Anquanshengchanzerenbaoxian.GetUrl(),
+		Tezhongzuoyezheng:            form.Tezhongzuoyezheng.GetUrl(),
 	}
 
 	// 设置创建人

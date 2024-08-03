@@ -15,6 +15,7 @@ type TbTableGetPageReq struct {
 	ShigongfangName  string `form:"shigongfangName"  search:"type:contains;column:shigongfang_name;table:tb_table" comment:"施工方名称"`
 	ShigongfangUser  string `form:"shigongfangUser"  search:"type:contains;column:shigongfang_user;table:tb_table" comment:"施工方项目负责人"`
 	ShigongfangPhone string `form:"shigongfangPhone"  search:"type:exact;column:shigongfang_phone;table:tb_table" comment:"施工方联系方式"`
+	Status           string `form:"status"  search:"type:exact;column:status;table:tb_table" comment:"状态"`
 	TbTableOrder
 }
 
@@ -37,6 +38,9 @@ type TbTableOrder struct {
 	Fuzerenid                    string `form:"fuzerenidOrder"  search:"type:order;column:fuzerenid;table:tb_table"`
 	Jiayishuangfangshigonghetong string `form:"jiayishuangfangshigonghetongOrder"  search:"type:order;column:jiayishuangfangshigonghetong;table:tb_table"`
 	Anquanshengchanzerenbaoxian  string `form:"anquanshengchanzerenbaoxianOrder"  search:"type:order;column:anquanshengchanzerenbaoxian;table:tb_table"`
+	Tezhongzuoyezheng            string `form:"tezhongzuoyezhengOrder"  search:"type:order;column:tezhongzuoyezheng;table:tb_table"`
+	WorkingDate                  string `form:"workingDateOrder"  search:"type:order;column:working_date;table:tb_table"`
+	WorkingStatus                string `form:"workingStatusOrder"  search:"type:order;column:working_status;table:tb_table"`
 	Status                       string `form:"statusOrder"  search:"type:order;column:status;table:tb_table"`
 	Remark                       string `form:"remarkOrder"  search:"type:order;column:remark;table:tb_table"`
 	CreatedAt                    string `form:"createdAtOrder"  search:"type:order;column:created_at;table:tb_table"`
@@ -69,6 +73,9 @@ type TbTableInsertReq struct {
 	Fuzerenid                    string `json:"fuzerenid" comment:"项目负责人身份证"`
 	Jiayishuangfangshigonghetong string `json:"jiayishuangfangshigonghetong" comment:"甲乙双方施工合同"`
 	Anquanshengchanzerenbaoxian  string `json:"anquanshengchanzerenbaoxian" comment:"安全生产责任保险"`
+	Tezhongzuoyezheng            string `json:"tezhongzuoyezheng" comment:"特种作业证"`
+	WorkingDate                  string `json:"workingDate" comment:"施工日期"`
+	WorkingStatus                string `json:"workingStatus" comment:"施工状态"`
 	Status                       string `json:"status" comment:"审核状态"`
 	Remark                       string `json:"remark" comment:"备注"`
 	common.ControlBy
@@ -95,6 +102,9 @@ func (s *TbTableInsertReq) Generate(model *models.TbTable) {
 	model.Fuzerenid = s.Fuzerenid
 	model.Jiayishuangfangshigonghetong = s.Jiayishuangfangshigonghetong
 	model.Anquanshengchanzerenbaoxian = s.Anquanshengchanzerenbaoxian
+	model.Tezhongzuoyezheng = s.Tezhongzuoyezheng
+	model.WorkingDate = s.WorkingDate
+	model.WorkingStatus = s.WorkingStatus
 	model.Status = s.Status
 	model.Remark = s.Remark
 	model.CreateBy = s.CreateBy // 添加这而，需要记录是被谁创建的
@@ -123,6 +133,9 @@ type TbTableUpdateReq struct {
 	Fuzerenid                    string `json:"fuzerenid" comment:"项目负责人身份证"`
 	Jiayishuangfangshigonghetong string `json:"jiayishuangfangshigonghetong" comment:"甲乙双方施工合同"`
 	Anquanshengchanzerenbaoxian  string `json:"anquanshengchanzerenbaoxian" comment:"安全生产责任保险"`
+	Tezhongzuoyezheng            string `json:"tezhongzuoyezheng" comment:"特种作业证"`
+	WorkingDate                  string `json:"workingDate" comment:"施工日期"`
+	WorkingStatus                string `json:"workingStatus" comment:"施工状态"`
 	Status                       string `json:"status" comment:"审核状态"`
 	Remark                       string `json:"remark" comment:"备注"`
 	common.ControlBy
@@ -149,6 +162,9 @@ func (s *TbTableUpdateReq) Generate(model *models.TbTable) {
 	model.Fuzerenid = s.Fuzerenid
 	model.Jiayishuangfangshigonghetong = s.Jiayishuangfangshigonghetong
 	model.Anquanshengchanzerenbaoxian = s.Anquanshengchanzerenbaoxian
+	model.Tezhongzuoyezheng = s.Tezhongzuoyezheng
+	model.WorkingDate = s.WorkingDate
+	model.WorkingStatus = s.WorkingStatus
 	model.Status = s.Status
 	model.Remark = s.Remark
 	model.UpdateBy = s.UpdateBy // 添加这而，需要记录是被谁更新的

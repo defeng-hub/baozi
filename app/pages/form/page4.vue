@@ -14,10 +14,10 @@
 		</view>
 		<view class="card">
 			<u--form style="width: 670rpx;" labelPosition="left" :model="model1" :rules="rules" ref="uForm">
-				<u-form-item :labelWidth="200" label="手机号：" prop="phone" borderBottom>
+				<u-form-item required :labelWidth="200" label="手机号：" prop="phone" borderBottom>
 					<u--input :maxlength="11" v-model="model1.phone" placeholder="手机号必填" border="none"></u--input>
 				</u-form-item>
-				<u-form-item :labelWidth="200" label="验证码：" prop="authcode" borderBottom>
+				<u-form-item required :labelWidth="200" label="验证码：" prop="authcode" borderBottom>
 					<u--input v-model="model1.authcode" placeholder="请输入验证码" border="none"></u--input>
 					<template slot="right">
 						<u-button :disabled="model1.phone.length != 11" type="primary" :plain="true"
@@ -26,40 +26,40 @@
 				</u-form-item>
 
 				<view class="title" style="margin-top: 20rpx;">一、基本信息上传</view>
-				<u-form-item :labelWidth="200" label="作业面积：" prop="zuoyemianji" borderBottom>
-					<u--input v-model="model1.zuoyemianji" border="none"></u--input>
+				<u-form-item required :labelWidth="200" label="作业面积：" prop="zuoyemianji" borderBottom>
+					<u--input v-model="model1.zuoyemianji" placeholder="作业面积"  border="none"></u--input>
 				</u-form-item>
-				<u-form-item :labelWidth="200" label="作业地址：" prop="zuoyedizhi" borderBottom>
-					<u--input v-model="model1.zuoyedizhi" border="none"></u--input>
+				<u-form-item required :labelWidth="200" label="作业地址：" prop="zuoyedizhi" borderBottom>
+					<u--input v-model="model1.zuoyedizhi" placeholder="作业地址" border="none"></u--input>
 				</u-form-item>
-				<u-form-item :labelWidth="200" label="所属社区：" prop="suoshushequ" borderBottom>
-					<u--input v-model="model1.suoshushequ" border="none"></u--input>
-				</u-form-item>
-
-				<u-form-item :labelWidth="200" label="发包方（甲方）名称：" prop="fabaofang.name" borderBottom>
-					<u--input v-model="model1.fabaofang.name" border="none"></u--input>
-				</u-form-item>
-				<u-form-item :labelWidth="200" label="联系人：" prop="fabaofang.user" borderBottom>
-					<u--input v-model="model1.fabaofang.user" border="none"></u--input>
-				</u-form-item>
-				<u-form-item :labelWidth="200" label="联系方式：" prop="fabaofang.phone" borderBottom>
-					<u--input v-model="model1.fabaofang.phone" border="none"></u--input>
+				<u-form-item required :labelWidth="200" label="所属社区：" prop="suoshushequ" borderBottom>
+					<u--input v-model="model1.suoshushequ" placeholder="所属社区"  border="none"></u--input>
 				</u-form-item>
 
-				<u-form-item :labelWidth="200" label="施工方（乙方）公司名称：" prop="shigongfang.name" borderBottom>
-					<u--input v-model="model1.shigongfang.name" border="none"></u--input>
+				<u-form-item required :labelWidth="200" label="发包方（甲方）名称：" prop="fabaofang.name" borderBottom>
+					<u--input v-model="model1.fabaofang.name" placeholder="发包方（甲方）名称"  border="none"></u--input>
 				</u-form-item>
-				<u-form-item :labelWidth="200" label="项目负责人：" prop="shigongfang.user" borderBottom>
-					<u--input v-model="model1.shigongfang.user" border="none"></u--input>
+				<u-form-item required :labelWidth="200" label="联系人：" prop="fabaofang.user" borderBottom>
+					<u--input v-model="model1.fabaofang.user" placeholder="发包方负责人姓名"  border="none"></u--input>
 				</u-form-item>
-				<u-form-item :labelWidth="200" label="联系方式：" prop="shigongfang.phone" borderBottom>
-					<u--input v-model="model1.shigongfang.phone" border="none"></u--input>
+				<u-form-item required :labelWidth="200" label="联系方式：" prop="fabaofang.phone" borderBottom>
+					<u--input v-model="model1.fabaofang.phone" placeholder="发包方负责人手机号"  border="none"></u--input>
+				</u-form-item>
+
+				<u-form-item required :labelWidth="200" label="施工方（乙方）公司名称：" prop="shigongfang.name" borderBottom>
+					<u--input v-model="model1.shigongfang.name" placeholder="施工方（乙方）公司名称"  border="none"></u--input>
+				</u-form-item>
+				<u-form-item required :labelWidth="200" label="项目负责人：" prop="shigongfang.user" borderBottom>
+					<u--input v-model="model1.shigongfang.user" placeholder="施工方负责人姓名"  border="none"></u--input>
+				</u-form-item>
+				<u-form-item required :labelWidth="200" label="联系方式：" prop="shigongfang.phone" borderBottom>
+					<u--input v-model="model1.shigongfang.phone" placeholder="施工方负责人手机号"  border="none"></u--input>
 				</u-form-item>
 
 
 				<view class="title" style="margin-top: 30rpx;">二、资质上传（均须提供复印件并加盖公章）</view>
 
-				<u-form-item :labelWidth="200" label="营业执照：" prop="yingyezhizhao" borderBottom>
+				<u-form-item required :labelWidth="200" label="营业执照：" prop="yingyezhizhao" borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.yingyezhizhao" :maxCount="1"
 						@afterRead="afterRead($event, 'yingyezhizhao')" @delete="deletePic('yingyezhizhao')">
 						<image src="@/static/page4/positive4.png" mode="widthFix" style="width: 250rpx;height: 150px;">
@@ -67,7 +67,7 @@
 					</u-upload>
 				</u-form-item>
 
-				<u-form-item :labelWidth="200" :label="'法人身份证：'" prop="farenId" borderBottom>
+				<u-form-item required :labelWidth="200" :label="'法人身份证：'" prop="farenId" borderBottom>
 					<u-upload accept="file" :fileList="model1.farenId" @afterRead="afterRead($event, 'farenId')"
 						@delete="deletePic('farenId')" :maxCount="1" width="250" height="150">
 						<image src="@/static/page4/positive.png" mode="widthFix" style="width: 250rpx;height: 150px;">
@@ -75,7 +75,7 @@
 					</u-upload>
 				</u-form-item>
 
-				<u-form-item :labelWidth="200" label="建筑企业资质安全生产许可证：" prop="anquanxvkezheng" borderBottom>
+				<u-form-item required :labelWidth="200" label="建筑企业资质安全生产许可证：" prop="anquanxvkezheng" borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.anquanxvkezheng" :maxCount="1"
 						@afterRead="afterRead($event, 'anquanxvkezheng')" @delete="deletePic('anquanxvkezheng')">
 						<image src="@/static/page4/positive4.png" mode="widthFix" style="width: 250rpx;height: 150px;">
@@ -83,7 +83,7 @@
 					</u-upload>
 				</u-form-item>
 
-				<u-form-item :labelWidth="200" label="授权委托书：" prop="shouquanweituozhu" borderBottom>
+				<u-form-item required :labelWidth="200" label="授权委托书：" prop="shouquanweituozhu" borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.shouquanweituozhu" :maxCount="1"
 						@afterRead="afterRead($event, 'shouquanweituozhu')" @delete="deletePic('shouquanweituozhu')">
 						<image src="@/static/page4/positive4.png" mode="widthFix" style="width: 250rpx;height: 150px;">
@@ -91,7 +91,7 @@
 					</u-upload>
 				</u-form-item>
 
-				<u-form-item :labelWidth="200" :label="'项目负责人身份证：'" prop="fuzerenId" borderBottom>
+				<u-form-item required :labelWidth="200" :label="'项目负责人身份证：'" prop="fuzerenId" borderBottom>
 					<u-upload accept="file" :fileList="model1.fuzerenId" @afterRead="afterRead($event, 'fuzerenId')"
 						@delete="deletePic('fuzerenId')" :maxCount="1" width="250" height="150">
 						<image st src="https://cdn.uviewui.com/uview/demo/upload/positive.png" mode="widthFix"
@@ -99,7 +99,7 @@
 					</u-upload>
 				</u-form-item>
 
-				<u-form-item :labelWidth="200" label="甲乙双方施工合同：" prop="jiayishuangfangshigonghetong" borderBottom>
+				<u-form-item required :labelWidth="200" label="甲乙双方施工合同：" prop="jiayishuangfangshigonghetong" borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.jiayishuangfangshigonghetong"
 						:maxCount="1" @afterRead="afterRead($event, 'jiayishuangfangshigonghetong')"
 						@delete="deletePic('jiayishuangfangshigonghetong')">
@@ -108,10 +108,19 @@
 					</u-upload>
 				</u-form-item>
 
-				<u-form-item :labelWidth="200" label="安全生产责任保险：" prop="anquanshengchanzerenbaoxian" borderBottom>
+				<u-form-item required :labelWidth="200" label="安全生产责任保险：" prop="anquanshengchanzerenbaoxian" borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.anquanshengchanzerenbaoxian"
 						:maxCount="1" @afterRead="afterRead($event, 'anquanshengchanzerenbaoxian')"
 						@delete="deletePic('anquanshengchanzerenbaoxian')">
+						<image src="@/static/page4/positive4.png" mode="widthFix" style="width: 250rpx;height: 150px;">
+						</image>
+					</u-upload>
+				</u-form-item>
+				
+				<u-form-item :labelWidth="200" label="特种作业证：" prop="tezhongzuoyezheng" borderBottom>
+					<u-upload accept="file" width="200" height="200" :fileList="model1.tezhongzuoyezheng"
+						:maxCount="1" @afterRead="afterRead($event, 'tezhongzuoyezheng')"
+						@delete="deletePic('tezhongzuoyezheng')">
 						<image src="@/static/page4/positive4.png" mode="widthFix" style="width: 250rpx;height: 150px;">
 						</image>
 					</u-upload>
@@ -159,7 +168,7 @@
 				},
 				model1: {
 					phone: "",
-					zuoyemianji: "测试",
+					zuoyemianji: "",
 					zuoyedizhi: "",
 					suoshushequ: "",
 					fabaofang: {
@@ -179,6 +188,7 @@
 					fuzerenId: [], //负责人身份证
 					jiayishuangfangshigonghetong: [], // 甲乙双方施工合同
 					anquanshengchanzerenbaoxian: [], // 安全生产责任保险
+					tezhongzuoyezheng:[],
 				},
 				rules: {
 					'phone': {
@@ -243,49 +253,49 @@
 						message: '请填写施工方电话',
 						trigger: ['blur', 'change']
 					},
-					// 'yingyezhizhao': {
-					// 	type: 'array',
-					// 	required: true,
-					// 	message: '请上传营业执照',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'farenId': {
-					// 	type: 'array',
-					// 	required: true,
-					// 	message: '请上传法人身份证',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'anquanxvkezheng': {
-					// 	type: 'array',
-					// 	required: true,
-					// 	message: '请上传建筑企业资质安全生产许可证',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'shouquanweituozhu': {
-					// 	type: 'array',
-					// 	required: true,
-					// 	message: '请上传授权委托书',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'fuzerenId': {
-					// 	type: 'array',
-					// 	required: true,
-					// 	message: '请上传项目负责人身份证',
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'jiayishuangfangshigonghetong': {
-					// 	type: 'array',
-					// 	required: true,
-					// 	message: '请上传甲乙双方施工合同',
+					'yingyezhizhao': {
+						type: 'array',
+						required: true,
+						message: '请上传营业执照',
+						trigger: ['blur', 'change']
+					},
+					'farenId': {
+						type: 'array',
+						required: true,
+						message: '请上传法人身份证',
+						trigger: ['blur', 'change']
+					},
+					'anquanxvkezheng': {
+						type: 'array',
+						required: true,
+						message: '请上传建筑企业资质安全生产许可证',
+						trigger: ['blur', 'change']
+					},
+					'shouquanweituozhu': {
+						type: 'array',
+						required: true,
+						message: '请上传授权委托书',
+						trigger: ['blur', 'change']
+					},
+					'fuzerenId': {
+						type: 'array',
+						required: true,
+						message: '请上传项目负责人身份证',
+						trigger: ['blur', 'change']
+					},
+					'jiayishuangfangshigonghetong': {
+						type: 'array',
+						required: true,
+						message: '请上传甲乙双方施工合同',
 
-					// 	trigger: ['blur', 'change']
-					// },
-					// 'anquanshengchanzerenbaoxian': {
-					// 	type: 'array',
-					// 	required: true,
-					// 	message: '请上传安全生产责任保险',
-					// 	trigger: ['blur', 'change']
-					// },
+						trigger: ['blur', 'change']
+					},
+					'anquanshengchanzerenbaoxian': {
+						type: 'array',
+						required: true,
+						message: '请上传安全生产责任保险',
+						trigger: ['blur', 'change']
+					},
 
 				},
 			};
@@ -446,7 +456,7 @@
 		margin-top: 40rpx;
 
 		.btn1 {
-			border-radius: 10rpx;
+			border-radius: 6rpx;
 			width: 250rpx;
 			height: 80rpx;
 			line-height: 80rpx;
@@ -458,7 +468,7 @@
 		}
 
 		.btn2 {
-			border-radius: 10rpx;
+			border-radius: 6rpx;
 			width: 250rpx;
 			height: 80rpx;
 			text-align: center;

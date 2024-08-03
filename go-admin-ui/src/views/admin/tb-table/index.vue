@@ -62,29 +62,29 @@
           <el-table-column label="施工方项目负责人" align="center" prop="shigongfangUser" :show-overflow-tooltip="true" />
           <!-- <el-table-column label="施工方联系方式" align="center" prop="shigongfangPhone"
             :show-overflow-tooltip="true" /> -->
-          <el-table-column width="100" label="审核状态" align="center" prop="status" :show-overflow-tooltip="true" >
+          <el-table-column width="100" label="审核状态" align="center" prop="status" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <p v-if="scope.row.status == '审核通过'" style="color: #43964e;">{{ scope.row.status }}</p>
-              <p v-if="scope.row.status == '审核未通过'" style="color: #ea3323;">{{ scope.row.status }}</p>
+              <p v-else-if="scope.row.status == '审核未通过'" style="color: #ea3323;">{{ scope.row.status }}</p>
               <p v-else>待审核</p>
             </template>
           </el-table-column>
 
-          <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" >
+          <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <p v-if="scope.row.remark">{{ scope.row.remark }}</p>
               <p v-else>—</p>
             </template>
           </el-table-column>
 
-          <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="200" >
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="160">
             <template slot-scope="scope">
 
-              <el-button slot="reference" v-permisaction="['admin:tbTable:edit']"  @click="handleUpdate(scope.row)"
-               size="mini" type="text" icon="el-icon-edit">审核</el-button>
+              <el-button slot="reference" v-permisaction="['admin:tbTable:edit']" @click="handleUpdate(scope.row)"
+                size="mini" type="text" icon="el-icon-edit">审核</el-button>
 
-              <el-button style="margin-left: 10px;" slot="reference" size="mini"  @click="handlerZhifa()"
-              type="text" icon="el-icon-view">执法检查</el-button>
+              <!-- <el-button style="margin-left: 10px;" slot="reference" size="mini"  @click="handlerZhifa()"
+              type="text" icon="el-icon-view">执法检查</el-button> -->
 
               <el-popconfirm class="delete-popconfirm" title="确认要删除吗?" confirm-button-text="删除"
                 @confirm="handleDelete(scope.row)">
@@ -141,62 +141,120 @@
               </el-tab-pane>
 
               <el-tab-pane label="资质上传" name="third">
-                <el-form-item label="营业执照" prop="yingyezhizhao" label-width="auto">
-                  <el-input v-model="form.yingyezhizhao" placeholder="空" size="mini">
-                    <template slot="prepend">地址</template>
-                    <template slot="append">
-                      <a :href="form.yingyezhizhao" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
-                    </template>
-                  </el-input>
+                <el-row>
+                  <el-col :span="12" style="padding: 20px 30px;">
+                    <el-form-item label="营业执照" prop="yingyezhizhao" label-width="auto">
+                      <el-input v-model="form.yingyezhizhao" placeholder="空" size="mini">
+                        <template slot="prepend">地址</template>
+                        <template slot="append">
+                          <a :href="form.yingyezhizhao" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
+                        </template>
+                      </el-input>
 
-                  <el-image style="width: 100px; height: 100px" :src="form.yingyezhizhao"
-                    :preview-src-list="[form.yingyezhizhao]"></el-image>
-                </el-form-item>
+                      <el-image v-if="isImg(form.yingyezhizhao)" style="width: 100px; height: 100px"
+                        :src="form.yingyezhizhao" :preview-src-list="[form.yingyezhizhao]"></el-image>
+                    </el-form-item>
 
-                <el-form-item label="法人身份证" prop="farenid" label-width="auto">
-                  <el-input v-model="form.farenid" placeholder="空" size="mini">
-                    <template slot="prepend">地址</template>
-                    <template slot="append">
-                      <a :href="form.farenid" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
-                    </template>
-                  </el-input>
+                    <el-form-item label="法人身份证" prop="farenid" label-width="auto">
+                      <el-input v-model="form.farenid" placeholder="空" size="mini">
+                        <template slot="prepend">地址</template>
+                        <template slot="append">
+                          <a :href="form.farenid" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
+                        </template>
+                      </el-input>
 
-                  <el-image style="width: 100px; height: 100px" :src="form.farenid"
-                    :preview-src-list="[form.farenid]"></el-image>
-                </el-form-item>
-                <el-form-item label="建筑企业资质安全生产许可证" prop="anquanxvkezheng" label-width="auto">
-                  <el-input v-model="form.anquanxvkezheng" placeholder="空" size="mini">
-                    <template slot="prepend">地址</template>
-                    <template slot="append">
-                      <a :href="form.anquanxvkezheng" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
-                    </template>
-                  </el-input>
+                      <el-image v-if="isImg(form.farenid)" style="width: 100px; height: 100px" :src="form.farenid"
+                        :preview-src-list="[form.farenid]"></el-image>
+                    </el-form-item>
+                    <el-form-item label="建筑企业资质安全生产许可证" prop="anquanxvkezheng" label-width="auto">
+                      <el-input v-model="form.anquanxvkezheng" placeholder="空" size="mini">
+                        <template slot="prepend">地址</template>
+                        <template slot="append">
+                          <a :href="form.anquanxvkezheng" target="_blank"
+                            style="display: block;color: #448ef7;">点击下载</a>
+                        </template>
+                      </el-input>
 
-                  <el-image style="width: 100px; height: 100px" :src="form.anquanxvkezheng"
-                    :preview-src-list="[form.anquanxvkezheng]"></el-image>
-                </el-form-item>
-                <el-form-item label="授权委托书" prop="shouquanweituozhu" label-width="auto">
-                  <el-input v-model="form.shouquanweituozhu" placeholder="空" />
-                </el-form-item>
-                <el-form-item label="项目负责人身份证" prop="fuzerenid" label-width="auto">
-                  <el-input v-model="form.fuzerenid" placeholder="空" />
-                </el-form-item>
-                <el-form-item label="甲乙双方施工合同" prop="jiayishuangfangshigonghetong" label-width="auto">
-                  <el-input v-model="form.jiayishuangfangshigonghetong" placeholder="空" />
-                </el-form-item>
-                <el-form-item label="安全生产责任保险" prop="anquanshengchanzerenbaoxian" label-width="auto">
-                  <el-input v-model="form.anquanshengchanzerenbaoxian" placeholder="空" />
-                </el-form-item>
+                      <el-image v-if="isImg(form.anquanxvkezheng)" style="width: 100px; height: 100px"
+                        :src="form.anquanxvkezheng" :preview-src-list="[form.anquanxvkezheng]"></el-image>
+                    </el-form-item>
+
+                    <el-form-item label="授权委托书" prop="shouquanweituozhu" label-width="auto">
+                      <el-input v-model="form.shouquanweituozhu" placeholder="空">
+                        <template slot="prepend">地址</template>
+                        <template slot="append">
+                          <a :href="form.shouquanweituozhu" target="_blank"
+                            style="display: block;color: #448ef7;">点击下载</a>
+                        </template>
+                      </el-input>
+                      <el-image v-if="isImg(form.shouquanweituozhu)" style="width: 100px; height: 100px"
+                        :src="form.shouquanweituozhu" :preview-src-list="[form.shouquanweituozhu]"></el-image>
+                    </el-form-item>
+                  </el-col>
+
+                  <el-col :span="12" style="padding: 20px 30px;">
+
+                    <el-form-item label="项目负责人身份证" prop="fuzerenid" label-width="auto">
+                      <el-input v-model="form.fuzerenid" placeholder="空">
+                        <template slot="prepend">地址</template>
+                        <template slot="append">
+                          <a :href="form.fuzerenid" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
+                        </template>
+                      </el-input>
+                      <el-image v-if="isImg(form.fuzerenid)" style="width: 100px; height: 100px" :src="form.fuzerenid"
+                        :preview-src-list="[form.fuzerenid]"></el-image>
+                    </el-form-item>
+                    <el-form-item label="甲乙双方施工合同" prop="jiayishuangfangshigonghetong" label-width="auto">
+                      <el-input v-model="form.jiayishuangfangshigonghetong" placeholder="空">
+                        <template slot="prepend">地址</template>
+                        <template slot="append">
+                          <a :href="form.jiayishuangfangshigonghetong" target="_blank"
+                            style="display: block;color: #448ef7;">点击下载</a>
+                        </template>
+                      </el-input>
+                      <el-image v-if="isImg(form.jiayishuangfangshigonghetong)" style="width: 100px; height: 100px"
+                        :src="form.jiayishuangfangshigonghetong"
+                        :preview-src-list="[form.jiayishuangfangshigonghetong]"></el-image>
+                    </el-form-item>
+                    <el-form-item label="安全生产责任保险" prop="anquanshengchanzerenbaoxian" label-width="auto">
+                      <el-input v-model="form.anquanshengchanzerenbaoxian" placeholder="空">
+                        <template slot="prepend">地址</template>
+                        <template slot="append">
+                          <a :href="form.anquanshengchanzerenbaoxian" target="_blank"
+                            style="display: block;color: #448ef7;">点击下载</a>
+                        </template>
+                      </el-input>
+                      <el-image v-if="isImg(form.anquanshengchanzerenbaoxian)" style="width: 100px; height: 100px"
+                        :src="form.anquanshengchanzerenbaoxian"
+                        :preview-src-list="[form.anquanshengchanzerenbaoxian]"></el-image>
+                    </el-form-item>
+
+                    <el-form-item label="特种作业证" prop="tezhongzuoyezheng" label-width="auto">
+                      <el-input v-model="form.tezhongzuoyezheng" placeholder="空">
+                        <template slot="prepend">地址</template>
+                        <template slot="append">
+                          <a :href="form.tezhongzuoyezheng" target="_blank"
+                            style="display: block;color: #448ef7;">点击下载</a>
+                        </template>
+                      </el-input>
+                      <el-image v-if="isImg(form.tezhongzuoyezheng)" style="width: 100px; height: 100px"
+                        :src="form.tezhongzuoyezheng"
+                        :preview-src-list="[form.tezhongzuoyezheng]"></el-image>
+                    </el-form-item>
+
+                  </el-col>
+                </el-row>
+
               </el-tab-pane>
 
               <el-tab-pane label="人工审核" name="fourth">
                 <el-form-item label="审核状态" prop="status">
                   <el-select v-model="form.status" placeholder="请选择">
                     <el-option key="1" label="已提交（待审核）" value=""></el-option>
-                    <el-option key="1" label="审核通过" value="审核通过">
+                    <el-option key="2" label="审核通过" value="审核通过">
                       <span style="float: left;color: #43964e;font-weight: 500;">审核通过</span>
                     </el-option>
-                    <el-option key="1" label="审核未通过" value="审核未通过">
+                    <el-option key="3" label="审核未通过" value="审核未通过">
                       <span style="float: left;color: #ea3323;font-weight: 500;">审核未通过</span>
                     </el-option>
                   </el-select>
@@ -285,8 +343,11 @@ export default {
     this.getList()
   },
   methods: {
-    handlerZhifa(){
-      this.$router.push({ path: '/tb-config/tb-zhifajiancha', query: { pid: 1 }})
+    isImg(str) {
+      return /\.(png|jpg|jpeg)$/i.test(str);
+    },
+    handlerZhifa() {
+      this.$router.push({ path: '/tb-config/tb-zhifajiancha', query: { pid: 1 } })
     },
     handleClick(tab, event) {
       console.log(tab, event);
@@ -333,6 +394,7 @@ export default {
       }
       this.resetForm('form')
     },
+
     getImgList: function () {
       this.form[this.fileIndex] = this.$refs['fileChoose'].resultList[0].fullUrl
     },

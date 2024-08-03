@@ -111,10 +111,10 @@ page{
 	justify-content: space-around;
 	margin-top: 40rpx;
 	.btn1{
-		border-radius: 20rpx;
+		border-radius: 6rpx;
 		width: 200rpx;
-		height: 60rpx;
-		line-height: 60rpx;
+		height: 70rpx;
+		line-height: 70rpx;
 		background: #0047ff;
 		color: #0047ff;
 		text-align: center;
@@ -124,11 +124,11 @@ page{
 	}
 	
 	.btn2{
-		border-radius: 20rpx;
+		border-radius: 6rpx;
 		width: 200rpx;
-		height: 60rpx;
+		height: 70rpx;
 		text-align: center;
-		line-height: 60rpx;
+		line-height: 70rpx;
 		color: #ffffff;
 		background: #0051FF;
 		border: 1rpx solid #165DFF;
@@ -150,7 +150,7 @@ page{
 .notice{
 	width: 698rpx;
 	background: linear-gradient( 319deg, #6F9FFF 0%, #F0F5FF 100%);
-	border-radius: 15rpx 15rpx 15rpx 15rpx;
+	border-radius: 10rpx;
 	border: 2rpx solid #FFFFFF;
 	
 	display: flex;

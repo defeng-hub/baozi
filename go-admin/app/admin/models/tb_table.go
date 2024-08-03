@@ -24,6 +24,9 @@ type TbTable struct {
 	Fuzerenid                    string `json:"fuzerenid" gorm:"type:longtext;comment:项目负责人身份证"`
 	Jiayishuangfangshigonghetong string `json:"jiayishuangfangshigonghetong" gorm:"type:longtext;comment:甲乙双方施工合同"`
 	Anquanshengchanzerenbaoxian  string `json:"anquanshengchanzerenbaoxian" gorm:"type:longtext;comment:安全生产责任保险"`
+	Tezhongzuoyezheng            string `json:"tezhongzuoyezheng" gorm:"type:longtext;comment:特种作业证"`
+	WorkingDate                  string `json:"workingDate" gorm:"type:varchar(255);comment:施工日期"`
+	WorkingStatus                string `json:"workingStatus" gorm:"type:varchar(255);comment:施工状态"`
 	Status                       string `json:"status" gorm:"type:longtext;comment:审核状态"`
 	Remark                       string `json:"remark" gorm:"type:longtext;comment:备注"`
 	models.ModelTime

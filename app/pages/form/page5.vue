@@ -5,7 +5,7 @@
 				信息已提交
 			</view>
 			<view class="notice2">
-				<view class="text" style="min-height: 30vh;">
+				<view class="text">
 					{{beiantongguotishi}}
 				</view>
 			</view>
@@ -84,11 +84,11 @@ page{
 	}
 	
 	.btn2{
-		border-radius: 20rpx;
-		width: 200rpx;
-		height: 60rpx;
+		border-radius: 10rpx;
+		width: 300rpx;
+		height: 80rpx;
 		text-align: center;
-		line-height: 60rpx;
+		line-height: 80rpx;
 		color: #ffffff;
 		background: #0051FF;
 		border: 1rpx solid #165DFF;
@@ -110,7 +110,7 @@ page{
 .notice{
 	width: 698rpx;
 	background: linear-gradient( 319deg, #6F9FFF 0%, #F0F5FF 100%);
-	border-radius: 10rpx 10rpx 10rpx 10rpx;
+	border-radius: 10rpx;
 	border: 2rpx solid #FFFFFF;
 	
 	display: flex;
@@ -122,7 +122,6 @@ page{
 		text-align: center;
 		font-weight: 500;
 		margin-top: 16rpx;
-		margin-left: 30rpx;
 		font-size: 31rpx;
 		color: #0051FF;
 		font-style: normal;

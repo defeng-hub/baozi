@@ -46,7 +46,7 @@
 			"path" : "pages/form/page5",
 			"style" : 
 			{
-				"navigationBarTitleText" : "提交完成",
+				"navigationBarTitleText" : "信息已提交",
 				"navigationStyle": "custom",
 				"backgroundColor":"#F6F7FB"
 			}
