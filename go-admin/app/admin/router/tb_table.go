@@ -20,6 +20,8 @@ func registerTbTableRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddle
 	n.POST("submit", api.Submit)
 	n.GET("/GK15qPn/:phone", api.GetByPhone)
 	n.GET("/HJnq8c/:id", api.GetByDesId)
+	n.GET("/page", api.GetPageSuccess)
+	n.GET("/filter", api.GetFilterList)
 
 	r := n.Use(authMiddleware.MiddlewareFunc()).Use(middleware.AuthCheckRole())
 	{

@@ -1,38 +1,84 @@
 <template>
-	<view class="continer" @touchmove.stop.prevent="() => {}">
-		<view class="title">
-			<view class="title1">{{title1}}</view>
-			<view class="title2">{{ title2 }}</view>
+	<view class="continer">
+		<view class="card">
+			<view class="userinfo">欢迎您：{{user.username}}</view>
+			<view class="userinfo">{{user.department}} ： {{user.name}}</view>
 		</view>
-
-		<view class="centerForm" style="margin-top: 30vh;">
-			<u--form style="width: 500rpx;" labelPosition="left" :model="model1" ref="uForm">
-				<view class="center">
-					<u-upload accept="file" width="400rpx" height="400rpx" :fileList="model1.video" @afterRead="afterRead($event, 'video')" @delete="deletePic('video')" :maxCount="1"></u-upload>
+		<view class="card">
+			<view class="title centerForm">
+				{{title3}}
+			</view>
+			<!--	<view class="centerForm" style="color: #888888;">
+				格式: 编号——社区——施工方
+			</view> -->
+			<view class="filter">
+				<u-row customStyle="margin-bottom: 10px" gutter="8">
+					<u-col span="4" @click="show1 = true">
+						<u-search  placeholder="社区" v-model="keyword1" :showAction="false" :clearabled="false"></u-search>
+					</u-col>
+					<u-col span="4" @click="show2 = true">
+						<u-search placeholder="企业" v-model="keyword2" :showAction="false" :clearabled="false"></u-search>
+					</u-col>
+				    <u-col span="4" @click="show3 = true">
+						<u-search placeholder="状态" v-model="keyword3" :showAction="false"  @search="searchHandler()"  @custom="searchHandler()"></u-search>
+					</u-col>
+				</u-row>
+				
+				<view class="filter-btn">
+					<view>
+						<u-button customStyle="width:100rpx;border-radius:6rpx;" type="primary" size="mini" :plain="true" text="清空" @click="clearHandler()"></u-button>
+					</view>
+					<view style="margin-left: 10rpx;">
+						<u-button customStyle="width:100rpx;border-radius:6rpx;" type="primary" size="mini" text="搜索" @click="searchHandler()"></u-button>
+					</view>
 				</view>
+			</view>
 
-				<u-form-item :labelWidth="200" label="姓名：" prop="name" borderBottom style="margin-top: 50rpx;">
-					<u--input :maxlength="11" v-model="model1.name" placeholder="姓名" border="none"></u--input>
-				</u-form-item>
-				<u-form-item :labelWidth="200" label="所属部门：" prop="department" borderBottom>
-					<u--input v-model="model1.department" placeholder="所属部门" border="none"></u--input>
-				</u-form-item>
-				<u-form-item :labelWidth="200" label="所属部门：" prop="department" borderBottom>
-					<u--input v-model="model1.department" placeholder="所属部门" border="none"></u--input>
-				</u-form-item>
-			</u--form>
 
+			<view class="form2">
+				<scroll-view scroll-y="true" class="scroll-Y">
+					<u-collapse>
+
+						<u-collapse-item :title="obj.id + '-'+ obj.suoshushequ + '—' + obj.shigongfangName"
+							v-for="obj in data.list">
+							<text>作业面积：<span>{{obj.zuoyemianji}}</span></text>
+							<text>作业地址：<span>{{obj.zuoyedizhi}}</span></text>
+							<text>所属社区：<span>{{obj.suoshushequ}}</span></text>
+							
+							<view style="margin-top: 10rpx;margin-bottom: 10rpx;">
+								<u-line></u-line>
+							</view>
+							
+							<text>发包方名称：<span>{{obj.fabaofangName}}</span></text>
+							<text>发包方手机号：<span>{{obj.fabaofangPhone}}</span></text>
+							
+							<text>施工方名称：<span>{{obj.shigongfangName}}</span></text>
+							<text>施工方手机号：<span>{{obj.shigongfangPhone}}</span></text>
+							<view style="margin-top: 10rpx;margin-bottom: 10rpx;">
+								<u-line></u-line>
+							</view>
+							<text>施工时间：<span>{{obj.workingDate}}</span></text>
+							<text>施工状态：<span>{{obj.workingStatus}}</span></text>
+							
+							<view class="zhifa">去检查</view>
+							<view style="height: 20rpx;"></view>
+						</u-collapse-item>
+
+					</u-collapse>
+				</scroll-view>
+			</view>
 		</view>
-		
+
 		<view class="bottom">
 			<view class="btns">
-				<view class="btn1" @click="check">上传照片/视频</view>
 				<view class="info">
 					{{ end }}
 				</view>
 			</view>
 		</view>
-
+		<u-picker :show="show1" :columns="columns1" @cancel="cancelHandler" @confirm="confirmHandler($event, 1)" :closeOnClickOverlay="true"></u-picker>
+		<u-picker :show="show2" :columns="columns2" @cancel="cancelHandler" @confirm="confirmHandler($event, 2)" :closeOnClickOverlay="true"></u-picker>
+		<u-picker :show="show3" :columns="columns3" @cancel="cancelHandler" @confirm="confirmHandler($event, 3)" :closeOnClickOverlay="true"></u-picker>
 	</view>
 </template>
 
@@ -40,109 +86,174 @@
 	import {
 		getKey,
 		getTableByPhone,
-		BASE_URL
+		BASE_URL,
+		getPage,
+		filterApi
 	} from 'api'
 	export default {
 		data() {
 			return {
-				model1:{
-					name:"",
-					department:"",
-					video:[],
+				user: {
+					username: "",
+					passwd: "",
 				},
-				title1: "",
-				title2: "",
+				data: {
+					list: [], // 列表
+					count: [], //总数
+				},
 				end: "",
+				title3: "台账列表",
+				
+				// xxxx
+				show1: false,
+				keyword1:"",
+				columns1: [
+					['中国', '美国', '日本']
+				],
+				show2: false,
+				keyword2:"",
+				columns2: [
+					['中国', '美国', '日本']
+				],
+				show3: false,
+				keyword3:"",
+				columns3: [
+					['在施', '超期', '已延期在施', '已销账']
+				],
+				// xxx
 			};
 		},
 		async created() {
-			let res1 = await this.$http.get(getKey + "zhifa-title1", {})
-			this.title1 = res1.data.value
-
-			let res2 = await this.$http.get(getKey + "zhifa-title2", {})
-			this.title2 = res2.data.value
+			let res1 = await this.$http.get(getKey + "title3", {})
+			this.title3 = res1.data.value
 
 			let res3 = await this.$http.get(getKey + "end", {})
 			this.end = res3.data.value
-			// console.log(this.title1,this.title2)
-		},
-		onShow() {
-			let user = uni.getStorageSync("Mt8p3QiZ")
-			if(user){
-				this.model1.name = user.name
-				this.model1.department = user.department
+			
+			let res4  = await this.$http.get(filterApi, {})
+			// console.log(res4)
+			if(res4.code == 200){
+				this.columns1 =  [ res4.data.suoshushequ ]
+				this.columns2 = [ res4.data.shigongfangName ]
 			}
 		},
+		async onShow() {
+			let user = uni.getStorageSync("Mt8p3QiZ")
+			if (user) {
+				this.user = user
+			} else {
+				uni.showToast({
+					icon: "none",
+					title: "未登录"
+				})
+				setTimeout(() => {
+					uni.redirectTo({
+						url: "/pages/admin/check"
+					})
+				}, 1000)
+				return
+			}
+
+			this.getData()
+		},
 		methods: {
-			check() {
-
-			},
-			query() {
-
-			},
-			async afterRead(event, filen) {
-				const result = await this.uploadFilePromise(event.file.url)
-				this.model1[filen].push({
-					url: BASE_URL + result.data.path
+			async getData(){
+				let user = this.user;
+				let res3 = await this.$http.get(getPage, {
+					username: user.username,
+					passwd: user.passwd,
+					suoshushequ: this.keyword1,
+					shigongfangName: this.keyword2,
+					workStatus: this.keyword3,
 				})
+				console.log(res3)
+				if (res3.code == 403) {
+					console.log(res3)
+					uni.showToast({
+						icon: "none",
+						title: "执法人员账号密码错误或没有权限",
+						duration: 20000
+					})
+				} else if (res3.code == 200) {
+					this.data = res3.data
+				} else {
+					uni.showToast({
+						icon: "none",
+						title: "获取台账失败",
+						duration: 20000
+					})
+				}
 			},
-			uploadFilePromise(url) {
-				return new Promise((resolve, reject) => {
-					let a = uni.uploadFile({
-						url: BASE_URL + '/api/v1/public/uploadFile', // 仅为示例，非真实的接口地址
-						filePath: url,
-						name: 'file',
-						formData: {
-							user: 'test'
-						},
-						success: (res) => {
-							resolve(JSON.parse(res.data))
-						}
-					});
-				})
+			cancelHandler() {
+				this.show1 = false
+				this.show2 = false
+				this.show3 = false
 			},
-			// 删除图片
-			deletePic(event) {
-				this.model1[`${event}`].splice(event.index, 1)
+			confirmHandler(e,inx){
+				this.cancelHandler()
+				if(inx == 1){
+					this.keyword1 = e.value[0]
+				}else if(inx == 2){
+					this.keyword2 = e.value[0]
+				}else if(inx == 3){
+					this.keyword3 = e.value[0]
+				}
 			},
+			searchHandler(){
+				console.log(this.keyword1,this.keyword2,this.keyword3)
+				this.getData()
+			},
+			clearHandler(){
+				this.keyword1 = "";
+				this.keyword2 = "";
+				this.keyword3 = "";
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.popup {
-		min-height: 500rpx;
+	page {
+		background-image: url(@/static/page1/bg.png);
+		background-size: cover;
+	}
+	button::after {
+	  border: none;
+	}
+	
+
+	.card {
 		margin-top: 20rpx;
-		padding: 40rpx 32rpx;
+		padding: 25rpx 20rpx;
+		padding-right: 18rpx;
 		width: 94.7vw;
 		background: #FFFFFF;
 		border-radius: 8rpx;
+	}
 
-		.btn3 {
-			margin-top: 50rpx;
-			margin-left: 120rpx;
-			width: 450rpx;
-			height: 70rpx;
-			background: #0047ff;
-			border-radius: 40rpx;
-			color: #ffffff;
-			text-align: center;
-			line-height: 70rpx;
+	.scroll-Y {
+		height: 70vh;
+	}
+	.filter{
+		
+		.filter-btn{
+			display: flex;
+			// padding: 10rpx 100rpx;
+			justify-content: left;
+			// justify-content:flex-start;
 		}
 	}
 
+
 	.continer {
 		z-index: 1;
-		position: fixed;
-		height: 100%;
-		width: 100%;
-
+		padding: 20rpx 20rpx;
+		
 		.bottom {
-			position: fixed;
-			bottom: 50rpx;
 			z-index: 100;
 
 			.info {
+				width: 750rpx;
 				margin-top: 20rpx;
 				font-weight: 400;
 				font-size: 24rpx;
@@ -151,43 +262,9 @@
 				text-align: center;
 				font-style: normal;
 			}
-
-			.btns {
-				padding: 20rpx 70rpx;
-
-				.btn1 {
-					width: 600rpx;
-					height: 92rpx;
-					background: #0047ff;
-					border-radius: 40rpx;
-					color: #ffffff;
-					text-align: center;
-					line-height: 92rpx;
-				}
-
-				.btn2 {
-					margin-top: 40rpx;
-					width: 600rpx;
-					height: 92rpx;
-					background: #0047ff;
-					border-radius: 40rpx;
-					color: #0047ff;
-					text-align: center;
-					line-height: 92rpx;
-
-					background: #FFFFFF;
-					border: 2rpx solid #0047ff;
-				}
-			}
 		}
-		.centerForm{
-			position: relative;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			flex-direction: column;
-		}
-		.center {
+
+		.centerForm {
 			position: relative;
 			display: flex;
 			justify-content: center;
@@ -196,42 +273,28 @@
 		}
 
 		.title {
-			position: absolute;
+			height: 50rpx;
+		}
 
-			.title1 {
-				position: absolute;
-				top: 180rpx;
-				text-align: center;
-				height: 85rpx;
-				font-weight: 700;
-				font-size: 56rpx;
-				color: #FFFFFF;
-				line-height: 85rpx;
-				letter-spacing: 4px;
-				font-style: normal;
-				text-transform: none;
-				width: 100vw;
-			}
+		.form2 {
+			margin-top: 30rpx;
 
-			.title2 {
-				position: absolute;
-				text-align: center;
-				top: 280rpx;
-				height: 56rpx;
-				font-weight: 700;
-				font-size: 40rpx;
-				color: #FFFFFF;
-				line-height: 56rpx;
-				letter-spacing: 2px;
-				font-style: normal;
-				text-transform: none;
-				width: 100vw;
+			.form2-info {
+				color: #888888;
 			}
 		}
+
 	}
 
-	page {
-		background-image: url(@/static/page1/bg.png);
-		background-size: cover;
+	.zhifa {
+		margin: 10rpx 100rpx;
+		background-color: #1b46f5;
+		height: 50rpx;
+		color: #ffffff;
+		text-align: center;
+		line-height: 50rpx;
+		border-radius: 10rpx;
+		padding: 2rpx 10rpx;
+		padding-bottom: 20rpx;
 	}
 </style>

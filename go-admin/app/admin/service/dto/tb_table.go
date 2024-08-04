@@ -7,6 +7,12 @@ import (
 	common "go-admin/common/models"
 )
 
+type TbTableGetPageSuccessReq struct {
+	Username string `form:"username"  search:"type:exact;column:username;table:tb_table" comment:"username"`
+	Passwd   string `form:"passwd"  search:"type:exact;column:passwd;table:tb_table" comment:"username"`
+	TbTableGetPageReq
+}
+
 type TbTableGetPageReq struct {
 	dto.Pagination   `search:"-"`
 	Phone            string `form:"phone"  search:"type:contains;column:phone;table:tb_table" comment:"手机号"`
@@ -16,6 +22,8 @@ type TbTableGetPageReq struct {
 	ShigongfangUser  string `form:"shigongfangUser"  search:"type:contains;column:shigongfang_user;table:tb_table" comment:"施工方项目负责人"`
 	ShigongfangPhone string `form:"shigongfangPhone"  search:"type:exact;column:shigongfang_phone;table:tb_table" comment:"施工方联系方式"`
 	Status           string `form:"status"  search:"type:exact;column:status;table:tb_table" comment:"状态"`
+	WorkingStatus    string `form:"workStatus"  search:"type:exact;column:working_status;table:tb_table" comment:"施工状态"`
+	Suoshushequ      string `form:"suoshushequ"  search:"type:exact;column:suoshushequ;table:tb_table" comment:"所属社区"`
 	TbTableOrder
 }
 

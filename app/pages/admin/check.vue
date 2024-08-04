@@ -1,5 +1,5 @@
 <template>
-	<view class="continer" @touchmove.stop.prevent="() => {}">
+	<view class="continer">
 		<view class="title">
 			<view class="title1">{{ title1 }}</view>
 			<view class="title2">{{ title2 }}</view>
@@ -11,7 +11,7 @@
 		<view class="bottom">
 			<view class="btns">
 				<view class="btn1" @click="query">施工台账查询</view>
-				<view class="btn2" @click="check">执法检查</view>
+				<!-- <view class="btn2" @click="check">执法检查</view> -->
 				<view class="info">
 					{{ end }}
 				</view>

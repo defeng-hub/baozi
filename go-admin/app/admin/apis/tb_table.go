@@ -60,6 +60,90 @@ func (e TbTable) GetPage(c *gin.Context) {
 	e.PageOK(list, int(count), req.GetPageIndex(), req.GetPageSize(), "查询成功")
 }
 
+func (e TbTable) GetPageSuccess(c *gin.Context) {
+	reqQ := dto.TbTableGetPageSuccessReq{}
+	req := dto.TbTableGetPageReq{}
+	s := service.TbTable{}
+	err := e.MakeContext(c).
+		MakeOrm().
+		Bind(&reqQ).
+		MakeService(&s.Service).
+		Errors
+	if err != nil {
+		e.Logger.Error(err)
+		e.Error(500, err, err.Error())
+		return
+	}
+
+	db, err := e.GetOrm()
+	if err != nil {
+		e.Error(403, err, fmt.Sprintf("获取TbTable失败，\r\n失败信息 %s", "用户名或密码错误"))
+		return
+	}
+	var int1 int
+	err = db.Raw(fmt.Sprintf("SELECT count(*) FROM `tb_zhifa_user` WHERE `username` = '%s' and `passwd` = '%s'", reqQ.Username, reqQ.Passwd)).Scan(&int1).Error
+	if err != nil || int1 <= 0 {
+		e.Error(403, err, fmt.Sprintf("获取TbTable失败，\r\n失败信息 %s", "用户名或密码错误"))
+		return
+	}
+
+	req.WorkingStatus = reqQ.WorkingStatus
+	req.Suoshushequ = reqQ.Suoshushequ
+	req.ShigongfangName = reqQ.ShigongfangName
+	req.PageSize = 99999
+	req.PageIndex = 1
+	req.Status = "审核通过"
+	p := actions.GetPermissionFromContext(c)
+	list := make([]models.TbTable, 0)
+	var count int64
+
+	err = s.GetPage(&req, p, &list, &count)
+	if err != nil {
+		e.Error(500, err, fmt.Sprintf("获取TbTable失败，\r\n失败信息 %s", err.Error()))
+		return
+	}
+
+	e.PageOK(list, int(count), req.GetPageIndex(), req.GetPageSize(), "查询成功")
+}
+
+func (e TbTable) GetFilterList(c *gin.Context) {
+	s := service.TbTable{}
+	err := e.MakeContext(c).
+		MakeOrm().
+		MakeService(&s.Service).
+		Errors
+	if err != nil {
+		e.Logger.Error(err)
+		e.Error(500, err, err.Error())
+		return
+	}
+
+	db, err := e.GetOrm()
+	if err != nil {
+		e.Error(403, err, fmt.Sprintf("获取TbTable失败，\r\n失败信息 %s", "用户名或密码错误"))
+		return
+	}
+
+	var suoshushequ []string
+	err = db.Raw(fmt.Sprintf("SELECT suoshushequ from tb_table GROUP BY suoshushequ;")).Scan(&suoshushequ).Error
+	if err != nil {
+		e.Error(403, err, fmt.Sprintf("获取GetFilterList失败，\r\n失败信息 %s", "获取所属社区失败"))
+		return
+	}
+
+	var shigongfang_name []string
+	err = db.Raw(fmt.Sprintf("SELECT shigongfang_name from tb_table GROUP BY shigongfang_name;")).Scan(&shigongfang_name).Error
+	if err != nil {
+		e.Error(403, err, fmt.Sprintf("获取GetFilterList失败，\r\n失败信息 %s", "获取所属社区失败"))
+		return
+	}
+
+	e.OK(gin.H{
+		"suoshushequ":     suoshushequ,
+		"shigongfangName": shigongfang_name,
+	}, "查询成功")
+}
+
 // Get 获取TbTable
 // @Summary 获取TbTable
 // @Description 获取TbTable
