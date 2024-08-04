@@ -125,14 +125,14 @@ func (e TbTable) GetFilterList(c *gin.Context) {
 	}
 
 	var suoshushequ []string
-	err = db.Raw(fmt.Sprintf("SELECT suoshushequ from tb_table GROUP BY suoshushequ;")).Scan(&suoshushequ).Error
+	err = db.Raw(fmt.Sprintf("SELECT suoshushequ from tb_table where `status` = '审核通过' GROUP BY suoshushequ;")).Scan(&suoshushequ).Error
 	if err != nil {
 		e.Error(403, err, fmt.Sprintf("获取GetFilterList失败，\r\n失败信息 %s", "获取所属社区失败"))
 		return
 	}
 
 	var shigongfang_name []string
-	err = db.Raw(fmt.Sprintf("SELECT shigongfang_name from tb_table GROUP BY shigongfang_name;")).Scan(&shigongfang_name).Error
+	err = db.Raw(fmt.Sprintf("SELECT shigongfang_name from tb_table where `status` = '审核通过' GROUP BY shigongfang_name;")).Scan(&shigongfang_name).Error
 	if err != nil {
 		e.Error(403, err, fmt.Sprintf("获取GetFilterList失败，\r\n失败信息 %s", "获取所属社区失败"))
 		return
