@@ -1,36 +1,57 @@
 <template>
-	<view class="continer" @touchmove.stop.prevent="() => {}">
-		<view class="title">
-			<view class="title1">{{title1}}</view>
-			<view class="title2">{{ title2 }}</view>
-		</view>
-
-		<view class="centerForm" style="margin-top: 30vh;">
-			<u--form style="width: 500rpx;" labelPosition="left" :model="model1" ref="uForm">
-				<view class="center">
-					<u-upload accept="file" width="400rpx" height="400rpx" :fileList="model1.video" @afterRead="afterRead($event, 'video')" @delete="deletePic('video')" :maxCount="1"></u-upload>
+	<view class="continer">
+		<view class="card">
+			<view style="padding: 10rpx 20rpx;">
+				<view class="title" style="margin-bottom: 12rpx;">一、资质情况</view>
+				<view class="info">
+					<view>作业面积：<span>{{data.zuoyemianji}}</span></view>
+					<view>作业地址：<span>{{data.zuoyedizhi}}</span></view>
+					<view>所属社区：<span>{{data.suoshushequ}}</span></view>
+					<view style="margin-top: 10rpx;margin-bottom: 10rpx;">
+						<u-line></u-line>
+					</view>
+					<view>发包方名称：<span>{{data.fabaofangName}}</span></view>
+					<view>发包方手机号：<span>{{data.fabaofangPhone}}</span></view>
+					
+					<view>施工方名称：<span>{{data.shigongfangName}}</span></view>
+					<view>施工方手机号：<span>{{data.shigongfangPhone}}</span></view>
+					<view style="margin-top: 10rpx;margin-bottom: 10rpx;">
+						<u-line></u-line>
+					</view>
+					<view>施工时间：<span>{{data.workingDate}}</span></view>
+					<view>施工状态：<span>{{data.workingStatus}}</span></view>
+					<view style="margin-top: 10rpx;">
+						<u-line></u-line>
+					</view>
 				</view>
+				
+				<view class="title" style="margin-top: 30rpx;margin-bottom: 12rpx;">二、执法检查（上传现场情况）</view>
+				<u--form labelPosition="left" :model="model1" ref="uForm">
+					
+					<u-form-item :labelWidth="230" label="照片/视频：" prop="name" borderBottom>
+						<u-upload accept="file" width="300rpx" height="300rpx" :fileList="model1.file"
+							@afterRead="afterRead($event, 'file')" @delete="deletePic('file')" :maxCount="1"></u-upload>
+					</u-form-item>
 
-				<u-form-item :labelWidth="200" label="姓名：" prop="name" borderBottom style="margin-top: 50rpx;">
-					<u--input :maxlength="11" v-model="model1.name" placeholder="姓名" border="none"></u--input>
-				</u-form-item>
-				<u-form-item :labelWidth="200" label="所属部门：" prop="department" borderBottom>
-					<u--input v-model="model1.department" placeholder="所属部门" border="none"></u--input>
-				</u-form-item>
-				<u-form-item :labelWidth="200" label="所属部门：" prop="department" borderBottom>
-					<u--input v-model="model1.department" placeholder="所属部门" border="none"></u--input>
-				</u-form-item>
-			</u--form>
-
-		</view>
-		
-		<view class="bottom">
+					<u-form-item :labelWidth="230" label="姓名：" prop="name" borderBottom>
+						<u--input :maxlength="11" v-model="model1.name" placeholder="姓名" border="none"></u--input>
+					</u-form-item>
+					<u-form-item :labelWidth="230" label="所属部门：" prop="department" borderBottom>
+						<u--input v-model="model1.department" placeholder="所属部门" border="none"></u--input>
+					</u-form-item>
+					<u-form-item :labelWidth="230" label="检查情况：" prop="name" borderBottom>
+						<u--textarea v-model="model1.text" placeholder="检查情况" count autoHeight></u--textarea>
+					</u-form-item>
+					<u-form-item :labelWidth="270" label="是否新增违法建设：" prop="name" borderBottom>
+						<u--input v-model="model1.weifajianshe" placeholder="是否新增违法建设"></u--input>
+					</u-form-item>
+				</u--form>
+			</view>
+			
 			<view class="btns">
 				<view class="btn1" @click="check">上传照片/视频</view>
-				<view class="info">
-					{{ end }}
-				</view>
 			</view>
+
 		</view>
 
 	</view>
@@ -40,45 +61,44 @@
 	import {
 		getKey,
 		getTableByPhone,
-		BASE_URL
+		BASE_URL,
+		getTableById
 	} from 'api'
 	export default {
 		data() {
 			return {
-				model1:{
-					name:"",
-					department:"",
-					video:[],
+				data: {},
+				model1: {
+					name: "",
+					department: "",
+					file: [],
+					text:"",
+					weifajianshe:""
 				},
-				title1: "",
-				title2: "",
+				title1: "111",
+				title2: "222",
 				end: "",
 			};
 		},
 		async created() {
-			let res1 = await this.$http.get(getKey + "zhifa-title1", {})
-			this.title1 = res1.data.value
-
-			let res2 = await this.$http.get(getKey + "zhifa-title2", {})
-			this.title2 = res2.data.value
-
 			let res3 = await this.$http.get(getKey + "end", {})
 			this.end = res3.data.value
-			// console.log(this.title1,this.title2)
+		},
+		async onLoad(param) {
+			let res4 = await this.$http.get(getTableById + param.id, {})
+			console.log(res4)
+			this.data = res4.data;
 		},
 		onShow() {
 			let user = uni.getStorageSync("Mt8p3QiZ")
-			if(user){
+			if (user) {
 				this.model1.name = user.name
 				this.model1.department = user.department
 			}
 		},
 		methods: {
 			check() {
-
-			},
-			query() {
-
+				console.log(this.model1)
 			},
 			async afterRead(event, filen) {
 				const result = await this.uploadFilePromise(event.file.url)
@@ -110,123 +130,48 @@
 </script>
 
 <style lang="scss">
-	.popup {
-		min-height: 500rpx;
+	.card {
 		margin-top: 20rpx;
-		padding: 40rpx 32rpx;
+		padding: 25rpx 20rpx;
+		padding-right: 18rpx;
 		width: 94.7vw;
 		background: #FFFFFF;
 		border-radius: 8rpx;
-
-		.btn3 {
-			margin-top: 50rpx;
-			margin-left: 120rpx;
-			width: 450rpx;
-			height: 70rpx;
-			background: #0047ff;
-			border-radius: 40rpx;
-			color: #ffffff;
-			text-align: center;
-			line-height: 70rpx;
-		}
 	}
-
+	.info{
+		font-size: 26rpx;
+	}
+	.title{
+		font-weight: 600;
+	}
 	.continer {
 		z-index: 1;
-		position: fixed;
-		height: 100%;
-		width: 100%;
+		padding: 20rpx 20rpx;
 
-		.bottom {
-			position: fixed;
-			bottom: 50rpx;
-			z-index: 100;
-
-			.info {
-				margin-top: 20rpx;
-				font-weight: 400;
-				font-size: 24rpx;
-				color: #888888;
-				line-height: 34rpx;
-				text-align: center;
-				font-style: normal;
-			}
-
-			.btns {
-				padding: 20rpx 70rpx;
-
-				.btn1 {
-					width: 600rpx;
-					height: 92rpx;
-					background: #0047ff;
-					border-radius: 40rpx;
-					color: #ffffff;
-					text-align: center;
-					line-height: 92rpx;
-				}
-
-				.btn2 {
-					margin-top: 40rpx;
-					width: 600rpx;
-					height: 92rpx;
-					background: #0047ff;
-					border-radius: 40rpx;
-					color: #0047ff;
-					text-align: center;
-					line-height: 92rpx;
-
-					background: #FFFFFF;
-					border: 2rpx solid #0047ff;
-				}
-			}
-		}
-		.centerForm{
+		.btns {
 			position: relative;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
+			margin-top: 30rpx;
+			.btn1 {
+				width: 380rpx;
+				height: 60rpx;
+				background: #0047ff;
+				border-radius: 8rpx;
+				color: #ffffff;
+				text-align: center;
+				line-height: 60rpx;
+			}
 		}
-		.center {
+
+		.centerForm {
 			position: relative;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
-		}
-
-		.title {
-			position: absolute;
-
-			.title1 {
-				position: absolute;
-				top: 180rpx;
-				text-align: center;
-				height: 85rpx;
-				font-weight: 700;
-				font-size: 56rpx;
-				color: #FFFFFF;
-				line-height: 85rpx;
-				letter-spacing: 4px;
-				font-style: normal;
-				text-transform: none;
-				width: 100vw;
-			}
-
-			.title2 {
-				position: absolute;
-				text-align: center;
-				top: 280rpx;
-				height: 56rpx;
-				font-weight: 700;
-				font-size: 40rpx;
-				color: #FFFFFF;
-				line-height: 56rpx;
-				letter-spacing: 2px;
-				font-style: normal;
-				text-transform: none;
-				width: 100vw;
-			}
 		}
 	}
 

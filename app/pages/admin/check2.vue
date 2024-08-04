@@ -5,9 +5,7 @@
 			<view class="userinfo">{{user.department}} ： {{user.name}}</view>
 		</view>
 		<view class="card">
-			<view class="title centerForm">
-				{{title3}}
-			</view>
+
 			<!--	<view class="centerForm" style="color: #888888;">
 				格式: 编号——社区——施工方
 			</view> -->
@@ -60,7 +58,7 @@
 							<text>施工时间：<span>{{obj.workingDate}}</span></text>
 							<text>施工状态：<span>{{obj.workingStatus}}</span></text>
 							
-							<view class="zhifa">去检查</view>
+							<view class="zhifa" @click="checkHandler(obj)">去检查</view>
 							<view style="height: 20rpx;"></view>
 						</u-collapse-item>
 
@@ -102,18 +100,17 @@
 					count: [], //总数
 				},
 				end: "",
-				title3: "台账列表",
 				
 				// xxxx
 				show1: false,
 				keyword1:"",
 				columns1: [
-					['中国', '美国', '日本']
+					['获取失败']
 				],
 				show2: false,
 				keyword2:"",
 				columns2: [
-					['中国', '美国', '日本']
+					['获取失败']
 				],
 				show3: false,
 				keyword3:"",
@@ -124,9 +121,6 @@
 			};
 		},
 		async created() {
-			let res1 = await this.$http.get(getKey + "title3", {})
-			this.title3 = res1.data.value
-
 			let res3 = await this.$http.get(getKey + "end", {})
 			this.end = res3.data.value
 			
@@ -157,6 +151,12 @@
 			this.getData()
 		},
 		methods: {
+			checkHandler(obj){
+				console.log(obj)
+				uni.navigateTo({
+					url:"/pages/admin/check3?id="+obj.id
+				})
+			},
 			async getData(){
 				let user = this.user;
 				let res3 = await this.$http.get(getPage, {

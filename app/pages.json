@@ -64,6 +64,15 @@
 			"path" : "pages/admin/check2",
 			"style" :
 			{
+				"navigationBarTitleText" : "施工台账列表",
+				"navigationStyle": "custom",
+				"backgroundColor":"#F6F7FB"
+			}
+		},
+		{
+			"path" : "pages/admin/check3",
+			"style" :
+			{
 				"navigationBarTitleText" : "执法检查",
 				"navigationStyle": "custom",
 				"backgroundColor":"#F6F7FB"

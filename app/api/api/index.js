@@ -6,7 +6,12 @@ export const submitApi = '/api/v1/tb-table/submit'
 export const getPage = '/api/v1/tb-table/page'
 
 export const getTableByPhone = '/api/v1/tb-table/GK15qPn/'
+
+// 获取内容，通过加密的id
 export const getTableByDesId = '/api/v1/tb-table/HJnq8c/'
+
+// 未加密
+export const getTableById = '/api/v1/tb-table/HJnq8caq8/'
 
 export const loginApi = '/api/v1/tb-zhifa-user/login'
 
