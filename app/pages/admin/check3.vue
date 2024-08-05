@@ -62,13 +62,15 @@
 		getKey,
 		getTableByPhone,
 		BASE_URL,
-		getTableById
+		getTableById,
+		saveZhifaCheckApi
 	} from 'api'
 	export default {
 		data() {
 			return {
 				data: {},
 				model1: {
+					pid: 0,
 					name: "",
 					department: "",
 					file: [],
@@ -88,6 +90,7 @@
 			let res4 = await this.$http.get(getTableById + param.id, {})
 			console.log(res4)
 			this.data = res4.data;
+			this.model1.pid = res4.data.id
 		},
 		onShow() {
 			let user = uni.getStorageSync("Mt8p3QiZ")
@@ -97,8 +100,23 @@
 			}
 		},
 		methods: {
-			check() {
+			async check() {
 				console.log(this.model1)
+				console.log(saveZhifaCheckApi)
+				let res = await this.$http.post(saveZhifaCheckApi, this.model1)
+				if(res.code == 200){
+					uni.showToast({
+						title:"上传成功",
+						icon:"none",
+						duration:6000
+					})
+				}else{
+					uni.showToast({
+						title:"上传失败",
+						icon:"none",
+						duration:6000
+					})
+				}
 			},
 			async afterRead(event, filen) {
 				const result = await this.uploadFilePromise(event.file.url)

@@ -49,6 +49,7 @@
             </template>
           </el-table-column>
           <el-table-column label="检查情况" align="center" prop="text" :show-overflow-tooltip="true" />
+          <el-table-column label="检查情况" align="center" prop="text" :show-overflow-tooltip="true" />
 
           <el-table-column label="上传人" align="center" prop="user" :show-overflow-tooltip="true" />
           <el-table-column label="所属部门" align="center" prop="department" :show-overflow-tooltip="true" />

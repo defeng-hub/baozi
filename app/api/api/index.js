@@ -19,3 +19,5 @@ export const loginApi = '/api/v1/tb-zhifa-user/login'
 export const filterApi = '/api/v1/tb-table/filter'
 
 
+// 获取企业唯一值，社区唯一值
+export const saveZhifaCheckApi = '/api/v1/tb-zhifajiancha/save'

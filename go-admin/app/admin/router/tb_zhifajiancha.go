@@ -17,7 +17,7 @@ func init() {
 func registerTbZhifajianchaRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {
 	api := apis.TbZhifajiancha{}
 	n := v1.Group("/tb-zhifajiancha")
-	n.POST("/save", api.Insert)
+	n.POST("/save", api.Save)
 	r := n.Use(authMiddleware.MiddlewareFunc()).Use(middleware.AuthCheckRole())
 	{
 		r.GET("", actions.PermissionAction(), api.GetPage)
