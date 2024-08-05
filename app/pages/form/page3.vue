@@ -14,7 +14,7 @@
 		
 		<view class="notice" style="margin-top: 30rpx;">
 			<view class="title">
-				灰名单企业（因违规施工有过1次行政处罚谨慎使用）
+				灰名单企业（因违规施工有过1次行政处罚或多次施工未备案的企业，请谨慎使用）
 			</view>
 			<view class="notice2">
 				<view class="text">
