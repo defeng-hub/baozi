@@ -1,176 +1,115 @@
 <template>
   <div class="dashboard-editor-container">
-    <el-row :gutter="12">
-      <el-col :sm="24" :xs="24" :md="6" :xl="6" :lg="6" :style="{ marginBottom: '12px' }">
-        <chart-card title="总销售额" total="￥126,560">
-          <el-tooltip slot="action" class="item" effect="dark" content="指标说明" placement="top-start">
-            <i class="el-icon-warning-outline" />
-          </el-tooltip>
-          <div>
-            <trend flag="top" style="margin-right: 16px;" rate="12">
-              <span slot="term">周同比</span>
-            </trend>
-            <trend flag="bottom" rate="11">
-              <span slot="term">日同比</span>
-            </trend>
+    <BasicLayout>
+      <template #wrapper>
+        <el-card class="box-card">
+          <div class="main-page">
+            <p><span class="strong">南磨房地区-限额以下小型施工备案-管理系统</span></p>
           </div>
-          <template slot="footer">日均销售额<span>￥ 234.56</span></template>
-        </chart-card>
-      </el-col>
-      <el-col :sm="24" :xs="24" :md="6" :xl="6" :lg="6" :style="{ marginBottom: '12px' }">
-        <chart-card title="访问量" :total="8846">
-          <el-tooltip slot="action" class="item" effect="dark" content="指标说明" placement="top-start">
-            <i class="el-icon-warning-outline" />
-          </el-tooltip>
-          <div>
-            <mini-area />
-          </div>
-          <template slot="footer">日访问量<span> {{ '1234' }}</span></template>
-        </chart-card>
-      </el-col>
-      <el-col :sm="24" :xs="24" :md="6" :xl="6" :lg="6" :style="{ marginBottom: '12px' }">
-        <chart-card title="支付笔数" :total="6560">
-          <el-tooltip slot="action" class="item" effect="dark" content="指标说明" placement="top-start">
-            <i class="el-icon-warning-outline" />
-          </el-tooltip>
-          <div>
-            <mini-bar />
-          </div>
-          <template slot="footer">转化率 <span>60%</span></template>
-        </chart-card>
-      </el-col>
-      <el-col :sm="24" :xs="24" :md="6" :xl="6" :lg="6" :style="{ marginBottom: '12px' }">
-        <chart-card title="运营活动效果" total="78%">
-          <el-tooltip slot="action" class="item" effect="dark" content="指标说明" placement="top-start">
-            <i class="el-icon-warning-outline" />
-          </el-tooltip>
-          <div>
-            <mini-progress color="rgb(19, 194, 194)" :target="80" :percentage="78" height="8px" />
-          </div>
-          <template slot="footer">
-            <trend flag="top" style="margin-right: 16px;" rate="12">
-              <span slot="term">同周比</span>
-            </trend>
-            <trend flag="bottom" rate="80">
-              <span slot="term">日环比</span>
-            </trend>
-          </template>
-        </chart-card>
-      </el-col>
-    </el-row>
-
-    <el-card :bordered="false" :body-style="{padding: '0'}">
-      <div class="salesCard">
-        <el-tabs>
-          <el-tab-pane label="销售额">
-            <el-row>
-              <el-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :list="barData" title="销售额排行" />
-              </el-col>
-              <el-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="门店销售排行榜" :list="rankList" />
-              </el-col>
-            </el-row>
-          </el-tab-pane>
-          <el-tab-pane label="访问量">
-            <el-row>
-              <el-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-                <bar :list="barData2" title="销售额趋势" />
-              </el-col>
-              <el-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-                <rank-list title="门店销售排行榜" :list="rankList" />
-              </el-col>
-            </el-row>
-          </el-tab-pane>
-        </el-tabs>
-      </div>
-    </el-card>
-
+        </el-card>
+      </template>
+    </BasicLayout>
+    <div class="bottom-center" />
   </div>
 </template>
 
 <script>
-import ChartCard from '@/components/ChartCard'
-import Trend from '@/components/Trend'
-import MiniArea from '@/components/MiniArea'
-import MiniBar from '@/components/MiniBar'
-import MiniProgress from '@/components/MiniProgress'
-import RankList from '@/components/RankList/index'
-import Bar from '@/components/Bar.vue'
-
-const barData = []
-const barData2 = []
-for (let i = 0; i < 12; i += 1) {
-  barData.push({
-    x: `${i + 1}月`,
-    y: Math.floor(Math.random() * 1000) + 200
-  })
-  barData2.push({
-    x: `${i + 1}月`,
-    y: Math.floor(Math.random() * 1000) + 200
-  })
-}
-
-const rankList = []
-for (let i = 0; i < 7; i++) {
-  rankList.push({
-    name: '白鹭岛 ' + (i + 1) + ' 号店',
-    total: 1234.56 - i * 100
-  })
-}
+import { mapGetters } from 'vuex'
+import { getUserProfile } from '@/api/admin/sys-user'
 
 export default {
-  name: 'DashboardAdmin',
+  name: 'Dashboard',
   components: {
-    ChartCard,
-    Trend,
-    MiniArea,
-    MiniBar,
-    MiniProgress,
-    RankList,
-    Bar
   },
   data() {
     return {
-      barData,
-      barData2,
-      rankList
+      currentRole: 'adminDashboard'
     }
+  },
+  computed: {
+    ...mapGetters([
+      'roles'
+    ])
+  },
+  created() {
+    // 向后端请求数据，判断ticket状态
+    getUserProfile().then(response => {})
+    // this.$router.push('/tb-risk/index')
+    // if (!this.roles.includes('admin')) {
+    //   this.currentRole = 'editorDashboard'
+    // }
   },
   methods: {
   }
 }
 </script>
+<style scoped>
+.el-card{
+  width: 90%;
+  /* height: 60%; */
+  /* background-image: url("/holle.jpg"); */
+  /* background-position: center left; */
+  /* background-repeat: no-repeat; */
+  background-color: #f3f3f3;
+  background-size: cover;
+  /* overflow-y: auto; */
+  margin: auto;
+  margin-top: 10px;
+}
+.bottom-center{
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+}
 
-<style lang="scss" scoped>
-.dashboard-editor-container {
-  padding: 12px;
-  background-color: rgb(240, 242, 245);
-  position: relative;
+p{
+  color: #333;
+  line-height: 30px;
+}
+.strong{
+  font-size: 21px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+@media screen and (min-width:960px) {
+  .main-page{
+    padding: 10px 0;
+    margin-left: 40%;
+    margin-right: 5%;
+    /* margin-top: 10%; */
+    box-sizing: border-box;
+  }
+}
 
-  .github-corner {
+@media screen and (max-width: 960px) {
+  .el-card{
+    background-color: #fff;
+    border: #fff 1px solid;
+    background: none;
+  }
+  .el-card::after{
+    content: "";
+    background-image: url("/holle.jpg");
+    background-size: cover;
+    background-position: left bottom;
+    opacity: 0.2;
+
     position: absolute;
     top: 0;
-    border: 0;
+    left: 0;
+    bottom: 0;
     right: 0;
   }
-
-  .chart-wrapper {
-    background: #fff;
-    padding: 16px 16px 0;
-    margin-bottom: 32px;
+  .main-page{
+    padding: 5px 0;
+    margin-left: 0;
+    margin-right: 0;
+    /* margin-top: 10%; */
+    box-sizing: border-box;
   }
 }
 
-::v-deep .el-tabs__item{
-   padding-left: 16px!important;
-   height: 50px;
-   line-height: 50px;
-}
-
-@media (max-width:1024px) {
-  .chart-wrapper {
-    padding: 8px;
-  }
-}
 </style>
