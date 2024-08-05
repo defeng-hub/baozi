@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/casbin/casbin/v2/util"
 	"net/http"
 
@@ -26,6 +27,13 @@ func AuthCheckRole() gin.HandlerFunc {
 			c.Next()
 			return
 		}
+		if v["rolekey"] == "gov" {
+			res = true
+			c.Next()
+			return
+		}
+
+		fmt.Println("xxx", v["rolekey"])
 		for _, i := range CasbinExclude {
 			if util.KeyMatch2(c.Request.URL.Path, i.Url) && c.Request.Method == i.Method {
 				casbinExclude = true
