@@ -43,7 +43,7 @@
 						<u--textarea v-model="model1.text" placeholder="检查情况" count autoHeight></u--textarea>
 					</u-form-item>
 					<u-form-item :labelWidth="270" label="是否新增违法建设：" prop="name" borderBottom>
-						<u--input v-model="model1.weifajianshe" placeholder="是否新增违法建设"></u--input>
+						<u--input v-model="model1.text2" placeholder="是否新增违法建设"></u--input>
 					</u-form-item>
 				</u--form>
 			</view>
@@ -75,10 +75,8 @@
 					department: "",
 					file: [],
 					text:"",
-					weifajianshe:""
+					text2:""
 				},
-				title1: "111",
-				title2: "222",
 				end: "",
 			};
 		},

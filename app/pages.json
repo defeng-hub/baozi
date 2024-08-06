@@ -79,6 +79,15 @@
 			}
 		},
 		{
+			"path" : "pages/admin/check4",
+			"style" : 
+			{
+				"navigationBarTitleText" : "详情列表",
+				"navigationStyle": "custom",
+				"backgroundColor":"#F6F7FB"
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "南磨房"

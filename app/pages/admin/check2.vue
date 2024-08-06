@@ -58,7 +58,10 @@
 							<text>施工时间：<span>{{obj.workingDate}}</span></text>
 							<text>施工状态：<span>{{obj.workingStatus}}</span></text>
 							
-							<view class="zhifa" @click="checkHandler(obj)">去检查</view>
+							<view class="zhifa-btns">
+								<view class="zhifa2" @click="detailHandler(obj)">详细情况</view>
+								<view class="zhifa" @click="checkHandler(obj)">去检查</view>
+							</view>
 							<view style="height: 20rpx;"></view>
 						</u-collapse-item>
 
@@ -151,8 +154,12 @@
 			this.getData()
 		},
 		methods: {
+			detailHandler(obj){
+				// console.log(obj)
+				uni.navigateTo({ url:"/pages/admin/check4?id="+obj.id })
+			},
 			checkHandler(obj){
-				console.log(obj)
+				// console.log(obj)
 				uni.navigateTo({
 					url:"/pages/admin/check3?id="+obj.id
 				})
@@ -285,16 +292,32 @@
 		}
 
 	}
-
-	.zhifa {
-		margin: 10rpx 100rpx;
-		background-color: #1b46f5;
-		height: 50rpx;
-		color: #ffffff;
-		text-align: center;
-		line-height: 50rpx;
-		border-radius: 10rpx;
-		padding: 2rpx 10rpx;
-		padding-bottom: 20rpx;
+	.zhifa-btns{
+		display: flex;
+		justify-content: space-around;
+		margin-top: 20rpx;
+		.zhifa {
+			background-color: #1b46f5;
+			height: 50rpx;
+			color: #ffffff;
+			text-align: center;
+			line-height: 50rpx;
+			border-radius: 10rpx;
+			padding: 0 30rpx;
+			padding-bottom: 20rpx;
+		}
+		.zhifa2{
+			height: 50rpx;
+			color: #0047ff;
+			text-align: center;
+			line-height: 50rpx;
+			border-radius: 10rpx;
+			padding: 0 30rpx;
+			padding-bottom: 20rpx;
+			
+			background: #FFFFFF;
+			border: 2rpx solid #0047ff;
+		}
 	}
+
 </style>

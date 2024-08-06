@@ -3,7 +3,7 @@ package service
 import (
 	"errors"
 
-    "github.com/go-admin-team/go-admin-core/sdk/service"
+	"github.com/go-admin-team/go-admin-core/sdk/service"
 	"gorm.io/gorm"
 
 	"go-admin/app/admin/models"
@@ -26,7 +26,7 @@ func (e *TbZhifajiancha) GetPage(c *dto.TbZhifajianchaGetPageReq, p *actions.Dat
 			cDto.MakeCondition(c.GetNeedSearch()),
 			cDto.Paginate(c.GetPageSize(), c.GetPageIndex()),
 			actions.Permission(data.TableName(), p),
-		).
+		).Order("id desc").
 		Find(list).Limit(-1).Offset(-1).
 		Count(count).Error
 	if err != nil {
@@ -59,9 +59,9 @@ func (e *TbZhifajiancha) Get(d *dto.TbZhifajianchaGetReq, p *actions.DataPermiss
 
 // Insert 创建TbZhifajiancha对象
 func (e *TbZhifajiancha) Insert(c *dto.TbZhifajianchaInsertReq) error {
-    var err error
-    var data models.TbZhifajiancha
-    c.Generate(&data)
+	var err error
+	var data models.TbZhifajiancha
+	c.Generate(&data)
 	err = e.Orm.Create(&data).Error
 	if err != nil {
 		e.Log.Errorf("TbZhifajianchaService Insert error:%s \r\n", err)
@@ -72,22 +72,22 @@ func (e *TbZhifajiancha) Insert(c *dto.TbZhifajianchaInsertReq) error {
 
 // Update 修改TbZhifajiancha对象
 func (e *TbZhifajiancha) Update(c *dto.TbZhifajianchaUpdateReq, p *actions.DataPermission) error {
-    var err error
-    var data = models.TbZhifajiancha{}
-    e.Orm.Scopes(
-            actions.Permission(data.TableName(), p),
-        ).First(&data, c.GetId())
-    c.Generate(&data)
+	var err error
+	var data = models.TbZhifajiancha{}
+	e.Orm.Scopes(
+		actions.Permission(data.TableName(), p),
+	).First(&data, c.GetId())
+	c.Generate(&data)
 
-    db := e.Orm.Save(&data)
-    if err = db.Error; err != nil {
-        e.Log.Errorf("TbZhifajianchaService Save error:%s \r\n", err)
-        return err
-    }
-    if db.RowsAffected == 0 {
-        return errors.New("无权更新该数据")
-    }
-    return nil
+	db := e.Orm.Save(&data)
+	if err = db.Error; err != nil {
+		e.Log.Errorf("TbZhifajianchaService Save error:%s \r\n", err)
+		return err
+	}
+	if db.RowsAffected == 0 {
+		return errors.New("无权更新该数据")
+	}
+	return nil
 }
 
 // Remove 删除TbZhifajiancha
@@ -99,11 +99,11 @@ func (e *TbZhifajiancha) Remove(d *dto.TbZhifajianchaDeleteReq, p *actions.DataP
 			actions.Permission(data.TableName(), p),
 		).Delete(&data, d.GetId())
 	if err := db.Error; err != nil {
-        e.Log.Errorf("Service RemoveTbZhifajiancha error:%s \r\n", err)
-        return err
-    }
-    if db.RowsAffected == 0 {
-        return errors.New("无权删除该数据")
-    }
+		e.Log.Errorf("Service RemoveTbZhifajiancha error:%s \r\n", err)
+		return err
+	}
+	if db.RowsAffected == 0 {
+		return errors.New("无权删除该数据")
+	}
 	return nil
 }
