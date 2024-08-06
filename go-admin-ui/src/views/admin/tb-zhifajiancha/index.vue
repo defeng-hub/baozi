@@ -42,17 +42,17 @@
         <el-table v-loading="loading" :data="tbZhifajianchaList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
           <el-table-column label="项目id" align="center" prop="pid" :show-overflow-tooltip="true" />
+          <el-table-column label="检查情况" align="center" prop="text" :show-overflow-tooltip="true" />
+          <el-table-column label="上传人" align="center" prop="user" :show-overflow-tooltip="true" />
+          <el-table-column label="所属部门" align="center" prop="department" :show-overflow-tooltip="true" />
+
+          <el-table-column label="是否新增违法建设" align="center" prop="text2" :show-overflow-tooltip="true" />
           <el-table-column label="现场照片/视频" align="center" prop="file" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <el-image style="width: 100px; height: 100px" :src="scope.row.file"
                 :preview-src-list="[scope.row.file]" />
             </template>
           </el-table-column>
-          <el-table-column label="检查情况" align="center" prop="text" :show-overflow-tooltip="true" />
-          <el-table-column label="检查情况" align="center" prop="text" :show-overflow-tooltip="true" />
-
-          <el-table-column label="上传人" align="center" prop="user" :show-overflow-tooltip="true" />
-          <el-table-column label="所属部门" align="center" prop="department" :show-overflow-tooltip="true" />
           <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-popconfirm class="delete-popconfirm" title="确认要修改吗?" confirm-button-text="修改"
@@ -81,9 +81,9 @@
             <el-form-item label="项目id" prop="pid">
               <el-input v-model="form.pid" :disabled="true" placeholder="项目id" />
             </el-form-item>
-            <el-form-item label="现场照片/视频" prop="file">
+            <!-- <el-form-item label="现场照片/视频" prop="file">
               <el-input v-model="form.file" placeholder="照片或视频" />
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="检查情况" prop="file">
               <el-input v-model="form.text" placeholder="检查情况" />
             </el-form-item>
@@ -92,6 +92,9 @@
             </el-form-item>
             <el-form-item label="所属部门" prop="department">
               <el-input v-model="form.department" placeholder="所属部门" />
+            </el-form-item>
+            <el-form-item label="是否新增违法建设" prop="file">
+              <el-input v-model="form.text2" placeholder="是/否" />
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
@@ -191,6 +194,8 @@ export default {
         pid: undefined,
         file: undefined,
         user: undefined,
+        text :"",
+        text2 :"",
         department: undefined,
       }
       this.resetForm('form')
