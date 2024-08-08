@@ -252,6 +252,7 @@ func (e TbTable) GetByDesId(c *gin.Context) {
 		Zuoyeshijian: object.Zuoyeshijian,
 		Zuoyeneirong: object.Zuoyeneirong,
 		Suoshushequ:  object.Suoshushequ,
+		Shigongjine:  object.Shigongjine,
 		Fabaofang: struct {
 			Name  string `json:"name"`
 			User  string `json:"user"`
@@ -335,6 +336,14 @@ func (e TbTable) GetByDesId(c *gin.Context) {
 		form.Tezhongzuoyezheng = UploadFile{}
 	}
 
+	if object.Jianzhuqiyezizhi != "" {
+		form.Jianzhuqiyezizhi = UploadFile{
+			{URL: object.Jianzhuqiyezizhi},
+		}
+	} else {
+		form.Jianzhuqiyezizhi = UploadFile{}
+	}
+
 	e.OK(gin.H{
 		"data": object,
 		"form": form,
@@ -406,6 +415,8 @@ type SubmitForm struct {
 		User  string `json:"user"`
 		Phone string `json:"phone"`
 	} `json:"shigongfang"`
+	Shifoushejitezhongzuoye      string     `json:"shifoushejitezhongzuoye"`
+	Shifoushejidonghuozuoye      string     `json:"shifoushejidonghuozuoye"`
 	Yingyezhizhao                UploadFile `json:"yingyezhizhao"`
 	FarenID                      UploadFile `json:"farenId"`
 	Anquanxvkezheng              UploadFile `json:"anquanxvkezheng"`
@@ -414,7 +425,7 @@ type SubmitForm struct {
 	FuzerenID                    UploadFile `json:"fuzerenId"`
 	Jiayishuangfangshigonghetong UploadFile `json:"jiayishuangfangshigonghetong"`
 	Anquanshengchanzerenbaoxian  UploadFile `json:"anquanshengchanzerenbaoxian"`
-	Tezhongzuoyezheng            UploadFile `json:"tezhongzuoyezheng"`
+	Tezhongzuoyezheng            UploadFile `json:"tezhongzuoyezheng"` //甲乙双方施工合同
 }
 
 func (e TbTable) Submit(c *gin.Context) {
@@ -446,6 +457,8 @@ func (e TbTable) Submit(c *gin.Context) {
 		ShigongfangName:              form.Shigongfang.Name,
 		ShigongfangUser:              form.Shigongfang.User,
 		ShigongfangPhone:             form.Shigongfang.Phone,
+		Shifoushejitezhongzuoye:      form.Shifoushejitezhongzuoye,
+		Shifoushejidonghuozuoye:      form.Shifoushejidonghuozuoye,
 		Yingyezhizhao:                form.Yingyezhizhao.GetUrl(),
 		Farenid:                      form.FarenID.GetUrl(), //#xxxxx
 		Anquanxvkezheng:              form.Anquanxvkezheng.GetUrl(),

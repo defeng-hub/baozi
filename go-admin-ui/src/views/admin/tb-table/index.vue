@@ -128,7 +128,7 @@
                 </el-form-item>
               </el-tab-pane>
 
-              <el-tab-pane label="发包方（甲方）和 施工方（乙方）" name="second">
+              <el-tab-pane label="发包方（甲方）和 施工方（乙方）" name="second" style="height: 55vh; overflow-y: auto">
                 <el-form-item label="发包方名称" prop="fabaofangName" label-width="auto">
                   <el-input v-model="form.fabaofangName" placeholder="发包方名称" />
                 </el-form-item>
@@ -149,8 +149,15 @@
                 </el-form-item>
               </el-tab-pane>
 
-              <el-tab-pane label="资质上传" name="third">
-                <el-row  style="height: 55vh; overflow-y: auto">
+              <el-tab-pane label="资质上传" name="third" style="height: 55vh; overflow-y: auto">
+                <el-form-item label="是否涉及特种作业" prop="shifoushejitezhongzuoye" label-width="auto">
+                  <el-input v-model="form.shifoushejitezhongzuoye" placeholder="是否涉及特种作业" />
+                </el-form-item>
+                <el-form-item label="是否涉及动火作业" prop="shifoushejidonghuozuoye" label-width="auto">
+                  <el-input v-model="form.shifoushejidonghuozuoye" placeholder="是否涉及动火作业" />
+                </el-form-item>
+
+                <el-row>
                   <el-col :span="12" style="padding: 20px 30px;">
                     <el-form-item label="营业执照" prop="yingyezhizhao" label-width="auto">
                       <el-input v-model="form.yingyezhizhao" placeholder="空" size="mini">
@@ -247,8 +254,7 @@
                         </template>
                       </el-input>
                       <el-image v-if="isImg(form.tezhongzuoyezheng)" style="width: 100px; height: 100px"
-                        :src="form.tezhongzuoyezheng"
-                        :preview-src-list="[form.tezhongzuoyezheng]"></el-image>
+                        :src="form.tezhongzuoyezheng" :preview-src-list="[form.tezhongzuoyezheng]"></el-image>
                     </el-form-item>
 
                   </el-col>
@@ -385,7 +391,7 @@ export default {
         zuoyedizhi: undefined,
         zuoyeneirong: undefined,
         zuoyeshijian: undefined,
-        shigongjine:undefined,
+        shigongjine: undefined,
         suoshushequ: undefined,
         fabaofangName: undefined,
         fabaofangUser: undefined,

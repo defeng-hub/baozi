@@ -20,6 +20,8 @@ type TbTable struct {
 	ShigongfangName              string `json:"shigongfangName" gorm:"type:longtext;comment:施工方名称"`
 	ShigongfangUser              string `json:"shigongfangUser" gorm:"type:longtext;comment:施工方项目负责人"`
 	ShigongfangPhone             string `json:"shigongfangPhone" gorm:"type:longtext;comment:施工方联系方式"`
+	Shifoushejitezhongzuoye      string `json:"shifoushejitezhongzuoye" gorm:"type:longtext;comment:是否涉及特种作业"`
+	Shifoushejidonghuozuoye      string `json:"shifoushejidonghuozuoye" gorm:"type:longtext;comment:是否涉及动火作业"`
 	Yingyezhizhao                string `json:"yingyezhizhao" gorm:"type:longtext;comment:营业执照"`
 	Farenid                      string `json:"farenid" gorm:"type:longtext;comment:法人身份证号"`
 	Jianzhuqiyezizhi             string `json:"jianzhuqiyezizhi" gorm:"type:longtext;comment:建筑企业资质"`

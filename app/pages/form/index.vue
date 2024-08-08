@@ -28,51 +28,72 @@
 				<u-form-item required :labelWidth="200" label="作业地址：" prop="zuoyedizhi" borderBottom>
 					<u--input v-model="model1.zuoyedizhi" placeholder="作业地址精确到门牌号" border="none"></u--input>
 				</u-form-item>
-				
+
 				<u-form-item required :labelWidth="200" label="作业面积：" prop="zuoyemianji" borderBottom>
-					<u--input v-model="model1.zuoyemianji" placeholder="平方米"  border="none"></u--input>
+					<u--input v-model="model1.zuoyemianji" placeholder="平方米" border="none"></u--input>
 				</u-form-item>
 
-				
+
 				<u-form-item required :labelWidth="200" label="作业内容：" prop="zuoyeneirong" borderBottom>
-					<u--input v-model="model1.zuoyeneirong" placeholder="作业内容"  border="none"></u--input>
+					<u--input v-model="model1.zuoyeneirong" placeholder="作业内容" border="none"></u--input>
 				</u-form-item>
-				
+
 				<u-form-item required :labelWidth="200" label="作业时间：" prop="zuoyeshijian" borderBottom>
 					<u--input v-model="model1.zuoyeshijian" placeholder="年/月/日—年/月/日" border="none"></u--input>
 				</u-form-item>
-				
+
 				<u-form-item required :labelWidth="200" label="施工金额：" prop="shigongjine" borderBottom>
 					<u--input v-model="model1.shigongjine" placeholder="施工金额/元" border="none"></u--input>
 				</u-form-item>
-				
+
 				<u-form-item required :labelWidth="200" label="所属社区：" prop="suoshushequ" borderBottom>
-					<u--input v-model="model1.suoshushequ" placeholder="所属社区"  border="none"></u--input>
+					<u--input v-model="model1.suoshushequ" placeholder="所属社区" border="none"></u--input>
 				</u-form-item>
-				
+
+
 				<view class="title" style="margin-top: 30rpx;">二、发包方和施工方</view>
 				<u-form-item required :labelWidth="200" label="发包方（甲方）名称：" prop="fabaofang.name" borderBottom>
-					<u--input v-model="model1.fabaofang.name" placeholder="发包方（甲方）名称"  border="none"></u--input>
+					<u--input v-model="model1.fabaofang.name" placeholder="发包方（甲方）名称" border="none"></u--input>
 				</u-form-item>
 				<u-form-item required :labelWidth="200" label="联系人：" prop="fabaofang.user" borderBottom>
-					<u--input v-model="model1.fabaofang.user" placeholder="发包方负责人姓名"  border="none"></u--input>
+					<u--input v-model="model1.fabaofang.user" placeholder="发包方负责人姓名" border="none"></u--input>
 				</u-form-item>
 				<u-form-item required :labelWidth="200" label="联系方式：" prop="fabaofang.phone" borderBottom>
-					<u--input v-model="model1.fabaofang.phone" placeholder="发包方负责人手机号"  border="none"></u--input>
+					<u--input v-model="model1.fabaofang.phone" placeholder="发包方负责人手机号" border="none"></u--input>
 				</u-form-item>
 
 				<u-form-item required :labelWidth="200" label="施工方（乙方）公司名称：" prop="shigongfang.name" borderBottom>
-					<u--input v-model="model1.shigongfang.name" placeholder="施工方（乙方）公司名称"  border="none"></u--input>
+					<u--input v-model="model1.shigongfang.name" placeholder="施工方（乙方）公司名称" border="none"></u--input>
 				</u-form-item>
 				<u-form-item required :labelWidth="200" label="项目负责人：" prop="shigongfang.user" borderBottom>
-					<u--input v-model="model1.shigongfang.user" placeholder="施工方负责人姓名"  border="none"></u--input>
+					<u--input v-model="model1.shigongfang.user" placeholder="施工方负责人姓名" border="none"></u--input>
 				</u-form-item>
 				<u-form-item required :labelWidth="200" label="联系方式：" prop="shigongfang.phone" borderBottom>
-					<u--input v-model="model1.shigongfang.phone" placeholder="施工方负责人手机号"  border="none"></u--input>
+					<u--input v-model="model1.shigongfang.phone" placeholder="施工方负责人手机号" border="none"></u--input>
 				</u-form-item>
 
-
-				<view class="title" style="margin-top: 30rpx;">二、资质上传（均须提供复印件并加盖公章）</view>
+				<view class="title" style="margin-top: 30rpx;">三、特殊作业选择</view>
+				<u-form-item required :labelWidth="200" label="是否涉及特种作业：" prop="shifoushejitezhongzuoye" borderBottom>
+					<view style="padding: 14rpx 10rpx;">
+						<u-checkbox-group v-model="checkboxValue1" placement="column" iconSize="30" size="30">
+							<u-checkbox :customStyle="{marginBottom: '8px'}" v-for="(item, index) in checkboxList1"
+								:label="item.name" :name="item.name" iconSize="30" size="30" labelSize="30">
+							</u-checkbox>
+						</u-checkbox-group>
+					</view>
+				</u-form-item>
+				
+				<u-form-item required :labelWidth="200" label="是否涉及动火作业：" prop="shifoushejidonghuozuoye" borderBottom>
+					<view style="padding: 14rpx 10rpx;">
+						<u-checkbox-group v-model="checkboxValue2" placement="column" iconSize="30" size="30">
+							<u-checkbox :customStyle="{marginBottom: '8px'}" v-for="(item, index) in checkboxList2"
+								:label="item.name" :name="item.name" iconSize="30" size="30" labelSize="30">
+							</u-checkbox>
+						</u-checkbox-group>
+					</view>
+				</u-form-item>
+				
+				<view class="title" style="margin-top: 30rpx;">四、资质上传（均须提供复印件并加盖公章）</view>
 
 				<u-form-item required :labelWidth="200" label="营业执照：" prop="yingyezhizhao" borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.yingyezhizhao" :maxCount="1"
@@ -89,7 +110,7 @@
 						</image>
 					</u-upload>
 				</u-form-item>
-				
+
 				<u-form-item required :labelWidth="200" label="建筑企业资质：" prop="jianzhuqiyezizhi" borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.jianzhuqiyezizhi" :maxCount="1"
 						@afterRead="afterRead($event, 'jianzhuqiyezizhi')" @delete="deletePic('jianzhuqiyezizhi')">
@@ -122,7 +143,8 @@
 					</u-upload>
 				</u-form-item>
 
-				<u-form-item required :labelWidth="200" label="甲乙双方施工合同：" prop="jiayishuangfangshigonghetong" borderBottom>
+				<u-form-item required :labelWidth="200" label="甲乙双方施工合同：" prop="jiayishuangfangshigonghetong"
+					borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.jiayishuangfangshigonghetong"
 						:maxCount="1" @afterRead="afterRead($event, 'jiayishuangfangshigonghetong')"
 						@delete="deletePic('jiayishuangfangshigonghetong')">
@@ -131,7 +153,8 @@
 					</u-upload>
 				</u-form-item>
 
-				<u-form-item required :labelWidth="200" label="安全生产责任保险：" prop="anquanshengchanzerenbaoxian" borderBottom>
+				<u-form-item required :labelWidth="200" label="安全生产责任保险：" prop="anquanshengchanzerenbaoxian"
+					borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.anquanshengchanzerenbaoxian"
 						:maxCount="1" @afterRead="afterRead($event, 'anquanshengchanzerenbaoxian')"
 						@delete="deletePic('anquanshengchanzerenbaoxian')">
@@ -139,11 +162,10 @@
 						</image>
 					</u-upload>
 				</u-form-item>
-				
+
 				<u-form-item :labelWidth="200" label="特种作业证：" prop="tezhongzuoyezheng" borderBottom>
-					<u-upload accept="file" width="200" height="200" :fileList="model1.tezhongzuoyezheng"
-						:maxCount="1" @afterRead="afterRead($event, 'tezhongzuoyezheng')"
-						@delete="deletePic('tezhongzuoyezheng')">
+					<u-upload accept="file" width="200" height="200" :fileList="model1.tezhongzuoyezheng" :maxCount="1"
+						@afterRead="afterRead($event, 'tezhongzuoyezheng')" @delete="deletePic('tezhongzuoyezheng')">
 						<image src="@/static/page4/positive4.png" mode="widthFix" style="width: 250rpx;height: 150px;">
 						</image>
 					</u-upload>
@@ -184,7 +206,12 @@
 	export default {
 		data() {
 			return {
-				continerStyle:'padding: 20rpx 20rpx;',
+				checkboxValue1: [],//是否涉及特种作业
+				checkboxList1: [{name: '以下都不涉及'},{name: '电工作业'},{name: '焊接与热切割'},{name: '高处作业'},{name: '有限空间作业'},{name: '制冷与空调作业'}],
+				checkboxValue2: [],// 是否涉及动火作业
+				checkboxList2: [{name: '以下都不涉及'},{name: '切割作业（角磨机、砂轮机、打磨、电钻）'},{name: '电焊'},{name: '气焊'},{name: '喷灯'}],
+				
+				continerStyle: 'padding: 20rpx 20rpx;', //视频电脑端
 				status: {
 					status: "",
 					remark: "",
@@ -194,10 +221,10 @@
 					phone: "",
 					zuoyemianji: "",
 					zuoyedizhi: "",
-					zuoyeneirong:"",
-					zuoyeshijian:"",
-					shigongjine:"",//施工金额
-					suoshushequ: "",//所属社区
+					zuoyeneirong: "",
+					zuoyeshijian: "",
+					shigongjine: "", //施工金额
+					suoshushequ: "", //所属社区
 					fabaofang: {
 						name: "",
 						user: "",
@@ -208,15 +235,17 @@
 						user: "",
 						phone: "",
 					},
+					shifoushejitezhongzuoye:"",//是否涉及特种作业
+					shifoushejidonghuozuoye:"",//是否涉及动火作业
 					yingyezhizhao: [], //营业执照 file
 					farenId: [], //法人身份证
 					anquanxvkezheng: [], //安全生产许可证
-					jianzhuqiyezizhi:[], //建筑企业资质
+					jianzhuqiyezizhi: [], //建筑企业资质
 					shouquanweituozhu: [], //授权委托书
 					fuzerenId: [], //负责人身份证
 					jiayishuangfangshigonghetong: [], // 甲乙双方施工合同
 					anquanshengchanzerenbaoxian: [], // 安全生产责任保险
-					tezhongzuoyezheng:[],
+					tezhongzuoyezheng: [],
 				},
 				rules: {
 					'phone': {
@@ -225,6 +254,24 @@
 						max: 11,
 						min: 11,
 						message: '手机号不符合要求',
+						trigger: ['blur', 'change']
+					},
+					'zuoyeneirong': {
+						type: 'string',
+						required: true,
+						message: '请填写作业内容',
+						trigger: ['blur', 'change']
+					},
+					'zuoyeshijian': {
+						type: 'string',
+						required: true,
+						message: '请填写作业时间',
+						trigger: ['blur', 'change']
+					},
+					'shigongjine': {
+						type: 'string',
+						required: true,
+						message: '请填写施工金额',
 						trigger: ['blur', 'change']
 					},
 					'zuoyemianji': {
@@ -296,7 +343,13 @@
 					'anquanxvkezheng': {
 						type: 'array',
 						required: true,
-						message: '请上传建筑企业资质安全生产许可证',
+						message: '请上传安全生产许可证',
+						trigger: ['blur', 'change']
+					},
+					'jianzhuqiyezizhi': {
+						type: 'array',
+						required: true,
+						message: '请上传建筑企业资质',
 						trigger: ['blur', 'change']
 					},
 					'shouquanweituozhu': {
@@ -330,12 +383,15 @@
 		},
 		methods: {
 			// http://127.0.0.1:8100/static/uploadfile/75bf6c69-abc8-48cc-94d3-8ddaa8c34f4b.jpg
-			pre(){
+			pre() {
 				uni.navigateTo({
-					url:"/pages/form/page3"
+					url: "/pages/form/page3"
 				})
 			},
 			submit() {
+				// console.log(this.checkboxValue1.join(";"),this.checkboxValue2.join(";"))
+				this.model1.shifoushejitezhongzuoye = this.checkboxValue1.join(";");
+				this.model1.shifoushejidonghuozuoye = this.checkboxValue2.join(";");
 				this.$refs.uForm.validate().then(res => {
 					console.log(this.model1)
 					this.$http.post(submitApi, this.model1, {}).then(res => {
@@ -391,16 +447,16 @@
 			this.$refs.uForm.setRules(this.rules)
 		},
 		async onLoad(param) {
-			let system= uni.getSystemInfoSync()
+			let system = uni.getSystemInfoSync()
 			let os = system.platform
-			if (os == "windows" || os == "mac" || os == "macos"){
-				if(system.windowWidth<=600){
+			if (os == "windows" || os == "mac" || os == "macos") {
+				if (system.windowWidth <= 600) {
 					this.continerStyle = "padding: 20rpx 40rpx;"
-				}else{
+				} else {
 					this.continerStyle = "padding: 20rpx 12vw"
 				}
 			}
-			
+
 			// HJnq8c id
 			if (param["HJnq8c"]) {
 				// console.log(param["HJnq8c"])
@@ -429,9 +485,9 @@
 		background-size: cover;
 		background-color: #4274fa;
 	}
-	
+
 	.continer {
-		
+
 		font-size: 28rpx;
 		word-wrap: break-word;
 	}

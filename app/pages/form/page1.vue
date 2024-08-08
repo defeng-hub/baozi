@@ -202,7 +202,11 @@
 									url:"/pages/form/index?"+"HJnq8c="+resp.data?.id
 								})
 							}else if(resp.data?.status  == "审核通过"){
-								console.log("审核通过审核通过审核通过")
+								uni.showToast({
+									icon:"none",
+									title:"备案通过"
+								})
+								this.show = false;
 							}
 						}
 					}
