@@ -41,6 +41,7 @@ type TbTableOrder struct {
 	ShigongfangPhone             string `form:"shigongfangPhoneOrder"  search:"type:order;column:shigongfang_phone;table:tb_table"`
 	Yingyezhizhao                string `form:"yingyezhizhaoOrder"  search:"type:order;column:yingyezhizhao;table:tb_table"`
 	Farenid                      string `form:"farenidOrder"  search:"type:order;column:farenid;table:tb_table"`
+	Jianzhuqiyezizhi             string `form:"jianzhuqiyezizhi"  search:"type:order;column:jianzhuqiyezizhi;table:tb_table"`
 	Anquanxvkezheng              string `form:"anquanxvkezhengOrder"  search:"type:order;column:anquanxvkezheng;table:tb_table"`
 	Shouquanweituozhu            string `form:"shouquanweituozhuOrder"  search:"type:order;column:shouquanweituozhu;table:tb_table"`
 	Fuzerenid                    string `form:"fuzerenidOrder"  search:"type:order;column:fuzerenid;table:tb_table"`
@@ -76,7 +77,8 @@ type TbTableInsertReq struct {
 	ShigongfangPhone             string `json:"shigongfangPhone" comment:"施工方联系方式"`
 	Yingyezhizhao                string `json:"yingyezhizhao" comment:"营业执照"`
 	Farenid                      string `json:"farenid" comment:"法人身份证号"`
-	Anquanxvkezheng              string `json:"anquanxvkezheng" comment:"建筑企业资质安全生产许可证"`
+	Jianzhuqiyezizhi             string `json:"jianzhuqiyezizhi" comment:"建筑企业资质"`
+	Anquanxvkezheng              string `json:"anquanxvkezheng" comment:"安全生产许可证"`
 	Shouquanweituozhu            string `json:"shouquanweituozhu" comment:"授权委托书"`
 	Fuzerenid                    string `json:"fuzerenid" comment:"项目负责人身份证"`
 	Jiayishuangfangshigonghetong string `json:"jiayishuangfangshigonghetong" comment:"甲乙双方施工合同"`
@@ -106,6 +108,7 @@ func (s *TbTableInsertReq) Generate(model *models.TbTable) {
 	model.Yingyezhizhao = s.Yingyezhizhao
 	model.Farenid = s.Farenid
 	model.Anquanxvkezheng = s.Anquanxvkezheng
+	model.Jianzhuqiyezizhi = s.Jianzhuqiyezizhi
 	model.Shouquanweituozhu = s.Shouquanweituozhu
 	model.Fuzerenid = s.Fuzerenid
 	model.Jiayishuangfangshigonghetong = s.Jiayishuangfangshigonghetong
@@ -136,7 +139,8 @@ type TbTableUpdateReq struct {
 	ShigongfangPhone             string `json:"shigongfangPhone" comment:"施工方联系方式"`
 	Yingyezhizhao                string `json:"yingyezhizhao" comment:"营业执照"`
 	Farenid                      string `json:"farenid" comment:"法人身份证号"`
-	Anquanxvkezheng              string `json:"anquanxvkezheng" comment:"建筑企业资质安全生产许可证"`
+	Jianzhuqiyezizhi             string `json:"jianzhuqiyezizhi" comment:"建筑企业资质"`
+	Anquanxvkezheng              string `json:"anquanxvkezheng" comment:"安全生产许可证"`
 	Shouquanweituozhu            string `json:"shouquanweituozhu" comment:"授权委托书"`
 	Fuzerenid                    string `json:"fuzerenid" comment:"项目负责人身份证"`
 	Jiayishuangfangshigonghetong string `json:"jiayishuangfangshigonghetong" comment:"甲乙双方施工合同"`
@@ -166,6 +170,7 @@ func (s *TbTableUpdateReq) Generate(model *models.TbTable) {
 	model.Yingyezhizhao = s.Yingyezhizhao
 	model.Farenid = s.Farenid
 	model.Anquanxvkezheng = s.Anquanxvkezheng
+	model.Jianzhuqiyezizhi = s.Jianzhuqiyezizhi
 	model.Shouquanweituozhu = s.Shouquanweituozhu
 	model.Fuzerenid = s.Fuzerenid
 	model.Jiayishuangfangshigonghetong = s.Jiayishuangfangshigonghetong

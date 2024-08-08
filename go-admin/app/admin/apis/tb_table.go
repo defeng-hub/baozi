@@ -404,6 +404,7 @@ type SubmitForm struct {
 	Yingyezhizhao                UploadFile `json:"yingyezhizhao"`
 	FarenID                      UploadFile `json:"farenId"`
 	Anquanxvkezheng              UploadFile `json:"anquanxvkezheng"`
+	Jianzhuqiyezizhi             UploadFile `json:"jianzhuqiyezizhi"`
 	Shouquanweituozhu            UploadFile `json:"shouquanweituozhu"`
 	FuzerenID                    UploadFile `json:"fuzerenId"`
 	Jiayishuangfangshigonghetong UploadFile `json:"jiayishuangfangshigonghetong"`
@@ -440,6 +441,7 @@ func (e TbTable) Submit(c *gin.Context) {
 		Yingyezhizhao:                form.Yingyezhizhao.GetUrl(),
 		Farenid:                      form.FarenID.GetUrl(), //#xxxxx
 		Anquanxvkezheng:              form.Anquanxvkezheng.GetUrl(),
+		Jianzhuqiyezizhi:             form.Jianzhuqiyezizhi.GetUrl(),
 		Shouquanweituozhu:            form.Shouquanweituozhu.GetUrl(),
 		Fuzerenid:                    form.FuzerenID.GetUrl(), //#xxxx
 		Jiayishuangfangshigonghetong: form.Jiayishuangfangshigonghetong.GetUrl(),
