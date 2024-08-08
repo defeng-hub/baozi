@@ -61,11 +61,11 @@
 		async created() {
 			let res1 =  await this.$http.get(getKey+"heimingdanqiye", {})
 			this.heimingdanqiye = res1.data?.value
-			this.heimingdanqiyeList = this.heimingdanqiye.split("\n");
+			this.heimingdanqiyeList = this.heimingdanqiye.split(";");
 			
 			let res2 =  await this.$http.get(getKey+"huimingdanqiye", {})
 			this.huimingdanqiye = res2.data?.value
-			this.huimingdanqiyeList = this.huimingdanqiye.split("\n");
+			this.huimingdanqiyeList = this.huimingdanqiye.split(";");
 			
 			let res4 =  await this.$http.get(getKey+"end", {})
 			this.end = res4.data.value
