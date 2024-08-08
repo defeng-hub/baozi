@@ -19,6 +19,7 @@ type TbZhifajianchaOrder struct {
 	Id         string `form:"idOrder"  search:"type:order;column:id;table:tb_zhifajiancha"`
 	Pid        string `form:"pidOrder"  search:"type:order;column:pid;table:tb_zhifajiancha"`
 	File       string `form:"fileOrder"  search:"type:order;column:file;table:tb_zhifajiancha"`
+	File2      string `form:"file2Order"  search:"type:order;column:file2;table:tb_zhifajiancha"`
 	Text       string `form:"textOrder"  search:"type:order;column:text;table:tb_zhifajiancha"`
 	Text2      string `form:"text2Order"  search:"type:order;column:text2;table:tb_zhifajiancha"`
 	User       string `form:"userOrder"  search:"type:order;column:user;table:tb_zhifajiancha"`
@@ -38,6 +39,7 @@ type TbZhifajianchaInsertReq struct {
 	Id         int    `json:"-" comment:"主键编码"` // 主键编码
 	Pid        string `json:"pid" comment:"项目id"`
 	File       string `json:"file" comment:"照片或视频"`
+	File2      string `json:"file2" comment:"检查单"`
 	Text       string `json:"text" comment:"检查情况"`
 	Text2      string `json:"text2" comment:"是否新增违法建设"`
 	User       string `json:"user" comment:"上传人"`
@@ -51,6 +53,7 @@ func (s *TbZhifajianchaInsertReq) Generate(model *models.TbZhifajiancha) {
 	}
 	model.Pid = s.Pid
 	model.File = s.File
+	model.File2 = s.File2
 	model.Text = s.Text
 	model.Text2 = s.Text2
 	model.User = s.User
@@ -66,6 +69,7 @@ type TbZhifajianchaUpdateReq struct {
 	Id         int    `uri:"id" comment:"主键编码"` // 主键编码
 	Pid        string `json:"pid" comment:"项目id"`
 	File       string `json:"file" comment:"照片或视频"`
+	File2      string `json:"file2" comment:"检查单"`
 	Text       string `json:"text" comment:"检查情况"`
 	Text2      string `json:"text2" comment:"是否新增违法建设"`
 	User       string `json:"user" comment:"上传人"`
@@ -79,6 +83,7 @@ func (s *TbZhifajianchaUpdateReq) Generate(model *models.TbZhifajiancha) {
 	}
 	model.Pid = s.Pid
 	model.File = s.File
+	model.File2 = s.File2
 	model.Text = s.Text
 	model.Text2 = s.Text2
 	model.User = s.User

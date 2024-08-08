@@ -6,12 +6,13 @@
 		</view>
 		
 		<view class="center">
-			<image src="@/static/page1/logo3.png" mode="" class="logo"></image>
+			<image src="@/static/page1/logo5.png" mode="" class="logo"></image>
 		</view>
 		<view class="bottom">
 			<view class="btns">
 				<view class="btn1" @click="next">施工备案提交</view>
 				<view class="btn2" @click="query">施工备案查询</view>
+				<view class="btn2" @click="check">施工台账查看及执法检查</view>
 				<view class="info">
 					{{ end }}
 				</view>
@@ -35,17 +36,35 @@
 				</u--form>
 			</view>
 		</u-popup>
+		
+		<u-popup :show="show2" closeable closeOnClickOverlay @close="close" >
+			<view class="popup">
+				<u--form style="width: 670rpx;" labelPosition="left" :model="model2" :rules="rules2" ref="uForm2">
+					<u-form-item :labelWidth="200" label="账号：" prop="username" borderBottom>
+						<u--input :maxlength="11" v-model="model2.username" placeholder="手机号必填" border="none"></u--input>
+					</u-form-item>
+					<u-form-item :labelWidth="200" label="密码：" prop="passwd" borderBottom>
+						<u--input v-model="model2.passwd" placeholder="请输入密码"  border="none"></u--input>
+					</u-form-item>
+					<view class="btn3" @click="login()">登陆</view>
+				</u--form>
+			</view>
+		</u-popup>
 	</view>
 </template>
 
 <script>
-	import { getKey,getTableByPhone } from 'api'
+	import { getKey,getTableByPhone,loginApi } from 'api'
 	export default {
 		data() {
 			return {
 				model1:{
 					phone:"",
 					authcode:"",
+				},
+				model2:{
+					username:"",
+					passwd:"",
 				},
 				rules: {
 					'phone':{
@@ -57,10 +76,25 @@
 						trigger: ['blur', 'change']
 					}
 				},
+				rules2: {
+					'username':{
+						type: 'string',
+						required: true,
+						message: '手机号不符合要求',
+						trigger: ['blur', 'change']
+					},
+					'passwd': {
+						type: 'string',
+						required: true,
+						message: '密码不符合要求',
+						trigger: ['blur', 'change']
+					}
+				},
 				title1:"",
 				title2:"",
 				end:"",
 				show: false, //弹出层
+				show2: false, //弹出层
 			};
 		},
 		async created() {
@@ -80,8 +114,69 @@
 				uni.navigateTo({url:"/pages/form/page2"})
 			},
 			query(){
-				// console.log("query")
 				this.show = true;
+			},
+			async check(){
+				let user = uni.getStorageSync("Mt8p3QiZ")
+				if (user) {
+					this.model2.username = user?.username
+					this.model2.passwd = user?.passwd
+					
+					this.$http.post(loginApi, this.model2, {}).then(res => {
+						// console.log(res)
+						if (res.code == 200){
+							if(res.data.status == false){
+								uni.showToast({
+									icon:"none",
+									title:res.data.msg
+								})
+								uni.removeStorageSync("Mt8p3QiZ")
+								return
+							}else{
+								uni.setStorageSync("Mt8p3QiZ", res.data.user)
+								uni.navigateTo({
+									url:"/pages/admin/check2"
+								})
+								return
+							}
+						}
+					})
+				}
+				
+				// this.show2 = true;
+			},
+			async login(){
+				console.log(this.$refs.uForm2)
+				this.$refs.uForm2.validate().then(async (refRes) => {
+					console.log(this.model2)
+					this.$http.post(loginApi, this.model2, {}).then(res => {
+						// console.log(res)
+						if (res.code != 200){
+							uni.showToast({
+								icon:"none",
+								title:"登录失败"
+							})
+							uni.removeStorageSync("Mt8p3QiZ")
+						}else{
+							if(res.data.status == false){
+								uni.showToast({
+									icon:"none",
+									title:res.data.msg
+								})
+								return 
+							}else{
+								uni.setStorageSync("Mt8p3QiZ", res.data.user)
+								uni.navigateTo({
+									url:"/pages/admin/check2"
+								})
+							}
+						}
+			
+					})
+					
+				}).catch(errors => {
+					
+				})
 			},
 			async queryBeian(){
 				this.$refs.uForm.validate().then(async (res) => {
@@ -98,13 +193,13 @@
 							if(resp.data?.status  == "审核未通过"){
 								// console.log(resp.data?.status)
 								uni.navigateTo({
-									url:"/pages/form/page4?"+"HJnq8c="+resp.data?.id
+									url:"/pages/form/index?"+"HJnq8c="+resp.data?.id
 								})
 							}else if(resp.data?.status  == ""){
 								// console.log(resp.data?.status)
 								//待审核
 								uni.navigateTo({
-									url:"/pages/form/page4?"+"HJnq8c="+resp.data?.id
+									url:"/pages/form/index?"+"HJnq8c="+resp.data?.id
 								})
 							}else if(resp.data?.status  == "审核通过"){
 								console.log("审核通过审核通过审核通过")
@@ -118,6 +213,7 @@
 			},
 			close(){
 				this.show = false;
+				this.show2 = false;
 			}
 		}
 	}
@@ -150,7 +246,6 @@ page{
 .continer{
 	z-index: 1;
 	width: 100%;
-	height: 110vh;
 	.bottom{
 		position: fixed;
 		bottom: 50rpx;
@@ -167,6 +262,7 @@ page{
 		.btns{
 			padding: 20rpx 70rpx ;
 			.btn1{
+				margin-top: 30rpx;
 				width: 600rpx;
 				height: 92rpx;
 				background: #0047ff;
@@ -176,7 +272,7 @@ page{
 				line-height: 92rpx;
 			}
 			.btn2{
-				margin-top: 40rpx;
+				margin-top: 30rpx;
 				width: 600rpx;
 				height: 92rpx;
 				background: #0047ff;

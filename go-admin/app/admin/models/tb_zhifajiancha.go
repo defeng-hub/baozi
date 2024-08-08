@@ -9,6 +9,7 @@ type TbZhifajiancha struct {
 
 	Pid        string `json:"pid" gorm:"type:bigint;comment:项目id"`
 	File       string `json:"file" gorm:"type:longtext;comment:照片或视频"`
+	File2      string `json:"file2" gorm:"type:longtext;comment:检查单"`
 	Text       string `json:"text" gorm:"type:longtext;comment:检查情况"`
 	Text2      string `json:"text2" gorm:"type:varchar(254);comment:是否新增违法建设"`
 	User       string `json:"user" gorm:"type:longtext;comment:上传人"`

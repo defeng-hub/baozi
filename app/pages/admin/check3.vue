@@ -29,8 +29,13 @@
 				<u--form labelPosition="left" :model="model1" ref="uForm">
 					
 					<u-form-item :labelWidth="230" label="照片/视频：" prop="name" borderBottom>
-						<u-upload accept="file" width="300rpx" height="300rpx" :fileList="model1.file"
+						<u-upload accept="image" :maxDuration="30" capture="camera" width="300rpx" height="300rpx" :fileList="model1.file"
 							@afterRead="afterRead($event, 'file')" @delete="deletePic('file')" :maxCount="1"></u-upload>
+					</u-form-item>
+					
+					<u-form-item :labelWidth="230" label="检查单：" prop="name" borderBottom>
+						<u-upload accept="image" capture="camera" width="300rpx" height="300rpx" :fileList="model1.file2"
+							@afterRead="afterRead($event, 'file2')" @delete="deletePic('file2')" :maxCount="1"></u-upload>
 					</u-form-item>
 
 					<u-form-item :labelWidth="230" label="姓名：" prop="name" borderBottom>
@@ -42,8 +47,8 @@
 					<u-form-item :labelWidth="230" label="检查情况：" prop="name" borderBottom>
 						<u--textarea v-model="model1.text" placeholder="检查情况" count autoHeight></u--textarea>
 					</u-form-item>
-					<u-form-item :labelWidth="270" label="是否新增违法建设：" prop="name" borderBottom>
-						<u--input v-model="model1.text2" placeholder="是否新增违法建设"></u--input>
+					<u-form-item :labelWidth="270" label="是否存在违法建设：" prop="name" borderBottom>
+						<u--input v-model="model1.text2" placeholder="是否存在违法建设"></u--input>
 					</u-form-item>
 				</u--form>
 			</view>
@@ -74,6 +79,7 @@
 					name: "",
 					department: "",
 					file: [],
+					file2: [],
 					text:"",
 					text2:""
 				},

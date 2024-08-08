@@ -6,7 +6,10 @@
 			</view>
 			<view class="notice2">
 				<view class="text">
-					{{heimingdanqiye}}
+					<view v-for="line in heimingdanqiyeList">
+						{{line}}
+					</view>
+					<!-- {{heimingdanqiye}} -->
 				</view>
 			</view>
 		</view>
@@ -18,7 +21,10 @@
 			</view>
 			<view class="notice2">
 				<view class="text">
-					{{huimingdanqiye}}
+					<view v-for="line in huimingdanqiyeList">
+						{{line}}
+					</view>
+					<!-- {{huimingdanqiye}} -->
 				</view>
 			</view>
 		</view>
@@ -46,16 +52,20 @@
 			return {
 				resTime:5, //默认不显示下一页
 				heimingdanqiye: "",
+				heimingdanqiyeList: [],
 				huimingdanqiye: "",
+				huimingdanqiyeList: [],
 				end:"",
 			};
 		},
 		async created() {
 			let res1 =  await this.$http.get(getKey+"heimingdanqiye", {})
 			this.heimingdanqiye = res1.data?.value
+			this.heimingdanqiyeList = this.heimingdanqiye.split("\n");
 			
 			let res2 =  await this.$http.get(getKey+"huimingdanqiye", {})
 			this.huimingdanqiye = res2.data?.value
+			this.huimingdanqiyeList = this.huimingdanqiye.split("\n");
 			
 			let res4 =  await this.$http.get(getKey+"end", {})
 			this.end = res4.data.value
@@ -77,7 +87,7 @@
 			next(){
 				if(this.resTime <= 0){
 					uni.navigateTo({
-						url:"/pages/form/page4"
+						url:"/pages/form/index"
 					})
 				}else{
 
@@ -148,7 +158,7 @@ page{
 	align-items: center;
 	flex-direction:column;
 	.title{
-		width: 100%;
+		width: 650rpx;
 		text-align: left;
 		font-weight: 500;
 		margin-top: 16rpx;

@@ -49,7 +49,7 @@
 
         <el-table v-loading="loading" :data="tbTableList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
-          <el-table-column label="编号" align="center" prop="id" :show-overflow-tooltip="true" />
+          <el-table-column width="55" label="编号" align="center" prop="id" :show-overflow-tooltip="true" />
           <el-table-column width="140" label="手机号" align="center" prop="phone" :show-overflow-tooltip="true" />
           <el-table-column label="作业面积" align="center" prop="zuoyemianji" :show-overflow-tooltip="true" />
           <el-table-column label="作业地址" align="center" prop="zuoyedizhi" :show-overflow-tooltip="true" />
@@ -109,10 +109,19 @@
                   <el-input v-model="form.phone" placeholder="手机号" :disabled="true" />
                 </el-form-item>
                 <el-form-item label="作业面积" prop="zuoyemianji">
-                  <el-input v-model="form.zuoyemianji" placeholder="作业面积" />
+                  <el-input v-model="form.zuoyemianji" placeholder="平方米" />
                 </el-form-item>
                 <el-form-item label="作业地址" prop="zuoyedizhi">
-                  <el-input v-model="form.zuoyedizhi" placeholder="作业地址" />
+                  <el-input v-model="form.zuoyedizhi" placeholder="精确到门牌号" />
+                </el-form-item>
+                <el-form-item label="作业内容" prop="zuoyeneirong">
+                  <el-input v-model="form.zuoyeneirong" placeholder="作业内容" />
+                </el-form-item>
+                <el-form-item label="作业时间" prop="zuoyeshijian">
+                  <el-input v-model="form.zuoyeshijian" placeholder="年/月/日—年/月/日" />
+                </el-form-item>
+                <el-form-item label="施工金额" prop="shigongjine">
+                  <el-input v-model="form.shigongjine" placeholder="施工金额/元" />
                 </el-form-item>
                 <el-form-item label="所属社区" prop="suoshushequ">
                   <el-input v-model="form.suoshushequ" placeholder="所属社区" />
@@ -141,7 +150,7 @@
               </el-tab-pane>
 
               <el-tab-pane label="资质上传" name="third">
-                <el-row>
+                <el-row  style="height: 55vh; overflow-y: auto">
                   <el-col :span="12" style="padding: 20px 30px;">
                     <el-form-item label="营业执照" prop="yingyezhizhao" label-width="auto">
                       <el-input v-model="form.yingyezhizhao" placeholder="空" size="mini">
@@ -370,11 +379,13 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-
         id: undefined,
         phone: undefined,
         zuoyemianji: undefined,
         zuoyedizhi: undefined,
+        zuoyeneirong: undefined,
+        zuoyeshijian: undefined,
+        shigongjine:undefined,
         suoshushequ: undefined,
         fabaofangName: undefined,
         fabaofangUser: undefined,

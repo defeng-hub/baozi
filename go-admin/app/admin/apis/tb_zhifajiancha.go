@@ -135,6 +135,9 @@ func (e TbZhifajiancha) Save(c *gin.Context) {
 		File       []struct {
 			URL string `json:"url"`
 		} `json:"file"`
+		File2 []struct {
+			URL string `json:"url"`
+		} `json:"file2"`
 		Text         string `json:"text"`
 		Text2        string `json:"text2"`
 		Weifajianshe string `json:"weifajianshe"`
@@ -162,6 +165,9 @@ func (e TbZhifajiancha) Save(c *gin.Context) {
 	}
 	if len(reqQ.File) > 0 {
 		req.File = reqQ.File[0].URL
+	}
+	if len(reqQ.File2) > 0 {
+		req.File2 = reqQ.File2[0].URL
 	}
 
 	// 设置创建人

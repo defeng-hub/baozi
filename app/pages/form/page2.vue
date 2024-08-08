@@ -175,6 +175,7 @@ page{
 		border-radius: 15rpx 15rpx 15rpx 15rpx;
 		padding: 23rpx 23rpx;
 		.text{
+			text-indent:2em;
 			width: 621rpx;
 			min-height: 577rpx;
 			font-weight: 400;
@@ -197,6 +198,9 @@ page{
 			background: #F4F7FF;
 			box-shadow: inset 0rpx 4 15rpx 0rpx #FFFFFF;
 			border-radius: 15rpx 15rpx 15rpx 15rpx;
+			text-align: left;
+			padding-left: 20rpx;
+			line-height: 194rpx;
 		}
 	}
 }

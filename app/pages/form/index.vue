@@ -1,5 +1,5 @@
 <template>
-	<view class="continer">
+	<view class="continer" :style="continerStyle">
 		<view class="card" v-if="status.show">
 			<view class="status">
 				审核状态：
@@ -13,8 +13,8 @@
 			</view>
 		</view>
 		<view class="card">
-			<u--form style="width: 670rpx;" labelPosition="left" :model="model1" :rules="rules" ref="uForm">
-				<u-form-item required :labelWidth="200" label="手机号：" prop="phone" borderBottom>
+			<u--form labelPosition="left" :model="model1" :rules="rules" ref="uForm">
+				<u-form-item required :labelWidth="250" label="手机号(仅用作备案进度查询)：" prop="phone" borderBottom>
 					<u--input :maxlength="11" v-model="model1.phone" placeholder="手机号必填" border="none"></u--input>
 				</u-form-item>
 				<u-form-item required :labelWidth="200" label="验证码：" prop="authcode" borderBottom>
@@ -24,18 +24,33 @@
 							style="right: 20rpx;" size="mini">获取验证码</u-button>
 					</template>
 				</u-form-item>
-
 				<view class="title" style="margin-top: 20rpx;">一、基本信息上传</view>
-				<u-form-item required :labelWidth="200" label="作业面积：" prop="zuoyemianji" borderBottom>
-					<u--input v-model="model1.zuoyemianji" placeholder="作业面积"  border="none"></u--input>
-				</u-form-item>
 				<u-form-item required :labelWidth="200" label="作业地址：" prop="zuoyedizhi" borderBottom>
-					<u--input v-model="model1.zuoyedizhi" placeholder="作业地址" border="none"></u--input>
+					<u--input v-model="model1.zuoyedizhi" placeholder="作业地址精确到门牌号" border="none"></u--input>
 				</u-form-item>
+				
+				<u-form-item required :labelWidth="200" label="作业面积：" prop="zuoyemianji" borderBottom>
+					<u--input v-model="model1.zuoyemianji" placeholder="平方米"  border="none"></u--input>
+				</u-form-item>
+
+				
+				<u-form-item required :labelWidth="200" label="作业内容：" prop="zuoyeneirong" borderBottom>
+					<u--input v-model="model1.zuoyeneirong" placeholder="作业内容"  border="none"></u--input>
+				</u-form-item>
+				
+				<u-form-item required :labelWidth="200" label="作业时间：" prop="zuoyeshijian" borderBottom>
+					<u--input v-model="model1.zuoyeshijian" placeholder="年/月/日—年/月/日" border="none"></u--input>
+				</u-form-item>
+				
+				<u-form-item required :labelWidth="200" label="施工金额：" prop="shigongjine" borderBottom>
+					<u--input v-model="model1.shigongjine" placeholder="施工金额/元" border="none"></u--input>
+				</u-form-item>
+				
 				<u-form-item required :labelWidth="200" label="所属社区：" prop="suoshushequ" borderBottom>
 					<u--input v-model="model1.suoshushequ" placeholder="所属社区"  border="none"></u--input>
 				</u-form-item>
-
+				
+				<view class="title" style="margin-top: 30rpx;">二、发包方和施工方</view>
 				<u-form-item required :labelWidth="200" label="发包方（甲方）名称：" prop="fabaofang.name" borderBottom>
 					<u--input v-model="model1.fabaofang.name" placeholder="发包方（甲方）名称"  border="none"></u--input>
 				</u-form-item>
@@ -74,14 +89,22 @@
 						</image>
 					</u-upload>
 				</u-form-item>
-
-				<u-form-item required :labelWidth="200" label="建筑企业资质安全生产许可证：" prop="anquanxvkezheng" borderBottom>
+				
+				<u-form-item required :labelWidth="200" label="建筑企业资质：" prop="jianzhuqiyezizhi" borderBottom>
+					<u-upload accept="file" width="200" height="200" :fileList="model1.jianzhuqiyezizhi" :maxCount="1"
+						@afterRead="afterRead($event, 'jianzhuqiyezizhi')" @delete="deletePic('jianzhuqiyezizhi')">
+						<image src="@/static/page4/positive4.png" mode="widthFix" style="width: 250rpx;height: 150px;">
+						</image>
+					</u-upload>
+				</u-form-item>
+				<u-form-item required :labelWidth="200" label="安全生产许可证：" prop="anquanxvkezheng" borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.anquanxvkezheng" :maxCount="1"
 						@afterRead="afterRead($event, 'anquanxvkezheng')" @delete="deletePic('anquanxvkezheng')">
 						<image src="@/static/page4/positive4.png" mode="widthFix" style="width: 250rpx;height: 150px;">
 						</image>
 					</u-upload>
 				</u-form-item>
+
 
 				<u-form-item required :labelWidth="200" label="授权委托书：" prop="shouquanweituozhu" borderBottom>
 					<u-upload accept="file" width="200" height="200" :fileList="model1.shouquanweituozhu" :maxCount="1"
@@ -161,6 +184,7 @@
 	export default {
 		data() {
 			return {
+				continerStyle:'padding: 20rpx 20rpx;',
 				status: {
 					status: "",
 					remark: "",
@@ -170,7 +194,10 @@
 					phone: "",
 					zuoyemianji: "",
 					zuoyedizhi: "",
-					suoshushequ: "",
+					zuoyeneirong:"",
+					zuoyeshijian:"",
+					shigongjine:"",//施工金额
+					suoshushequ: "",//所属社区
 					fabaofang: {
 						name: "",
 						user: "",
@@ -183,7 +210,8 @@
 					},
 					yingyezhizhao: [], //营业执照 file
 					farenId: [], //法人身份证
-					anquanxvkezheng: [], //建筑企业资质安全生产许可证
+					anquanxvkezheng: [], //安全生产许可证
+					jianzhuqiyezizhi:[], //建筑企业资质
 					shouquanweituozhu: [], //授权委托书
 					fuzerenId: [], //负责人身份证
 					jiayishuangfangshigonghetong: [], // 甲乙双方施工合同
@@ -363,6 +391,16 @@
 			this.$refs.uForm.setRules(this.rules)
 		},
 		async onLoad(param) {
+			let system= uni.getSystemInfoSync()
+			let os = system.platform
+			if (os == "windows" || os == "mac" || os == "macos"){
+				if(system.windowWidth<=600){
+					this.continerStyle = "padding: 20rpx 40rpx;"
+				}else{
+					this.continerStyle = "padding: 20rpx 12vw"
+				}
+			}
+			
 			// HJnq8c id
 			if (param["HJnq8c"]) {
 				// console.log(param["HJnq8c"])
@@ -382,24 +420,20 @@
 	};
 </script>
 <style>
-	page {
-		background-image: url(@/static/page1/bg.png);
-		background-size: cover;
-		background-color: #4274fa;
-	}
 
-	.continer {
-		padding: 20rpx 20rpx;
-		font-size: 28rpx;
-		word-wrap: break-word;
-	}
 </style>
 
 <style lang="scss">
 	page {
 		background-image: url(@/static/page1/bg.png);
 		background-size: cover;
-		overflow-y: scroll;
+		background-color: #4274fa;
+	}
+	
+	.continer {
+		
+		font-size: 28rpx;
+		word-wrap: break-word;
 	}
 
 	.top {
@@ -428,7 +462,6 @@
 	.card {
 		margin-top: 20rpx;
 		padding: 25rpx 32rpx;
-		width: 94.7vw;
 		background: #FFFFFF;
 		border-radius: 8rpx;
 

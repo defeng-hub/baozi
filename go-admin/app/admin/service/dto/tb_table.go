@@ -32,6 +32,9 @@ type TbTableOrder struct {
 	Phone                        string `form:"phoneOrder"  search:"type:order;column:phone;table:tb_table"`
 	Zuoyemianji                  string `form:"zuoyemianjiOrder"  search:"type:order;column:zuoyemianji;table:tb_table"`
 	Zuoyedizhi                   string `form:"zuoyedizhiOrder"  search:"type:order;column:zuoyedizhi;table:tb_table"`
+	Zuoyeneirong                 string `form:"zuoyeneirongOrder"  search:"type:order;column:zuoyeneirong;table:tb_table"`
+	Zuoyeshijian                 string `form:"zuoyeshijianOrder"  search:"type:order;column:zuoyeshijian;table:tb_table"`
+	Shigongjine                  string `form:"shigongjineOrder"  search:"type:order;column:shigongjine;table:tb_table"`
 	Suoshushequ                  string `form:"suoshushequOrder"  search:"type:order;column:suoshushequ;table:tb_table"`
 	FabaofangName                string `form:"fabaofangNameOrder"  search:"type:order;column:fabaofang_name;table:tb_table"`
 	FabaofangUser                string `form:"fabaofangUserOrder"  search:"type:order;column:fabaofang_user;table:tb_table"`
@@ -68,6 +71,9 @@ type TbTableInsertReq struct {
 	Phone                        string `json:"phone" comment:"手机号"`
 	Zuoyemianji                  string `json:"zuoyemianji" comment:"作业面积"`
 	Zuoyedizhi                   string `json:"zuoyedizhi" comment:"作业地址"`
+	Zuoyeneirong                 string `json:"zuoyeneirong" comment:"作业内容"`
+	Zuoyeshijian                 string `json:"zuoyeshijian" comment:"作业时间"`
+	Shigongjine                  string `json:"shigongjine" comment:"施工金额"`
 	Suoshushequ                  string `json:"suoshushequ" comment:"所属社区"`
 	FabaofangName                string `json:"fabaofangName" comment:"发包方名称"`
 	FabaofangUser                string `json:"fabaofangUser" comment:"发包方联系人"`
@@ -98,6 +104,9 @@ func (s *TbTableInsertReq) Generate(model *models.TbTable) {
 	model.Phone = s.Phone
 	model.Zuoyemianji = s.Zuoyemianji
 	model.Zuoyedizhi = s.Zuoyedizhi
+	model.Zuoyeneirong = s.Zuoyeneirong
+	model.Zuoyeshijian = s.Zuoyeshijian
+	model.Shigongjine = s.Shigongjine
 	model.Suoshushequ = s.Suoshushequ
 	model.FabaofangName = s.FabaofangName
 	model.FabaofangUser = s.FabaofangUser
@@ -130,6 +139,9 @@ type TbTableUpdateReq struct {
 	Phone                        string `json:"phone" comment:"手机号"`
 	Zuoyemianji                  string `json:"zuoyemianji" comment:"作业面积"`
 	Zuoyedizhi                   string `json:"zuoyedizhi" comment:"作业地址"`
+	Zuoyeneirong                 string `json:"zuoyeneirong" comment:"作业内容"`
+	Zuoyeshijian                 string `json:"zuoyeshijian" comment:"作业时间"`
+	Shigongjine                  string `json:"shigongjine" comment:"施工金额"`
 	Suoshushequ                  string `json:"suoshushequ" comment:"所属社区"`
 	FabaofangName                string `json:"fabaofangName" comment:"发包方名称"`
 	FabaofangUser                string `json:"fabaofangUser" comment:"发包方联系人"`
@@ -160,6 +172,9 @@ func (s *TbTableUpdateReq) Generate(model *models.TbTable) {
 	model.Phone = s.Phone
 	model.Zuoyemianji = s.Zuoyemianji
 	model.Zuoyedizhi = s.Zuoyedizhi
+	model.Zuoyeneirong = s.Zuoyeneirong
+	model.Zuoyeshijian = s.Zuoyeshijian
+	model.Shigongjine = s.Shigongjine
 	model.Suoshushequ = s.Suoshushequ
 	model.FabaofangName = s.FabaofangName
 	model.FabaofangUser = s.FabaofangUser
@@ -181,6 +196,14 @@ func (s *TbTableUpdateReq) Generate(model *models.TbTable) {
 	model.Status = s.Status
 	model.Remark = s.Remark
 	model.UpdateBy = s.UpdateBy // 添加这而，需要记录是被谁更新的
+
+	// 审核通过的时间，如果状态是审核通过，并且工作日期为空，则设置工作日期为作业时间
+	if s.Status == "审核通过" && s.WorkingDate == "" && s.Zuoyeshijian != "" {
+		model.WorkingDate = s.Zuoyeshijian
+	}
+	if s.Status == "审核通过" && s.WorkingStatus == "" {
+		model.WorkingStatus = "在施"
+	}
 }
 
 func (s *TbTableUpdateReq) GetId() interface{} {

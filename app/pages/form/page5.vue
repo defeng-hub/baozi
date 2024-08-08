@@ -45,7 +45,7 @@
 		methods:{
 			pre(){
 				uni.navigateTo({
-					url:"/pages/form/page4"
+					url:"/pages/form/index"
 				})
 			},
 			next(){

@@ -173,9 +173,7 @@
 					shigongfangName: this.keyword2,
 					workStatus: this.keyword3,
 				})
-				console.log(res3)
 				if (res3.code == 403) {
-					console.log(res3)
 					uni.showToast({
 						icon: "none",
 						title: "执法人员账号密码错误或没有权限",

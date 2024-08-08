@@ -246,10 +246,12 @@ func (e TbTable) GetByDesId(c *gin.Context) {
 	}
 
 	form := SubmitForm{
-		Phone:       object.Phone,
-		Zuoyemianji: object.Zuoyemianji,
-		Zuoyedizhi:  object.Zuoyedizhi,
-		Suoshushequ: object.Suoshushequ,
+		Phone:        object.Phone,
+		Zuoyemianji:  object.Zuoyemianji,
+		Zuoyedizhi:   object.Zuoyedizhi,
+		Zuoyeshijian: object.Zuoyeshijian,
+		Zuoyeneirong: object.Zuoyeneirong,
+		Suoshushequ:  object.Suoshushequ,
 		Fabaofang: struct {
 			Name  string `json:"name"`
 			User  string `json:"user"`
@@ -387,11 +389,14 @@ func (u UploadFile) GetUrl() string {
 }
 
 type SubmitForm struct {
-	Phone       string `json:"phone"`
-	Zuoyemianji string `json:"zuoyemianji"`
-	Zuoyedizhi  string `json:"zuoyedizhi"`
-	Suoshushequ string `json:"suoshushequ"`
-	Fabaofang   struct {
+	Phone        string `json:"phone"`
+	Zuoyemianji  string `json:"zuoyemianji"`
+	Zuoyedizhi   string `json:"zuoyedizhi"`
+	Zuoyeneirong string `json:"zuoyeneirong"`
+	Zuoyeshijian string `json:"zuoyeshijian"`
+	Shigongjine  string `json:"shigongjine"`
+	Suoshushequ  string `json:"suoshushequ"`
+	Fabaofang    struct {
 		Name  string `json:"name"`
 		User  string `json:"user"`
 		Phone string `json:"phone"`
@@ -431,6 +436,9 @@ func (e TbTable) Submit(c *gin.Context) {
 		Phone:                        form.Phone,
 		Zuoyemianji:                  form.Zuoyemianji,
 		Zuoyedizhi:                   form.Zuoyedizhi,
+		Zuoyeshijian:                 form.Zuoyeshijian,
+		Zuoyeneirong:                 form.Zuoyeneirong,
+		Shigongjine:                  form.Shigongjine,
 		Suoshushequ:                  form.Suoshushequ,
 		FabaofangName:                form.Fabaofang.Name,
 		FabaofangUser:                form.Fabaofang.User,

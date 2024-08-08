@@ -34,7 +34,7 @@
 			}
 		},
 		{
-			"path" : "pages/form/page4",
+			"path" : "pages/form/index",
 			"style" : 
 			{
 				"navigationBarTitleText" : "备案填写",

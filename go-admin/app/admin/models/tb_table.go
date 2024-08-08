@@ -8,8 +8,11 @@ type TbTable struct {
 	models.Model
 
 	Phone                        string `json:"phone" gorm:"type:varchar(255);comment:手机号"`
-	Zuoyemianji                  string `json:"zuoyemianji" gorm:"type:longtext;comment:作业面积"`
+	Zuoyemianji                  string `json:"zuoyemianji" gorm:"type:varchar(255);comment:作业面积"`
 	Zuoyedizhi                   string `json:"zuoyedizhi" gorm:"type:longtext;comment:作业地址"`
+	Zuoyeneirong                 string `json:"zuoyeneirong" gorm:"type:longtext;comment:作业内容"`
+	Zuoyeshijian                 string `json:"zuoyeshijian" gorm:"type:varchar(255);comment:作业时间"`
+	Shigongjine                  string `json:"shigongjine" gorm:"type:varchar(255);comment:施工金额"`
 	Suoshushequ                  string `json:"suoshushequ" gorm:"type:longtext;comment:所属社区"`
 	FabaofangName                string `json:"fabaofangName" gorm:"type:longtext;comment:发包方名称"`
 	FabaofangUser                string `json:"fabaofangUser" gorm:"type:longtext;comment:发包方联系人"`

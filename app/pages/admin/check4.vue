@@ -37,7 +37,7 @@
 						<u-line></u-line>
 					</view>
 					<view>检查情况：<span>{{obj.text}}</span></view>
-					<view>是否新增违法建筑：<span>{{obj.text2}}</span></view>
+					<view>是否存在违法建筑：<span>{{obj.text2}}</span></view>
 					
 				</view>
 			</view>

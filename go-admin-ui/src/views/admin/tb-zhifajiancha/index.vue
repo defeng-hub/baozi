@@ -49,10 +49,27 @@
           <el-table-column label="是否新增违法建设" align="center" prop="text2" :show-overflow-tooltip="true" />
           <el-table-column label="现场照片/视频" align="center" prop="file" :show-overflow-tooltip="true">
             <template slot-scope="scope">
-              <el-image style="width: 100px; height: 100px" :src="scope.row.file"
+              <div v-if="scope.row.file">
+                <el-image style="width: 100px; height: 100px" :src="scope.row.file"
                 :preview-src-list="[scope.row.file]" />
+              </div>
+              <div v-else>
+                无
+              </div>
             </template>
           </el-table-column>
+
+          <el-table-column label="检查单" align="center" prop="file2" :show-overflow-tooltip="true">
+            <template slot-scope="scope">
+              <div v-if="scope.row.file2">
+                <el-image style="width: 100px; height: 100px" :src="scope.row.file2" :preview-src-list="[scope.row.file2]" />
+              </div>
+              <div v-else>
+                无
+              </div>
+            </template>
+          </el-table-column>
+
           <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
               <el-popconfirm class="delete-popconfirm" title="确认要修改吗?" confirm-button-text="修改"

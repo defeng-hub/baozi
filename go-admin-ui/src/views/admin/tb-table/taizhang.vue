@@ -49,10 +49,10 @@
 
         <el-table v-loading="loading" :data="tbTableList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="55" align="center" />
-          <el-table-column label="编号" align="center" prop="id" :show-overflow-tooltip="true" />
-          <el-table-column width="140" label="手机号" align="center" prop="phone" :show-overflow-tooltip="true" />
-          <el-table-column label="作业面积" align="center" prop="zuoyemianji" :show-overflow-tooltip="true" />
-          <!-- <el-table-column label="作业地址" align="center" prop="zuoyedizhi" :show-overflow-tooltip="true" /> -->
+          <el-table-column width="55" label="编号" align="center" prop="id" :show-overflow-tooltip="true" />
+          <el-table-column width="130" label="手机号" align="center" prop="phone" :show-overflow-tooltip="true" />
+          <!-- <el-table-column label="作业面积" align="center" prop="zuoyemianji" :show-overflow-tooltip="true" /> -->
+          <el-table-column width="200" label="作业地址" align="center" prop="zuoyedizhi" :show-overflow-tooltip="true" />
           <el-table-column label="所属社区" align="center" prop="suoshushequ" :show-overflow-tooltip="true" />
           <el-table-column label="发包方名称" align="center" prop="fabaofangName" :show-overflow-tooltip="true" />
           <!-- <el-table-column label="发包方联系人" align="center" prop="fabaofangUser" :show-overflow-tooltip="true" /> -->
@@ -74,12 +74,13 @@
             </template>
           </el-table-column> -->
 
-          <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true">
+          <!-- <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <p v-if="scope.row.remark">{{ scope.row.remark }}</p>
               <p v-else>—</p>
             </template>
-          </el-table-column>
+          </el-table-column> -->
+
 
           <el-table-column label="操作" align="center" class-name="small-padding fixed-width" width="160">
             <template slot-scope="scope">
@@ -100,6 +101,42 @@
 
           <el-form ref="form" :model="form" :rules="rules" label-width="80px">
             <el-tabs v-model="activeName" @tab-click="handleClick">
+              <el-tab-pane label="人工审核" name="fourth">
+                <el-form-item label="审核状态" prop="status" disabled>
+                  <el-select v-model="form.status" placeholder="请选择" disabled>
+                    <el-option key="1" label="已提交（待审核）" value=""></el-option>
+                    <el-option key="2" label="审核通过" value="审核通过">
+                      <span style="float: left;color: #43964e;font-weight: 500;">审核通过</span>
+                    </el-option>
+                    <el-option key="3" label="审核未通过" value="审核未通过">
+                      <span style="float: left;color: #ea3323;font-weight: 500;">审核未通过</span>
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item label="施工日期" prop="workingDate">
+                  <el-input style="width: 50%" placeholder="未填写" v-model="form.workingDate">
+                  </el-input>
+                </el-form-item>
+
+                <el-form-item label="施工状态" prop="workingStatus">
+                  <!-- 在施/超期/已延期在施/已销账 -->
+                  <el-select v-model="form.workingStatus" placeholder="请选择">
+                    <el-option label="未选择" value=""></el-option>
+                    <el-option label="在施" value="在施"></el-option>
+                    <el-option label="超期" value="超期"></el-option>
+                    <el-option label="已销账" value="已销账"></el-option>
+                  </el-select>
+                </el-form-item>
+
+                <el-form-item label="备注" prop="remark">
+                  <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" style="width: 50%" placeholder="未填写"
+                    v-model="form.remark">
+                  </el-input>
+                </el-form-item>
+
+              </el-tab-pane>
+
               <el-tab-pane label="基本信息" name="first">
                 <el-form-item label="手机号" prop="phone">
                   <el-input v-model="form.phone" placeholder="手机号" :disabled="true" />
@@ -109,6 +146,15 @@
                 </el-form-item>
                 <el-form-item label="作业地址" prop="zuoyedizhi">
                   <el-input v-model="form.zuoyedizhi" placeholder="作业地址" />
+                </el-form-item>
+                <el-form-item label="作业内容" prop="zuoyeneirong">
+                  <el-input v-model="form.zuoyeneirong" placeholder="作业内容" />
+                </el-form-item>
+                <el-form-item label="作业时间" prop="zuoyeshijian">
+                  <el-input v-model="form.zuoyeshijian" placeholder="年/月/日—年/月/日" />
+                </el-form-item>
+                <el-form-item label="施工金额" prop="shigongjine">
+                  <el-input v-model="form.shigongjine" placeholder="施工金额/元" />
                 </el-form-item>
                 <el-form-item label="所属社区" prop="suoshushequ">
                   <el-input v-model="form.suoshushequ" placeholder="所属社区" />
@@ -137,52 +183,53 @@
               </el-tab-pane>
 
               <el-tab-pane label="资质上传" name="third">
-                <el-row>
+                <el-row style="height: 55vh; overflow-y: auto">
                   <el-col :span="12" style="padding: 20px 30px;">
                     <el-form-item label="营业执照" prop="yingyezhizhao" label-width="auto">
-                      <el-input v-model="form.yingyezhizhao" placeholder="空" size="mini">
+                      <!-- <el-input v-model="form.yingyezhizhao" placeholder="空" size="mini">
                         <template slot="prepend">地址</template>
                         <template slot="append">
                           <a :href="form.yingyezhizhao" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                         </template>
-                      </el-input>
+                      </el-input> -->
+                      <a :href="form.yingyezhizhao" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
 
                       <el-image v-if="isImg(form.yingyezhizhao)" style="width: 100px; height: 100px"
                         :src="form.yingyezhizhao" :preview-src-list="[form.yingyezhizhao]"></el-image>
                     </el-form-item>
 
                     <el-form-item label="法人身份证" prop="farenid" label-width="auto">
-                      <el-input v-model="form.farenid" placeholder="空" size="mini">
+                      <!-- <el-input v-model="form.farenid" placeholder="空" size="mini">
                         <template slot="prepend">地址</template>
                         <template slot="append">
                           <a :href="form.farenid" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                         </template>
-                      </el-input>
-
+                      </el-input> -->
+                      <a :href="form.farenid" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                       <el-image v-if="isImg(form.farenid)" style="width: 100px; height: 100px" :src="form.farenid"
                         :preview-src-list="[form.farenid]"></el-image>
                     </el-form-item>
                     <el-form-item label="建筑企业资质安全生产许可证" prop="anquanxvkezheng" label-width="auto">
-                      <el-input v-model="form.anquanxvkezheng" placeholder="空" size="mini">
+                      <!-- <el-input v-model="form.anquanxvkezheng" placeholder="空" size="mini">
                         <template slot="prepend">地址</template>
                         <template slot="append">
-                          <a :href="form.anquanxvkezheng" target="_blank"
-                            style="display: block;color: #448ef7;">点击下载</a>
+                          <a :href="form.anquanxvkezheng" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                         </template>
-                      </el-input>
+                      </el-input> -->
+                      <a :href="form.anquanxvkezheng" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
 
                       <el-image v-if="isImg(form.anquanxvkezheng)" style="width: 100px; height: 100px"
                         :src="form.anquanxvkezheng" :preview-src-list="[form.anquanxvkezheng]"></el-image>
                     </el-form-item>
 
                     <el-form-item label="授权委托书" prop="shouquanweituozhu" label-width="auto">
-                      <el-input v-model="form.shouquanweituozhu" placeholder="空">
+                      <!-- <el-input v-model="form.shouquanweituozhu" placeholder="空">
                         <template slot="prepend">地址</template>
                         <template slot="append">
-                          <a :href="form.shouquanweituozhu" target="_blank"
-                            style="display: block;color: #448ef7;">点击下载</a>
+                          <a :href="form.shouquanweituozhu" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                         </template>
-                      </el-input>
+                      </el-input> -->
+                      <a :href="form.shouquanweituozhu" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                       <el-image v-if="isImg(form.shouquanweituozhu)" style="width: 100px; height: 100px"
                         :src="form.shouquanweituozhu" :preview-src-list="[form.shouquanweituozhu]"></el-image>
                     </el-form-item>
@@ -191,48 +238,50 @@
                   <el-col :span="12" style="padding: 20px 30px;">
 
                     <el-form-item label="项目负责人身份证" prop="fuzerenid" label-width="auto">
-                      <el-input v-model="form.fuzerenid" placeholder="空">
+                      <!-- <el-input v-model="form.fuzerenid" placeholder="空">
                         <template slot="prepend">地址</template>
                         <template slot="append">
                           <a :href="form.fuzerenid" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                         </template>
-                      </el-input>
+                      </el-input> -->
+                      <a :href="form.fuzerenid" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                       <el-image v-if="isImg(form.fuzerenid)" style="width: 100px; height: 100px" :src="form.fuzerenid"
                         :preview-src-list="[form.fuzerenid]"></el-image>
                     </el-form-item>
                     <el-form-item label="甲乙双方施工合同" prop="jiayishuangfangshigonghetong" label-width="auto">
-                      <el-input v-model="form.jiayishuangfangshigonghetong" placeholder="空">
+                      <!-- <el-input v-model="form.jiayishuangfangshigonghetong" placeholder="空">
                         <template slot="prepend">地址</template>
                         <template slot="append">
-                          <a :href="form.jiayishuangfangshigonghetong" target="_blank"
-                            style="display: block;color: #448ef7;">点击下载</a>
+                          <a :href="form.jiayishuangfangshigonghetong" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                         </template>
-                      </el-input>
+                      </el-input> -->
+                      <a :href="form.jiayishuangfangshigonghetong" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                       <el-image v-if="isImg(form.jiayishuangfangshigonghetong)" style="width: 100px; height: 100px"
                         :src="form.jiayishuangfangshigonghetong"
                         :preview-src-list="[form.jiayishuangfangshigonghetong]"></el-image>
                     </el-form-item>
                     <el-form-item label="安全生产责任保险" prop="anquanshengchanzerenbaoxian" label-width="auto">
-                      <el-input v-model="form.anquanshengchanzerenbaoxian" placeholder="空">
+                      <!-- <el-input v-model="form.anquanshengchanzerenbaoxian" placeholder="空">
                         <template slot="prepend">地址</template>
                         <template slot="append">
                           <a :href="form.anquanshengchanzerenbaoxian" target="_blank"
                             style="display: block;color: #448ef7;">点击下载</a>
                         </template>
-                      </el-input>
+                      </el-input> -->
+                      <a :href="form.anquanshengchanzerenbaoxian" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                       <el-image v-if="isImg(form.anquanshengchanzerenbaoxian)" style="width: 100px; height: 100px"
                         :src="form.anquanshengchanzerenbaoxian"
                         :preview-src-list="[form.anquanshengchanzerenbaoxian]"></el-image>
                     </el-form-item>
 
                     <el-form-item label="特种作业证" prop="tezhongzuoyezheng" label-width="auto">
-                      <el-input v-model="form.tezhongzuoyezheng" placeholder="空">
+                      <!-- <el-input v-model="form.tezhongzuoyezheng" placeholder="空">
                         <template slot="prepend">地址</template>
                         <template slot="append">
-                          <a :href="form.tezhongzuoyezheng" target="_blank"
-                            style="display: block;color: #448ef7;">点击下载</a>
+                          <a :href="form.tezhongzuoyezheng" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                         </template>
-                      </el-input>
+                      </el-input> -->
+                      <a :href="form.tezhongzuoyezheng" target="_blank" style="display: block;color: #448ef7;">点击下载</a>
                       <el-image v-if="isImg(form.tezhongzuoyezheng)" style="width: 100px; height: 100px"
                         :src="form.tezhongzuoyezheng" :preview-src-list="[form.tezhongzuoyezheng]"></el-image>
                     </el-form-item>
@@ -242,42 +291,7 @@
 
               </el-tab-pane>
 
-              <el-tab-pane label="人工审核" name="fourth">
-                <el-form-item label="审核状态" prop="status">
-                  <el-select v-model="form.status" placeholder="请选择">
-                    <el-option key="1" label="已提交（待审核）" value=""></el-option>
-                    <el-option key="2" label="审核通过" value="审核通过">
-                      <span style="float: left;color: #43964e;font-weight: 500;">审核通过</span>
-                    </el-option>
-                    <el-option key="3" label="审核未通过" value="审核未通过">
-                      <span style="float: left;color: #ea3323;font-weight: 500;">审核未通过</span>
-                    </el-option>
-                  </el-select>
-                </el-form-item>
 
-                <el-form-item label="施工日期" prop="workingDate">
-                  <el-input style="width: 50%" placeholder="未填写" v-model="form.workingDate">
-                  </el-input>
-                </el-form-item>
-
-                <el-form-item label="施工状态" prop="workingStatus">
-                  <!-- 在施/超期/已延期在施/已销账 -->
-                  <el-select v-model="form.workingStatus" placeholder="请选择">
-                    <el-option label="未选择" value=""></el-option>
-                    <el-option label="在施" value="在施"></el-option>
-                    <el-option label="超期" value="超期"></el-option>
-                    <el-option label="已延期在施" value="已延期在施"></el-option>
-                    <el-option label="已销账" value="已销账"></el-option>
-                  </el-select>
-                </el-form-item>
-
-                <el-form-item label="备注" prop="remark">
-                  <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4 }" style="width: 50%" placeholder="未填写"
-                    v-model="form.remark">
-                  </el-input>
-                </el-form-item>
-
-              </el-tab-pane>
             </el-tabs>
 
           </el-form>
@@ -300,7 +314,7 @@ export default {
   },
   data() {
     return {
-      activeName: 'first',
+      activeName: 'fourth',
       // 遮罩层
       loading: true,
       // 选中数组
@@ -384,11 +398,13 @@ export default {
     // 表单重置
     reset() {
       this.form = {
-
         id: undefined,
         phone: undefined,
         zuoyemianji: undefined,
         zuoyedizhi: undefined,
+        zuoyeneirong: undefined,
+        zuoyeshijian: undefined,
+        shigongjine:undefined,
         suoshushequ: undefined,
         fabaofangName: undefined,
         fabaofangUser: undefined,
