@@ -6,14 +6,14 @@
           <el-form-item label="手机号" label-width="100" prop="phone"><el-input v-model="queryParams.phone"
               placeholder="请输入手机号" clearable size="small" @keyup.enter.native="handleQuery" />
           </el-form-item>
-          <el-form-item label="发包方名称" label-width="100" prop="fabaofangName"><el-input
+           <!-- <el-form-item label="发包方名称" label-width="100" prop="fabaofangName"><el-input
               v-model="queryParams.fabaofangName" placeholder="请输入发包方名称" clearable size="small"
               @keyup.enter.native="handleQuery" />
           </el-form-item>
           <el-form-item label="发包方联系人" label-width="100" prop="fabaofangUser"><el-input
               v-model="queryParams.fabaofangUser" placeholder="请输入发包方联系人" clearable size="small"
               @keyup.enter.native="handleQuery" />
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item label="施工方名称" label-width="100" prop="shigongfangName"><el-input
               v-model="queryParams.shigongfangName" placeholder="请输入施工方名称" clearable size="small"
               @keyup.enter.native="handleQuery" />
@@ -21,6 +21,14 @@
           <el-form-item label="施工方项目负责人" label-width="100" prop="shigongfangUser"><el-input
               v-model="queryParams.shigongfangUser" placeholder="请输入施工方项目负责人" clearable size="small"
               @keyup.enter.native="handleQuery" />
+          </el-form-item>
+
+          <el-form-item label="施工状态" label-width="100" prop="shigongfangUser">
+            <el-select v-model="queryParams.workingStatus" placeholder="请选择">
+              <el-option label="在施" value="在施"></el-option>
+              <el-option label="超期" value="超期"></el-option>
+              <el-option label="已销账" value="已销账"></el-option>
+          </el-select>
           </el-form-item>
 
           <el-form-item>
@@ -347,6 +355,7 @@ export default {
         pageSize: 10,
         phone: undefined,
         fabaofangName: undefined,
+        workingStatus: undefined,
         fabaofangUser: undefined,
         shigongfangName: undefined,
         shigongfangUser: undefined,
@@ -387,6 +396,7 @@ export default {
     },
     /** 查询参数列表 */
     getList() {
+      console.log("this.addDateRange(this.queryParams, this.dateRange)",this.addDateRange(this.queryParams, this.dateRange))
       this.loading = true
       listTbTable(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
         this.tbTableList = response.data.list

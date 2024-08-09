@@ -2,7 +2,7 @@
 	<view class="continer">
 		<view class="notice">
 			<view class="title">
-				黑名单企业（因违规施工行政处罚较多不予备案）
+				{{ heimingdanqiyeTitle }}
 			</view>
 			<view class="notice2">
 				<view class="text">
@@ -17,7 +17,7 @@
 		
 		<view class="notice" style="margin-top: 30rpx;">
 			<view class="title">
-				灰名单企业（因违规施工有过1次行政处罚或多次施工未备案的企业，请谨慎使用）
+				{{huimingdanqiyeTitle}}
 			</view>
 			<view class="notice2">
 				<view class="text">
@@ -51,8 +51,10 @@
 		data() {
 			return {
 				resTime:5, //默认不显示下一页
+				heimingdanqiyeTitle:"黑名单企业（2024年因违规施工行政处罚较多不予备案）",
 				heimingdanqiye: "",
 				heimingdanqiyeList: [],
+				huimingdanqiyeTitle: "灰名单企业（2024年因违规施工有过1次行政处罚或多次施工未备案的企业，请谨慎使用）",
 				huimingdanqiye: "",
 				huimingdanqiyeList: [],
 				end:"",
@@ -69,8 +71,16 @@
 			
 			let res4 =  await this.$http.get(getKey+"end", {})
 			this.end = res4.data.value
+			
+
 		},
-		onShow() {
+		async onShow() {
+			let res5 = await this.$http.get(getKey+"huimingdanqiye-title", {})
+			this.huimingdanqiyeTitle = res5.data.value
+			
+			let res6 = await this.$http.get(getKey+"heimingdanqiye-title", {})
+			this.heimingdanqiyeTitle = res6.data.value
+			
 			let that = this;
 			setInterval(() => {
 				if (this.resTime > 0){

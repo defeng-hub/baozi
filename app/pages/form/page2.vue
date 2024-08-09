@@ -6,7 +6,10 @@
 			</view>
 			<view class="notice2">
 				<view class="text">
-					{{notice}}
+					<!-- {{notice}} -->
+					<view v-for="line in noticeList">
+						{{line}}
+					</view>
 				</view>
 			</view>
 		</view>
@@ -52,6 +55,7 @@
 			return {
 				resTime:5, //默认不显示下一页
 				notice: "",
+				noticeList:[],
 				template1: "",
 				template2: "",
 				end:"",
@@ -60,6 +64,7 @@
 		async created() {
 			let res1 =  await this.$http.get(getKey+"notice", {})
 			this.notice = res1.data?.value
+			this.noticeList = this.notice.split("\n");
 			
 			let res2 =  await this.$http.get(getKey+"template1", {})
 			this.template1 = res2.data?.value

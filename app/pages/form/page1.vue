@@ -131,6 +131,7 @@
 									title:res.data.msg
 								})
 								uni.removeStorageSync("Mt8p3QiZ")
+								this.show2 = true;
 								return
 							}else{
 								uni.setStorageSync("Mt8p3QiZ", res.data.user)
@@ -139,11 +140,14 @@
 								})
 								return
 							}
+						}else{
+							this.show2 = true;
 						}
 					})
+				}else{
+					this.show2 = true;
 				}
 				
-				// this.show2 = true;
 			},
 			async login(){
 				console.log(this.$refs.uForm2)

@@ -51,8 +51,8 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageIndex"
-          :limit.sync="queryParams.pageSize" @pagination="getList" />
+        <!-- <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageIndex"
+          :limit.sync="queryParams.pageSize" @pagination="getList" /> -->
 
         <!-- 添加或修改对话框 -->
         <el-dialog :title="title" :visible.sync="open" width="500px">

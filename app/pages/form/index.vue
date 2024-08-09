@@ -138,7 +138,7 @@
 				<u-form-item required :labelWidth="200" :label="'项目负责人身份证：'" prop="fuzerenId" borderBottom>
 					<u-upload accept="file" :fileList="model1.fuzerenId" @afterRead="afterRead($event, 'fuzerenId')"
 						@delete="deletePic('fuzerenId')" :maxCount="1" width="250" height="150">
-						<image st src="https://cdn.uviewui.com/uview/demo/upload/positive.png" mode="widthFix"
+						<image src="@/static/page4/positive.png" mode="widthFix"
 							style="width: 250rpx;height: 150px;"></image>
 					</u-upload>
 				</u-form-item>

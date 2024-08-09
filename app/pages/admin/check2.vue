@@ -1,9 +1,9 @@
 <template>
 	<view class="continer">
-		<view class="card">
+		<!-- <view class="card">
 			<view class="userinfo">欢迎您：{{user.username}}</view>
 			<view class="userinfo">{{user.department}} ： {{user.name}}</view>
-		</view>
+		</view> -->
 		<view class="card">
 
 			<!--	<view class="centerForm" style="color: #888888;">
@@ -145,7 +145,7 @@
 				})
 				setTimeout(() => {
 					uni.redirectTo({
-						url: "/pages/admin/check"
+						url: "/pages/form/page1"
 					})
 				}, 1000)
 				return
@@ -161,7 +161,7 @@
 			checkHandler(obj){
 				// console.log(obj)
 				uni.navigateTo({
-					url:"/pages/admin/check3?id="+obj.id
+					url:"/pages/admin/check3?g67ac="+obj.id
 				})
 			},
 			async getData(){
@@ -237,7 +237,7 @@
 	}
 
 	.scroll-Y {
-		height: 70vh;
+		height: 71vh;
 	}
 	.filter{
 		

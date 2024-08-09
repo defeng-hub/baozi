@@ -65,7 +65,7 @@
 			"style" :
 			{
 				"navigationBarTitleText" : "施工台账列表",
-				"navigationStyle": "custom",
+				// "navigationStyle": "custom",
 				"backgroundColor":"#F6F7FB"
 			}
 		},
@@ -74,7 +74,7 @@
 			"style" :
 			{
 				"navigationBarTitleText" : "执法检查",
-				"navigationStyle": "custom",
+				// "navigationStyle": "custom",
 				"backgroundColor":"#F6F7FB"
 			}
 		},
@@ -82,8 +82,8 @@
 			"path" : "pages/admin/check4",
 			"style" : 
 			{
-				"navigationBarTitleText" : "详情列表",
-				"navigationStyle": "custom",
+				"navigationBarTitleText" : "详细情况",
+				// "navigationStyle": "custom",
 				"backgroundColor":"#F6F7FB"
 			}
 		},

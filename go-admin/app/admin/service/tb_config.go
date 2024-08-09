@@ -20,7 +20,7 @@ type TbConfig struct {
 func (e *TbConfig) GetPage(c *dto.TbConfigGetPageReq, p *actions.DataPermission, list *[]models.TbConfig, count *int64) error {
 	var err error
 	var data models.TbConfig
-
+	c.PageSize = 9999
 	err = e.Orm.Model(&data).
 		Scopes(
 			cDto.MakeCondition(c.GetNeedSearch()),

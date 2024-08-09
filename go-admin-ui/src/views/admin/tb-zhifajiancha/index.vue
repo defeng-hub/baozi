@@ -50,8 +50,13 @@
           <el-table-column label="现场照片/视频" align="center" prop="file" :show-overflow-tooltip="true">
             <template slot-scope="scope">
               <div v-if="scope.row.file">
-                <el-image style="width: 100px; height: 100px" :src="scope.row.file"
-                :preview-src-list="[scope.row.file]" />
+                <div v-if="isImg(scope.row.file)">
+                  <el-image style="width: 100px; height: 100px" :src="scope.row.file"
+                  :preview-src-list="[scope.row.file]" />
+                </div>
+                <div v-else>
+                  <a :href="scope.row.file" target="_blank" style="color: #1890ff;">点击查看</a>
+                </div>
               </div>
               <div v-else>
                 无
@@ -189,6 +194,9 @@ export default {
     this.getList()
   },
   methods: {
+    isImg(str) {
+      return /\.(png|jpg|jpeg)$/i.test(str);
+    },
     /** 查询参数列表 */
     getList() {
       this.loading = true

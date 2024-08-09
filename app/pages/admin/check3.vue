@@ -4,22 +4,44 @@
 			<view style="padding: 10rpx 20rpx;">
 				<view class="title" style="margin-bottom: 12rpx;">一、资质情况</view>
 				<view class="info">
-					<view>作业面积：<span>{{data.zuoyemianji}}</span></view>
-					<view>作业地址：<span>{{data.zuoyedizhi}}</span></view>
 					<view>所属社区：<span>{{data.suoshushequ}}</span></view>
-					<view style="margin-top: 10rpx;margin-bottom: 10rpx;">
-						<u-line></u-line>
-					</view>
-					<view>发包方名称：<span>{{data.fabaofangName}}</span></view>
-					<view>发包方手机号：<span>{{data.fabaofangPhone}}</span></view>
+					<view>作业地址：<span>{{data.zuoyedizhi}}</span></view>
+					<view>作业面积：<span>{{data.zuoyemianji}}</span></view>
+					<view>施工金额：<span>{{data.shigongjine}}</span></view>
 					
-					<view>施工方名称：<span>{{data.shigongfangName}}</span></view>
-					<view>施工方手机号：<span>{{data.shigongfangPhone}}</span></view>
+					<view>
+						作业内容：
+						<span v-if="data.zuoyeneirong!=''">{{data.zuoyeneirong}}</span>
+						<span v-else>空</span>
+					</view>
 					<view style="margin-top: 10rpx;margin-bottom: 10rpx;">
 						<u-line></u-line>
 					</view>
-					<view>施工时间：<span>{{data.workingDate}}</span></view>
-					<view>施工状态：<span>{{data.workingStatus}}</span></view>
+					
+					<view>
+						涉及特种作业：
+						<span v-if="data.shifoushejitezhongzuoye!=''">{{data.shifoushejitezhongzuoye}}</span>
+						<span v-else>空</span>
+					</view>
+					
+					<view>
+						涉及动火作业：
+						<span v-if="data.shifoushejidonghuozuoye!=''">{{data.shifoushejidonghuozuoye}}</span>
+						<span v-else>空</span>
+					</view>
+					
+					<view>
+						施工时间：
+						<span v-if="data.workingDate!=''">{{data.workingDate}}</span>
+						<span v-else>空</span>
+					</view>
+					
+					<view>
+						施工状态：
+						<span v-if="data.workingStatus!=''">{{data.workingStatus}}</span>
+						<span v-else>空</span>
+					</view>
+					
 					<view style="margin-top: 10rpx;">
 						<u-line></u-line>
 					</view>
@@ -27,9 +49,8 @@
 				
 				<view class="title" style="margin-top: 30rpx;margin-bottom: 12rpx;">二、执法检查（上传现场情况）</view>
 				<u--form labelPosition="left" :model="model1" ref="uForm">
-					
 					<u-form-item :labelWidth="230" label="照片/视频：" prop="name" borderBottom>
-						<u-upload accept="image" :maxDuration="30" capture="camera" width="300rpx" height="300rpx" :fileList="model1.file"
+						<u-upload accept="video" :maxDuration="30" capture="camera" width="300rpx" height="300rpx" :fileList="model1.file"
 							@afterRead="afterRead($event, 'file')" @delete="deletePic('file')" :maxCount="1"></u-upload>
 					</u-form-item>
 					
@@ -66,6 +87,7 @@
 	import {
 		getKey,
 		getTableByPhone,
+		loginApi,
 		BASE_URL,
 		getTableById,
 		saveZhifaCheckApi
@@ -83,6 +105,10 @@
 					text:"",
 					text2:""
 				},
+				model2:{
+					username:"",
+					passwd:"",
+				},
 				end: "",
 			};
 		},
@@ -91,19 +117,57 @@
 			this.end = res3.data.value
 		},
 		async onLoad(param) {
-			let res4 = await this.$http.get(getTableById + param.id, {})
-			console.log(res4)
-			this.data = res4.data;
-			this.model1.pid = res4.data.id
+			
+			let log = await this.loginCheck()
+			if (log == true){
+				if(param["g67ac"]) {
+					this.model1.pid = param["g67ac"]
+					this.getdata(param)
+				}else{
+					uni.reLaunch({
+						url:"/pages/form/page1"
+					})
+				}
+			}else{
+				uni.reLaunch({
+					url:"/pages/form/page1"
+				})
+			}
+			
+
+
 		},
 		onShow() {
-			let user = uni.getStorageSync("Mt8p3QiZ")
-			if (user) {
-				this.model1.name = user.name
-				this.model1.department = user.department
-			}
+
 		},
 		methods: {
+			async loginCheck(){
+				let user = uni.getStorageSync("Mt8p3QiZ")
+				if (user) {
+					this.model2.username = user?.username
+					this.model2.passwd = user?.passwd
+					
+					let res = await this.$http.post(loginApi, this.model2, {})
+					if (res.code == 200){
+						if(res.data.status == false){
+							return false
+						}else{
+							uni.setStorageSync("Mt8p3QiZ", res.data.user)
+							return true
+						}
+					}else{
+						return false
+					}
+				}else{
+					return false
+				}
+			},
+			async getdata(param){
+				let res4 = await this.$http.get(getTableById + param["g67ac"], {})
+				console.log(res4)
+				this.data = res4.data;
+				this.model1.pid = res4.data.id
+			},
 			async check() {
 				console.log(this.model1)
 				console.log(saveZhifaCheckApi)
