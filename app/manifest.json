@@ -61,7 +61,7 @@
         "enable" : false
     },
     "h5" : {
-        "title" : "备案须知",
+        "title" : "备案告知",
         "router" : {
             "mode" : "history",
             "base" : ""
